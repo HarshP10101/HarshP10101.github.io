@@ -378,82 +378,128 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   to { transform: rotate(360deg); }
 }
 
-/* ── Mini Pipeline Flow (NEW) ── */
-.mini-pipeline {
+/* ── Mini Coffee Cycle (playful) ── */
+.mini-coffee {
   display: flex;
   align-items: center;
   gap: 0;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 10px 16px;
+  padding: 10px 14px;
   width: 100%;
-  max-width: 340px;
+  max-width: 360px;
 }
 
-.pipe-node {
-  padding: 6px 12px;
+.coffee-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   background: var(--surface);
   border: 1px solid var(--border);
   transition: all 0.3s var(--ease);
   flex-shrink: 0;
+  min-width: 74px;
+  position: relative;
 }
 
-.pipe-node.pipe-active {
-  border-color: var(--jade);
-  background: var(--jade-soft);
+.coffee-icon {
+  font-size: 1rem;
+  line-height: 1;
+  filter: saturate(0.95);
 }
 
-.pipe-node.pipe-gold {
-  border-color: var(--jade);
-  background: var(--jade-soft);
+.coffee-label {
+  font-size: 0.7rem;
+  font-weight: 650;
+  color: var(--ink);
+  letter-spacing: 0.02em;
 }
 
-.pipe-node.pipe-gold .pipe-label {
-  color: var(--jade);
-  font-weight: 600;
-}
-
-.pipe-label {
-  font-size: 0.68rem;
-  font-weight: 500;
+.coffee-sub {
+  font-size: 0.62rem;
   color: var(--muted);
   letter-spacing: 0.04em;
 }
 
-.pipe-arrow {
+.coffee-active {
+  border-color: var(--jade);
+  background: var(--jade-soft);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+}
+
+.coffee-gold {
+  border-color: var(--jade);
+  background: var(--jade-soft);
+}
+
+.coffee-gold .coffee-label {
+  color: var(--jade);
+}
+
+.coffee-track {
   flex: 1;
   height: 2px;
   background: var(--border);
   position: relative;
-  min-width: 20px;
+  min-width: 18px;
+  margin: 0 6px;
   overflow: hidden;
+  border-radius: 999px;
 }
 
-.pipe-dot-flow {
+.coffee-bean {
   position: absolute;
-  top: -2px;
-  left: -6px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  top: -3px;
+  left: -10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
   background: var(--jade);
-  animation: dotFlow 2.2s ease-in-out infinite;
-  box-shadow: 0 0 6px rgba(45,157,120,0.5);
+  opacity: 0.0;
+  box-shadow: 0 0 10px rgba(45,157,120,0.45);
+  animation: beanFlow 2.4s ease-in-out infinite;
 }
 
-.pipe-dot-flow.d2 { animation-delay: 0.7s; }
-.pipe-dot-flow.d3 { animation-delay: 1.4s; }
+.coffee-bean.b2 { animation-delay: 0.8s; }
+.coffee-bean.b3 { animation-delay: 1.6s; }
 
-@keyframes dotFlow {
-  0% { left: -6px; opacity: 0; }
-  15% { opacity: 1; }
-  85% { opacity: 1; }
-  100% { left: calc(100% + 6px); opacity: 0; }
+@keyframes beanFlow {
+  0%   { left: -10px; opacity: 0; transform: translateY(0) scale(0.9); }
+  15%  { opacity: 1; }
+  50%  { transform: translateY(-1px) scale(1); }
+  85%  { opacity: 1; }
+  100% { left: calc(100% + 10px); opacity: 0; transform: translateY(0) scale(0.9); }
 }
 
+.coffee-node:nth-of-type(5) .coffee-icon {
+  animation: steamWiggle 2.8s var(--ease) infinite;
+  transform-origin: 50% 60%;
+}
 
+@keyframes steamWiggle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50%      { transform: rotate(-6deg) translateY(-1px); }
+}
+
+.coffee-gold .coffee-icon {
+  animation: servePop 3.2s var(--ease) infinite;
+}
+
+@keyframes servePop {
+  0%, 85%, 100% { transform: scale(1); }
+  90%           { transform: scale(1.08); }
+}
+
+@media (max-width: 420px) {
+  .mini-coffee { max-width: 100%; padding: 8px 10px; }
+  .coffee-node { min-width: 68px; padding: 7px 8px; }
+  .coffee-label { font-size: 0.68rem; }
+  .coffee-sub { font-size: 0.6rem; }
+}
 
 /* Hero skill tags */
 .hero-skills {
@@ -1388,23 +1434,50 @@ h4 { font-size: 0.95rem; font-weight: 600; }
         </div>
 
         <!-- Mini pipeline flow diagram -->
-        <div class="mini-pipeline">
-          <div class="pipe-node">
-            <span class="pipe-label">Raw</span>
-          </div>
-          <div class="pipe-arrow"><span class="pipe-dot-flow"></span></div>
-          <div class="pipe-node pipe-active">
-            <span class="pipe-label">Clean</span>
-          </div>
-          <div class="pipe-arrow"><span class="pipe-dot-flow d2"></span></div>
-          <div class="pipe-node">
-            <span class="pipe-label">Model</span>
-          </div>
-          <div class="pipe-arrow"><span class="pipe-dot-flow d3"></span></div>
-          <div class="pipe-node pipe-gold">
-            <span class="pipe-label">Dashboard</span>
-          </div>
-        </div>
+        <!-- Mini coffee pipeline -->
+<div class="mini-coffee" aria-label="Coffee-flavored data cycle: Beans, Grind, Brew, Serve">
+  <div class="coffee-node coffee-active">
+    <span class="coffee-icon" aria-hidden="true">🫘</span>
+    <span class="coffee-label">Beans</span>
+    <span class="coffee-sub">Raw</span>
+  </div>
+
+  <div class="coffee-track" aria-hidden="true">
+    <span class="coffee-bean b1"></span>
+    <span class="coffee-bean b2"></span>
+    <span class="coffee-bean b3"></span>
+  </div>
+
+  <div class="coffee-node">
+    <span class="coffee-icon" aria-hidden="true">⚙️</span>
+    <span class="coffee-label">Grind</span>
+    <span class="coffee-sub">Clean</span>
+  </div>
+
+  <div class="coffee-track" aria-hidden="true">
+    <span class="coffee-bean b1"></span>
+    <span class="coffee-bean b2"></span>
+    <span class="coffee-bean b3"></span>
+  </div>
+
+  <div class="coffee-node">
+    <span class="coffee-icon" aria-hidden="true">☕</span>
+    <span class="coffee-label">Brew</span>
+    <span class="coffee-sub">Model</span>
+  </div>
+
+  <div class="coffee-track" aria-hidden="true">
+    <span class="coffee-bean b1"></span>
+    <span class="coffee-bean b2"></span>
+    <span class="coffee-bean b3"></span>
+  </div>
+
+  <div class="coffee-node coffee-gold">
+    <span class="coffee-icon" aria-hidden="true">📈</span>
+    <span class="coffee-label">Serve</span>
+    <span class="coffee-sub">Dashboard</span>
+  </div>
+</div>
 
 
       </div>
