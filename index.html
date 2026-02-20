@@ -378,127 +378,228 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   to { transform: rotate(360deg); }
 }
 
-/* ── Mini Coffee Cycle (playful) ── */
-.mini-coffee {
+/* ── Data Barista Slider (coffee pipeline) ── */
+.data-barista {
   display: flex;
-  align-items: center;
-  gap: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 14px;
+  justify-content: flex-start;
   width: 100%;
-  max-width: 360px;
+  max-width: 440px;
 }
 
-.coffee-node {
+.barista-track {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.03);
+}
+
+.barista-stage {
+  position: relative;
+  flex: 1;
+  padding: 8px 4px 7px;
+  border-radius: 999px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  transition: all 0.3s var(--ease);
-  flex-shrink: 0;
-  min-width: 74px;
-  position: relative;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.coffee-icon {
-  font-size: 1rem;
-  line-height: 1;
-  filter: saturate(0.95);
+.barista-stage:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -0.5px;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  background: var(--border);
+  opacity: 0.7;
 }
 
-.coffee-label {
-  font-size: 0.7rem;
+.stage-label {
+  font-size: 0.68rem;
   font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--ink);
-  letter-spacing: 0.02em;
 }
 
-.coffee-sub {
-  font-size: 0.62rem;
+.stage-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.03em;
   color: var(--muted);
-  letter-spacing: 0.04em;
 }
 
-.coffee-active {
-  border-color: var(--jade);
-  background: var(--jade-soft);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+/* highlight current phase subtly via gradient sweep */
+.barista-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 120%, rgba(45,157,120,0.16), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
 }
 
-.coffee-gold {
-  border-color: var(--jade);
-  background: var(--jade-soft);
+/* final stage has a breathing glow */
+.barista-stage--final::before {
+  opacity: 1;
+  animation: serveGlow 3.4s ease-in-out infinite;
 }
-
-.coffee-gold .coffee-label {
+.barista-stage--final .stage-label {
   color: var(--jade);
 }
 
-.coffee-track {
-  flex: 1;
-  height: 2px;
-  background: var(--border);
-  position: relative;
-  min-width: 18px;
-  margin: 0 6px;
-  overflow: hidden;
-  border-radius: 999px;
-}
-
-.coffee-bean {
+/* moving cup */
+.barista-cup {
   position: absolute;
-  top: -3px;
-  left: -10px;
-  width: 8px;
-  height: 8px;
+  top: 50%;
+  left: 7%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 18px;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  text-shadow: none;
+  animation: cupSlide 4.8s var(--ease) infinite;
+}
+
+/* cup body */
+.cup-body {
+  position: relative;
+  width: 16px;
+  height: 11px;
+  border-radius: 4px 4px 6px 6px;
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.16);
+}
+
+/* cup handle */
+.cup-handle {
+  position: absolute;
+  right: -5px;
+  bottom: 3px;
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
-  background: var(--jade);
+  border: 1.4px solid var(--ink);
+  border-left-color: transparent;
+}
+
+/* steam lines */
+.cup-steam {
+  position: absolute;
+  bottom: 11px;
+  width: 2px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--muted);
   opacity: 0.0;
-  box-shadow: 0 0 10px rgba(45,157,120,0.45);
-  animation: beanFlow 2.4s ease-in-out infinite;
+  animation: steamRise 2.4s ease-in-out infinite;
 }
 
-.coffee-bean.b2 { animation-delay: 0.8s; }
-.coffee-bean.b3 { animation-delay: 1.6s; }
-
-@keyframes beanFlow {
-  0%   { left: -10px; opacity: 0; transform: translateY(0) scale(0.9); }
-  15%  { opacity: 1; }
-  50%  { transform: translateY(-1px) scale(1); }
-  85%  { opacity: 1; }
-  100% { left: calc(100% + 10px); opacity: 0; transform: translateY(0) scale(0.9); }
+.cup-steam.s1 {
+  left: 7px;
+  animation-delay: 0.0s;
 }
 
-.coffee-node:nth-of-type(5) .coffee-icon {
-  animation: steamWiggle 2.8s var(--ease) infinite;
-  transform-origin: 50% 60%;
+.cup-steam.s2 {
+  left: 11px;
+  animation-delay: 0.6s;
 }
 
-@keyframes steamWiggle {
-  0%, 100% { transform: rotate(0deg) translateY(0); }
-  50%      { transform: rotate(-6deg) translateY(-1px); }
+/* steam animation */
+@keyframes steamRise {
+  0%   { transform: translateY(4px) scaleY(0.6); opacity: 0; }
+  20%  { opacity: 0.4; }
+  50%  { transform: translateY(-1px) scaleY(1); opacity: 0.65; }
+  80%  { opacity: 0.3; }
+  100% { transform: translateY(-6px) scaleY(0.7); opacity: 0; }
 }
 
-.coffee-gold .coffee-icon {
-  animation: servePop 3.2s var(--ease) infinite;
+/* trail behind the cup */
+.barista-trail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(45,157,120,0.0),
+    rgba(45,157,120,0.45),
+    rgba(45,157,120,0.0)
+  );
+  opacity: 0.0;
+  animation: trailPulse 4.8s var(--ease) infinite;
 }
 
-@keyframes servePop {
-  0%, 85%, 100% { transform: scale(1); }
-  90%           { transform: scale(1.08); }
+/* subtle micro dots along track */
+.barista-dot-row {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 22px;
+  pointer-events: none;
+}
+
+.barista-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--border);
+  opacity: 0.8;
+}
+
+/* cup animation: move across 4 stages */
+@keyframes cupSlide {
+  0%   { left: 7%;   transform: translate(-50%, -50%) scale(1); }
+  20%  { left: 7%;   transform: translate(-50%, -52%) scale(1.02); }
+  25%  { left: 33%;  transform: translate(-50%, -50%) scale(1); }
+  45%  { left: 33%;  transform: translate(-50%, -50%) scale(1.02); }
+  50%  { left: 61%;  transform: translate(-50%, -50%) scale(1); }
+  70%  { left: 61%;  transform: translate(-50%, -52%) scale(1.02); }
+  75%  { left: 92%;  transform: translate(-50%, -50%) scale(1.02); }
+  85%  { left: 92%;  transform: translate(-50%, -50%) scale(1.06); }
+  100% { left: 92%;  transform: translate(-50%, -50%) scale(1); }
+}
+
+/* light trail pulse as the cup moves */
+@keyframes trailPulse {
+  0%, 10%   { opacity: 0.0; }
+  15%, 70%  { opacity: 0.5; }
+  80%, 100% { opacity: 0.0; }
+}
+
+/* serve stage glow */
+@keyframes serveGlow {
+  0%, 100% {
+    opacity: 0.18;
+    box-shadow: 0 0 0 rgba(45,157,120,0.2);
+  }
+  50% {
+    opacity: 0.32;
+    box-shadow: 0 0 18px rgba(45,157,120,0.35);
+  }
 }
 
 @media (max-width: 420px) {
-  .mini-coffee { max-width: 100%; padding: 8px 10px; }
-  .coffee-node { min-width: 68px; padding: 7px 8px; }
-  .coffee-label { font-size: 0.68rem; }
-  .coffee-sub { font-size: 0.6rem; }
+  .data-barista { max-width: 100%; }
+  .barista-track { padding: 5px; }
+  .stage-label { font-size: 0.64rem; }
+  .stage-sub { font-size: 0.58rem; }
 }
 
 /* Hero skill tags */
@@ -840,18 +941,23 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl);
+  padding: var(--space-lg); /* slightly tighter than space-xl */
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  transition: all var(--duration) var(--ease);
+  transition: transform var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease),
+              border-color var(--duration) var(--ease),
+              background var(--duration) var(--ease);
   position: relative;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.04);
 }
 
 .lab-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.07);
+  border-color: rgba(45,157,120,0.25);
+  background: radial-gradient(circle at top left, rgba(248,250,249,0.9), var(--card));
 }
 
 .lab-card-header {
@@ -865,6 +971,36 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   font-size: 1.05rem;
 }
 
+/* Why it matters block inside lab cards */
+.lab-why {
+  margin-top: -4px;
+  padding: 10px 11px;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    135deg,
+    rgba(232,245,240,0.85),
+    rgba(245,240,234,0.8)
+  );
+  border: 1px solid rgba(45,157,120,0.18);
+}
+
+.lab-why-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 650;
+  color: var(--jade);
+  margin-bottom: 2px;
+}
+
+.lab-why p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+   
 .lab-link {
   flex-shrink: 0;
   width: 32px;
@@ -889,28 +1025,43 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 }
 
 .lab-card > p {
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: 0.82rem;
+  line-height: 1.5;
   color: var(--muted);
-  flex-grow: 1;
 }
 
 .lab-card .project-tools {
-  margin-top: auto;
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.lab-card .tool-tag {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
 }
 
 .lab-lang {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--muted);
   font-weight: 500;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--surface);
 }
 
 .lab-lang-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -1435,51 +1586,46 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 
         <!-- Mini pipeline flow diagram -->
         <!-- Mini coffee pipeline -->
-<div class="mini-coffee" aria-label="Coffee-flavored data cycle: Beans, Grind, Brew, Serve">
-  <div class="coffee-node coffee-active">
-    <span class="coffee-icon" aria-hidden="true">🫘</span>
-    <span class="coffee-label">Beans</span>
-    <span class="coffee-sub">Raw</span>
-  </div>
+<!-- Data Barista Slider: how I handle data, coffee-style -->
+<div class="data-barista" aria-label="How I turn raw data into decision-ready dashboards">
+  <div class="barista-track">
+    <div class="barista-dot-row" aria-hidden="true">
+      <span class="barista-dot"></span>
+      <span class="barista-dot"></span>
+      <span class="barista-dot"></span>
+      <span class="barista-dot"></span>
+    </div>
 
-  <div class="coffee-track" aria-hidden="true">
-    <span class="coffee-bean b1"></span>
-    <span class="coffee-bean b2"></span>
-    <span class="coffee-bean b3"></span>
-  </div>
+    <span class="barista-trail" aria-hidden="true"></span>
+    <span class="barista-cup" aria-hidden="true">
+        <span class="cup-body"></span>
+        <span class="cup-handle"></span>
+        <span class="cup-steam s1"></span>
+        <span class="cup-steam s2"></span>
+   </span>
 
-  <div class="coffee-node">
-    <span class="coffee-icon" aria-hidden="true">⚙️</span>
-    <span class="coffee-label">Grind</span>
-    <span class="coffee-sub">Clean</span>
-  </div>
+    <div class="barista-stage">
+      <span class="stage-label">Beans</span>
+      <span class="stage-sub">Raw data</span>
+    </div>
 
-  <div class="coffee-track" aria-hidden="true">
-    <span class="coffee-bean b1"></span>
-    <span class="coffee-bean b2"></span>
-    <span class="coffee-bean b3"></span>
-  </div>
+    <div class="barista-stage">
+      <span class="stage-label">Grind</span>
+      <span class="stage-sub">Clean &amp; prep</span>
+    </div>
 
-  <div class="coffee-node">
-    <span class="coffee-icon" aria-hidden="true">☕</span>
-    <span class="coffee-label">Brew</span>
-    <span class="coffee-sub">Model</span>
-  </div>
+    <div class="barista-stage">
+      <span class="stage-label">Brew</span>
+      <span class="stage-sub">Model &amp; logic</span>
+    </div>
 
-  <div class="coffee-track" aria-hidden="true">
-    <span class="coffee-bean b1"></span>
-    <span class="coffee-bean b2"></span>
-    <span class="coffee-bean b3"></span>
-  </div>
-
-  <div class="coffee-node coffee-gold">
-    <span class="coffee-icon" aria-hidden="true">📈</span>
-    <span class="coffee-label">Serve</span>
-    <span class="coffee-sub">Dashboard</span>
+    <div class="barista-stage barista-stage--final">
+      <span class="stage-label">Serve</span>
+      <span class="stage-sub">Decision view</span>
+    </div>
   </div>
 </div>
-
-
+         
       </div>
     </div>
   </div>
@@ -1536,31 +1682,53 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 </section>
 
 <!-- ============================================
-     FEATURED PROJECTS
+     WORK EXPERIENCE HIGHLIGHTS
      ============================================ -->
 <section class="section" id="projects">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="section-label"><span class="overline">Featured Work</span></div>
-      <h2>Projects that solved real problems</h2>
+      <div class="section-label">
+        <span class="overline">Work experience</span>
+      </div>
+      <h2>Real work I contributed to</h2>
+      <p class="section-subtitle">
+        These are systems and analyses I worked on as a Data &amp; Reporting Analyst and Data Analyst Intern. 
+        They were used by real teams, not just for practice.
+      </p>
     </div>
 
     <div class="projects-grid">
 
+      <!-- 01 -->
       <article class="project-card fade-in">
         <span class="project-number">01</span>
-        <h3>Post-Investment Metrics System</h3>
+        <p class="project-meta">Alberta Innovates · Data &amp; Reporting Analyst · 2025</p>
+        <h3>Post-investment metrics - one place for the truth</h3>
+
         <div class="project-section">
-          <span class="project-section-label">Problem</span>
-          <p>Alberta Innovates tracked grant performance across fragmented spreadsheets with no single source of truth which made it difficult to compare programs or surface trends reliably.</p>
+          <span class="project-section-label">Context</span>
+          <p>
+            Grant performance data lived in different spreadsheets across teams. 
+            It was hard to line up programs and answer simple questions about how the portfolio was doing.
+          </p>
         </div>
+
         <div class="project-section">
-          <span class="project-section-label">Approach</span>
-          <p>Rebuilt the reporting pipeline from scratch, migrating legacy data into Microsoft Fabric and designing a star-schema model that unified metrics across investment programs.</p>
+          <span class="project-section-label">What I worked on</span>
+          <p>
+            I helped move the reporting into Microsoft Fabric, worked on a star-schema model for programs and projects, 
+            and supported the migration and cleaning of legacy spreadsheets into that model. 
+            I also helped document how key metrics were calculated so teams used the same definitions.
+          </p>
         </div>
+
         <div class="project-impact">
-          <p>Eliminated hours of manual reporting weekly; created a single source of truth used by the corporate planning team for strategic funding decisions.</p>
+          <p>
+            <strong>Impact for the team:</strong> It became easier for corporate planning and leadership to compare programs 
+            and review the portfolio without spending time reconciling different versions of the numbers.
+          </p>
         </div>
+
         <div class="project-tools">
           <span class="tool-tag">Microsoft Fabric</span>
           <span class="tool-tag">Power BI</span>
@@ -1569,20 +1737,36 @@ h4 { font-size: 0.95rem; font-weight: 600; }
         </div>
       </article>
 
+      <!-- 02 -->
       <article class="project-card fade-in">
         <span class="project-number">02</span>
-        <h3>Alberta Tech Landscape Scan</h3>
+        <p class="project-meta">Alberta Innovates · Data &amp; Reporting Analyst · 2025</p>
+        <h3>Alberta tech landscape - strategy support pack</h3>
+
         <div class="project-section">
-          <span class="project-section-label">Problem</span>
-          <p>Leadership needed a data-driven view of Alberta's tech ecosystem to inform future innovation program investments, but no consolidated dataset existed.</p>
+          <span class="project-section-label">Context</span>
+          <p>
+            Leadership wanted a clearer, data driven picture of Alberta's tech ecosystem to help guide future programs and funding, 
+            but information was spread across reports, public sources, and conversations.
+          </p>
         </div>
+
         <div class="project-section">
-          <span class="project-section-label">Approach</span>
-          <p>Synthesized public economic data and stakeholder feedback into a structured analysis, identifying growth sectors, funding gaps, and competitive dynamics across the province.</p>
+          <span class="project-section-label">What I worked on</span>
+          <p>
+            I helped pull together public datasets, internal notes, and stakeholder input into a structured view of sectors, stages, 
+            regions, and gaps. I supported building summary tables and visuals that could be shared in slide decks and discussions 
+            with partners.
+          </p>
         </div>
+
         <div class="project-impact">
-          <p>Insights directly shaped program strategy for upcoming funding cycles and informed stakeholder presentations to government partners.</p>
+          <p>
+            <strong>Impact for the team:</strong> The work gave leaders a clearer starting point for where to focus upcoming 
+            programs and made it easier to explain the landscape to government partners.
+          </p>
         </div>
+
         <div class="project-tools">
           <span class="tool-tag">Python</span>
           <span class="tool-tag">Excel</span>
@@ -1591,20 +1775,36 @@ h4 { font-size: 0.95rem; font-weight: 600; }
         </div>
       </article>
 
+      <!-- 03 -->
       <article class="project-card fade-in">
         <span class="project-number">03</span>
-        <h3>A/B Testing &amp; Insights Engine</h3>
+        <p class="project-meta">Whistling Solutions · Data Analyst Intern · 2023</p>
+        <h3>Experiment insights - simple A/B testing workflow</h3>
+
         <div class="project-section">
-          <span class="project-section-label">Problem</span>
-          <p>Internal teams at Whistling Solutions were making product changes without statistically validating outcomes, leading to decisions based on gut feel rather than evidence.</p>
+          <span class="project-section-label">Context</span>
+          <p>
+            Product changes were often shipped based on gut feel. The team wanted a simple way to check if a new feature 
+            actually improved user behaviour.
+          </p>
         </div>
+
         <div class="project-section">
-          <span class="project-section-label">Approach</span>
-          <p>Built a reusable A/B testing workflow in Python, including data cleaning pipelines, significance tests, and automated summary dashboards in Power BI and Tableau.</p>
+          <span class="project-section-label">What I worked on</span>
+          <p>
+            I helped build a small A/B testing workflow in Python and SQL. 
+            That included data cleaning steps, basic experiment metrics, significance checks, 
+            and standard result views in Power BI and Tableau so PMs could review outcomes without asking for a new analysis every time.
+          </p>
         </div>
+
         <div class="project-impact">
-          <p>Enabled evidence-based decision-making across the team; reduced ambiguity in product changes by providing clear statistical confidence levels.</p>
+          <p>
+            <strong>Impact for the team:</strong> It became easier to see whether a change helped, hurt, or made no real difference, 
+            so product discussions were based more on results and less on guesses.
+          </p>
         </div>
+
         <div class="project-tools">
           <span class="tool-tag">Python</span>
           <span class="tool-tag">SQL</span>
@@ -1613,20 +1813,35 @@ h4 { font-size: 0.95rem; font-weight: 600; }
         </div>
       </article>
 
+      <!-- 04 -->
       <article class="project-card fade-in">
         <span class="project-number">04</span>
-        <h3>Automated Funding Dashboard</h3>
+        <p class="project-meta">Alberta Innovates · Data &amp; Reporting Analyst · 2025</p>
+        <h3>Funding dashboard - monthly reports without the scramble</h3>
+
         <div class="project-section">
-          <span class="project-section-label">Problem</span>
-          <p>Corporate planning at Alberta Innovates relied on manual Excel workflows to assemble monthly funding reports, resulting in a time-intensive process that impacted the timeliness of strategic reviews.</p>
+          <span class="project-section-label">Context</span>
+          <p>
+            Monthly funding reports were put together by copying and pasting between several spreadsheets. 
+            It worked, but it was slow and stressful around review time.
+          </p>
         </div>
+
         <div class="project-section">
-          <span class="project-section-label">Approach</span>
-          <p>Designed automated Power BI dashboards connected to Fabric data pipelines, replacing manual assembly with live, filterable views of funding trends and program KPIs.</p>
+          <span class="project-section-label">What I worked on</span>
+          <p>
+            I helped design a Power BI model, connected it to Fabric dataflows, and set up views for funding amounts, timelines, 
+            and key KPIs. I also supported setting up scheduled refresh and basic checks so the data was ready before meetings.
+          </p>
         </div>
+
         <div class="project-impact">
-          <p>Gave stakeholders real-time visibility into funding trends; cut report assembly time from hours to near-zero with automated refresh cycles.</p>
+          <p>
+            <strong>Impact for the team:</strong> Report prep shifted from manual assembly to reviewing an updated dashboard, 
+            which saved time and reduced last minute fixes before leadership reviews.
+          </p>
         </div>
+
         <div class="project-tools">
           <span class="tool-tag">Power BI</span>
           <span class="tool-tag">Microsoft Fabric</span>
@@ -1639,9 +1854,6 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   </div>
 </section>
 
-<!-- ============================================
-     LAB — GitHub Side Projects (Slider)
-     ============================================ -->
 <section class="section" id="lab">
   <div class="container">
     <div class="section-header fade-in">
@@ -1654,12 +1866,18 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 
         <article class="lab-card">
           <div class="lab-card-header">
-            <h3>Maven Market — Power BI</h3>
+            <h3>Maven Market - Power BI</h3>
             <a href="https://github.com/HarshP10101/Maven-Market-Power-BI-Project" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
-          <p>End-to-end Power BI solution for a multi-national retail chain. Built a star schema from raw CSVs, wrote DAX measures for time intelligence and KPI tracking, and designed an interactive dashboard covering revenue, profit, returns, and regional store performance.</p>
+          <p>End to end Power BI solution for a multi national retail chain. Built a star schema from raw CSVs, wrote DAX measures for time intelligence and KPI tracking, and designed an interactive dashboard covering revenue, profit, returns, and regional store performance.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>This is how I practice realistic retail reporting: modeling from raw files, writing reusable measures, and designing views that make sense for executives and store managers, not just for a portfolio screenshot.</p>
+          </div>
+
           <div class="project-tools">
             <span class="tool-tag">Power BI</span>
             <span class="tool-tag">DAX</span>
@@ -1671,12 +1889,18 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 
         <article class="lab-card">
           <div class="lab-card-header">
-            <h3>Production-Grade ETL Pipeline</h3>
+            <h3>Production Grade ETL Pipeline</h3>
             <a href="https://github.com/HarshP10101/ETL-breweries" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
-          <p>Built a bronze → silver → gold ETL pipeline ingesting REST API data into MySQL. Includes hash-based change detection, a data quality framework with logged checks, and advanced SQL analytics using CTEs, window functions, HHI, and Shannon entropy.</p>
+          <p>Built a bronze to silver to gold ETL pipeline that ingests REST API data into MySQL. Includes hash based change detection, a simple data quality framework with logged checks, and advanced SQL analytics using CTEs, window functions, HHI, and Shannon entropy.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>This is where I practice analytics engineering basics: layered data, change detection, quality checks, and analytic queries on top. It shows how I think about moving from one off scripts to something repeatable.</p>
+          </div>
+
           <div class="project-tools">
             <span class="tool-tag">Python</span>
             <span class="tool-tag">MySQL</span>
@@ -1693,7 +1917,13 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
-          <p>Analyzed customer purchasing patterns to uncover product associations using Apriori-based association rule mining. Implemented dynamic pricing strategies and customer segmentation through clustering to surface cross-sell and upsell opportunities.</p>
+          <p>Analyzed customer purchasing patterns to uncover product associations using Apriori based association rule mining. Used clustering to explore simple customer segments and surfaced practical cross sell and upsell opportunities.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>Shows how I move from algorithms to store level actions like shelf placement, bundles, and targeted offers instead of stopping at support and confidence scores.</p>
+          </div>
+
           <div class="project-tools">
             <span class="tool-tag">Python</span>
             <span class="tool-tag">Pandas</span>
@@ -1710,7 +1940,13 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
-          <p>Interactive Power BI dashboard analyzing employee attrition trends inspired by real IT industry data. Features KPI cards, attrition breakdowns by age, department, salary, and job role, plus job satisfaction matrices, built to support data-backed retention strategies.</p>
+          <p>Interactive Power BI dashboard analyzing employee attrition trends inspired by real IT industry data. Includes KPI cards, attrition breakdowns by age, department, salary, and job role, plus job satisfaction views for retention conversations.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>Gives a taste of how I would support HR or people teams: clean breakdowns, simple navigation, and views that help managers talk about risk and retention instead of just counts.</p>
+          </div>
+
           <div class="project-tools">
             <span class="tool-tag">Power BI</span>
             <span class="tool-tag">DAX</span>
@@ -1727,7 +1963,13 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
-          <p>Explored data modeling tradeoffs in MongoDB by comparing normalized vs. embedded document models on a music dataset. Ran performance benchmarks on songwriter and recording queries to measure the real cost of schema design decisions.</p>
+          <p>Explored data modeling tradeoffs in MongoDB by comparing normalized and embedded document models on a music dataset. Benchmarked songwriter and recording queries to see the real performance impact of schema choices.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>This is where I test my understanding of modeling tradeoffs. It shows that I care about how a schema behaves under real workloads, not just how it looks in a diagram.</p>
+          </div>
+
           <div class="project-tools">
             <span class="tool-tag">Python</span>
             <span class="tool-tag">MongoDB</span>
@@ -1744,7 +1986,13 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
-          <p>Benchmarked SQL query execution on e-commerce databases using different indexing strategies. Built Python scripts to analyze execution times and visualize performance improvements, proving which indexes actually matter at scale.</p>
+          <p>Benchmarked SQL query execution on e commerce style datasets with different indexing strategies. Used Python scripts to collect execution times and visualize performance improvements to see which indexes actually matter.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>Shows that I do not stop at “the query runs”. I care about how fast and how scalable it is, and I am comfortable measuring the impact of indexing and query design decisions.</p>
+          </div>
+
           <div class="project-tools">
             <span class="tool-tag">SQL</span>
             <span class="tool-tag">Python</span>
