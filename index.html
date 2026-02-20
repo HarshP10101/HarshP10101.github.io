@@ -322,13 +322,16 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 }
 
 .avatar-badge {
-  width: 220px;
-  height: 220px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
   box-shadow: 0 20px 60px rgba(0,0,0,0.10);
   background: var(--surface);
+  display: flex;              /* ADD */
+  align-items: center;        /* ADD */
+  justify-content: center;    /* ADD */
 }
 
 .avatar-badge::before {
@@ -345,8 +348,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 
 .avatar-badge img {
   width: 100%;
-  height: 100%;
+  height: 105%;
   object-fit: cover;
+  object-position: center 40%; /* ADD */
   display: block;
 }
 
@@ -1095,8 +1099,8 @@ h4 { font-size: 0.95rem; font-weight: 600; }
     order: -1;
   }
   .avatar-badge {
-    width: 170px;
-    height: 170px;
+    width: 200px;
+    height: 200px;
   }
   .status-bar {
     justify-content: center;
@@ -1195,7 +1199,7 @@ h4 { font-size: 0.95rem; font-weight: 600; }
      ============================================ -->
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="container">
-    <a href="#hero" class="nav-logo" aria-label="Home">harsh<span>.</span></a>
+    <a href="#hero" class="nav-logo" aria-label="Home">harsh<span>.</span>data</a>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -1219,7 +1223,7 @@ h4 { font-size: 0.95rem; font-weight: 600; }
       <div class="hero-headline fade-in">
         <div class="overline" style="margin-bottom: var(--space-md);">Data Analyst · Analytics Engineer</div>
         <h2 class="hero-name">Harsh Piyushbhai Patel</h2>
-        <h1>Half analyst, half engineer — fully obsessed with why your numbers <span class="highlight">don't match.</span></h1>
+        <h1>I bridge the gap between <span class="highlight">'We have data'</span> and <span class="highlight">'We have a plan.'</span></h1>
         <p class="hero-sub">
           I build the pipelines nobody sees, the models nobody questions, and the dashboards everyone suddenly can't stop opening. If your data needs therapy, I'm the guy.
         </p>
@@ -1235,7 +1239,7 @@ h4 { font-size: 0.95rem; font-weight: 600; }
       </div>
       <div class="hero-visual fade-in">
         <div class="avatar-badge" aria-hidden="true">
-          <img src="avatar.png" alt="Harsh Patel — Data Analyst illustration" width="220" height="220" loading="eager">
+          <img src="avatar.png" alt="Harsh Patel — Data Analyst illustration" width="260" height="260" loading="eager">
         </div>
         <div class="hero-skills">
           <div class="hero-skill-tag">
