@@ -380,174 +380,152 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 
 /* ── Data Barista Slider (coffee pipeline) ── */
 /* ── Advanced Data Barista Pipeline ── */
-barista-pipeline-v2 {
+/* ============================================================
+   ▼▼▼  PIPELINE CSS — Copy everything below into your site  ▼▼▼
+   ============================================================ */
+
+/* Master cycle duration — change this one variable to speed up / slow down */
+/* Master cycle — one variable controls the whole timeline */
+.barista-pipeline { --cycle: 10s; }
+
+.barista-pipeline {
+  display: flex;
+  justify-content: center;
   width: 100%;
-  max-width: 520px;
 }
 
-.barista-track {
+.bp2-track {
   position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
   width: 100%;
-  padding: 16px 22px 14px;
+  max-width: 520px;
+  padding: 18px 24px 14px;
+  gap: 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--card);
   box-shadow:
-    0 1px 2px rgba(0,0,0,0.03),
-    0 8px 32px rgba(0,0,0,0.04);
+    0 1px 3px rgba(0,0,0,0.02),
+    0 12px 36px rgba(0,0,0,0.04);
 }
 
-/* ============================================
-   HORIZONTAL TRACK + RUNNER ARROW
-   ============================================ */
-.pipeline-rail {
+/* ── Horizontal rail ── */
+.bp2-rail {
   position: absolute;
-  left: 28px;
-  right: 28px;
-  top: 42px;
+  left: 30px;
+  right: 30px;
+  top: 44px;
   height: 3px;
   border-radius: 999px;
   background: var(--border);
-  overflow: visible;
   z-index: 1;
+  overflow: visible;
 }
 
-/* Subtle progress fill that follows the runner */
-.pipeline-rail::before {
+/* Progress glow trailing behind the runner */
+.bp2-rail::before {
   content: "";
   position: absolute;
+  top: -1px;
   left: 0;
-  top: 0;
-  height: 100%;
+  height: 5px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--bean-light), var(--jade));
-  opacity: 0.25;
-  animation: railFill var(--cycle) linear infinite;
+  background: linear-gradient(90deg, rgba(122,78,45,0.3), rgba(45,157,120,0.25));
+  filter: blur(1px);
+  animation: bp2RailGlow var(--cycle) ease-in-out infinite;
 }
 
-@keyframes railFill {
-  0%       { width: 0%; }
-  5%       { width: 6%; }
-  25%      { width: 30%; }
-  50%      { width: 58%; }
-  75%      { width: 88%; }
-  90%      { width: 92%; }
-  95%,100% { width: 0%; }
+@keyframes bp2RailGlow {
+  0%, 2%   { width: 0%; opacity: 0; }
+  5%       { opacity: 0.6; }
+  15%      { width: 12%; }
+  30%      { width: 34%; }
+  55%      { width: 60%; }
+  80%      { width: 92%; }
+  92%      { width: 92%; opacity: 0.5; }
+  96%      { width: 0%; opacity: 0; }
+  100%     { width: 0%; opacity: 0; }
 }
 
-/* Runner arrow */
-.runner {
+/* ── Runner bean ── */
+.bp2-runner {
   position: absolute;
   top: 50%;
-  z-index: 2;
-  animation: runnerMove var(--cycle) var(--ease) infinite;
+  left: 8%;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  animation: bp2RunnerPos var(--cycle) cubic-bezier(0.23,1,0.32,1) infinite;
 }
 
-.runner-shape {
+.bp2-runner-dot {
   width: 14px;
-  height: 10px;
-  position: relative;
-  transform: translate(-50%, -50%);
-  filter: drop-shadow(0 1px 4px rgba(122,78,45,0.35));
-}
-
-/* Arrow built with CSS — a small chevron */
-.runner-shape::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  background: var(--bean);
-  border-radius: 2px;
-  transform: rotate(45deg) scale(0.7);
-  transform-origin: center;
-}
-
-.runner-shape::after {
-  content: "";
-  position: absolute;
-  top: 1px;
-  left: -3px;
-  width: 8px;
-  height: 8px;
-  background: var(--card);
-  border-radius: 1px;
-  transform: rotate(45deg) scale(0.7);
-}
-
-/* Runner uses a bean dot instead for cleaner look */
-.runner-dot {
-  width: 12px;
-  height: 8px;
+  height: 9px;
   border-radius: 999px;
-  background: radial-gradient(ellipse at 40% 35%, var(--bean-light), var(--bean-dark));
-  box-shadow: 0 0 8px rgba(122,78,45,0.4), 0 0 2px rgba(122,78,45,0.6);
-  transform: translate(-50%, -50%);
-  animation: runnerPulse var(--cycle) ease-in-out infinite;
+  background: radial-gradient(ellipse at 35% 30%, #a06b3f, #5c3a1e);
+  box-shadow:
+    0 0 6px rgba(122,78,45,0.5),
+    0 0 12px rgba(122,78,45,0.2);
+  position: relative;
 }
 
-@keyframes runnerMove {
-  0%, 2%   { left: 6%; }
-  15%      { left: 6%; }
-  20%      { left: 32%; }
-  40%      { left: 32%; }
-  45%      { left: 58%; }
-  65%      { left: 58%; }
-  70%      { left: 90%; }
-  90%      { left: 90%; }
-  95%,100% { left: 6%; opacity: 0; }
-  0%       { opacity: 1; }
-  3%       { opacity: 1; }
-  92%      { opacity: 1; }
+.bp2-runner-dot::after {
+  content: "";
+  position: absolute;
+  top: 48%;
+  left: 22%;
+  right: 22%;
+  height: 1px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 999px;
 }
 
-@keyframes runnerPulse {
-  0%, 15%, 20%, 40%, 45%, 65%, 70%, 90% { transform: translate(-50%, -50%) scale(1); }
-  17%  { transform: translate(-50%, -55%) scale(1.15); }
-  42%  { transform: translate(-50%, -55%) scale(1.15); }
-  67%  { transform: translate(-50%, -55%) scale(1.15); }
-  85%  { transform: translate(-50%, -55%) scale(1.2); }
-  95%  { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+@keyframes bp2RunnerPos {
+  0%       { left: 8%;  opacity: 1; }
+  14%      { left: 8%;  opacity: 1; }
+  22%      { left: 35%; opacity: 1; }
+  38%      { left: 35%; opacity: 1; }
+  46%      { left: 62%; opacity: 1; }
+  62%      { left: 62%; opacity: 1; }
+  70%      { left: 90%; opacity: 1; }
+  90%      { left: 90%; opacity: 1; }
+  94%      { left: 90%; opacity: 1; }
+  97%      { left: 90%; opacity: 0; }
+  98%      { left: 8%;  opacity: 0; }
+  100%     { left: 8%;  opacity: 1; }
 }
 
-/* ============================================
-   STAGE — shared layout
-   ============================================ */
-.bp-stage {
+/* ── Stage layout ── */
+.bp2-stage {
   position: relative;
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   z-index: 3;
 }
 
-.bp-stage-icon {
-  height: 40px;
+.bp2-icon {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-.bp-stage-label {
+.bp2-label {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1px;
 }
 
-.bp-stage-name {
-  font-size: 0.7rem;
+.bp2-name {
+  font-size: 0.72rem;
   font-weight: 650;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -555,616 +533,539 @@ barista-pipeline-v2 {
   line-height: 1.2;
 }
 
-.bp-stage-sub {
-  font-size: 0.6rem;
+.bp2-sub {
+  font-size: 0.62rem;
   letter-spacing: 0.03em;
   color: var(--muted);
   line-height: 1.2;
 }
 
-/* ============================================
-   STAGE 1: BEANS — Dancing raw data
-   ============================================ */
-.beans-group {
+
+/* ────────────────────────────────────────────
+   STAGE 1 : BEANS
+   ──────────────────────────────────────────── */
+.bp2-beans {
   display: flex;
-  gap: 3px;
+  gap: 4px;
   align-items: center;
+}
+
+.bp2-bean {
+  width: 13px;
+  height: 9px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 35% 30%, #a06b3f, #5c3a1e);
+  box-shadow: inset 0 -1px 2px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
   position: relative;
 }
 
-.bp-bean {
-  width: 10px;
-  height: 7px;
-  border-radius: 999px;
-  position: relative;
-  overflow: hidden;
-  transform-origin: center;
-}
-
-/* Bean body with gradient for 3D feel */
-.bp-bean::before {
+.bp2-bean::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: radial-gradient(ellipse at 35% 30%, var(--bean-light), var(--bean-dark));
-  box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2);
-}
-
-/* Center crease line */
-.bp-bean::after {
-  content: "";
-  position: absolute;
-  top: 45%;
-  left: 20%;
-  right: 20%;
+  top: 46%;
+  left: 18%;
+  right: 18%;
   height: 1px;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.22);
   border-radius: 999px;
 }
 
-/* Synced to runner: beans dance most when runner is at stage 1 (0%-15%) */
-.bp-bean:nth-child(1) { animation: beanActive var(--cycle) ease-in-out infinite; }
-.bp-bean:nth-child(2) { animation: beanActive var(--cycle) ease-in-out infinite 0.12s; }
-.bp-bean:nth-child(3) { animation: beanActive var(--cycle) ease-in-out infinite 0.24s; }
+.bp2-bean:nth-child(1) { animation: bp2BeanDance var(--cycle) ease-in-out infinite; }
+.bp2-bean:nth-child(2) { animation: bp2BeanDance var(--cycle) ease-in-out infinite 0.1s; }
+.bp2-bean:nth-child(3) { animation: bp2BeanDance var(--cycle) ease-in-out infinite 0.2s; }
 
-@keyframes beanActive {
-  /* Active phase: 0% - 15% of cycle */
-  0%   { transform: translateY(0) rotate(-8deg); }
-  3%   { transform: translateY(-4px) rotate(6deg); }
-  6%   { transform: translateY(1px) rotate(-5deg); }
-  9%   { transform: translateY(-3px) rotate(8deg); }
-  12%  { transform: translateY(0px) rotate(-3deg); }
-  15%  { transform: translateY(0) rotate(0deg); }
-  /* Idle for rest of cycle */
-  18%, 100% { transform: translateY(0) rotate(0deg); }
+@keyframes bp2BeanDance {
+  0%       { transform: translateY(0) rotate(-6deg); }
+  3%       { transform: translateY(-5px) rotate(8deg); }
+  6%       { transform: translateY(1px) rotate(-4deg); }
+  9%       { transform: translateY(-4px) rotate(6deg); }
+  12%      { transform: translateY(0px) rotate(-2deg); }
+  15%      { transform: translateY(0) rotate(0deg); }
+  17%      { transform: translateY(0) rotate(0deg); }
+  95%      { transform: translateY(0) rotate(0deg); }
+  97%      { transform: translateY(-2px) rotate(3deg); }
+  100%     { transform: translateY(0) rotate(0deg); }
 }
 
-/* ============================================
-   STAGE 2: GRINDER — Handle spins + powder fill
-   ============================================ */
-.grinder-v2 {
+
+/* ────────────────────────────────────────────
+   STAGE 2 : GRINDER
+   ──────────────────────────────────────────── */
+.bp2-grinder {
   position: relative;
-  width: 28px;
-  height: 30px;
+  width: 32px;
+  height: 36px;
 }
 
-/* Hopper top */
-.grinder-v2-hopper {
+.bp2-grinder-hopper {
   position: absolute;
   left: 5px;
   right: 5px;
   top: 0;
-  height: 9px;
-  border-radius: 5px 5px 3px 3px;
-  background: linear-gradient(180deg, var(--surface) 0%, #e8e8e4 100%);
-  border: 1px solid var(--border);
+  height: 11px;
+  border-radius: 6px 6px 3px 3px;
+  background: linear-gradient(180deg, #eceae5, #dddbd5);
+  border: 1.5px solid var(--border);
   z-index: 2;
 }
 
-/* Hopper opening */
-.grinder-v2-hopper::after {
+.bp2-grinder-hopper::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 50%;
   transform: translateX(-50%);
   width: 6px;
   height: 3px;
-  background: var(--border);
+  background: #ccc9c2;
   border-radius: 0 0 2px 2px;
 }
 
-/* Grinder body */
-.grinder-v2-body {
+.bp2-grinder-body {
   position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 9px;
-  bottom: 2px;
-  border-radius: 4px 4px 6px 6px;
-  background: linear-gradient(180deg, #eae8e3 0%, var(--surface) 100%);
-  border: 1px solid var(--border);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  left: 3px;
+  right: 3px;
+  top: 11px;
+  bottom: 0;
+  border-radius: 5px 5px 7px 7px;
+  background: linear-gradient(180deg, #e5e3de, #d8d6d0);
+  border: 1.5px solid var(--border);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
   overflow: hidden;
   z-index: 1;
 }
 
-/* Powder fill inside grinder body — rises during grind phase */
-.grinder-v2-body::before {
+/* Powder fill */
+.bp2-grinder-body::after {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 1px;
-  right: 1px;
+  left: 2px;
+  right: 2px;
   height: 0%;
   background: linear-gradient(
     180deg,
-    rgba(139, 99, 56, 0.4) 0%,
-    rgba(139, 99, 56, 0.7) 100%
+    rgba(160, 107, 63, 0.35) 0%,
+    rgba(122, 78, 45, 0.65) 100%
   );
-  border-radius: 0 0 4px 4px;
-  animation: powderFill var(--cycle) ease-in-out infinite;
+  border-radius: 0 0 5px 5px;
+  animation: bp2Powder var(--cycle) ease-in-out infinite;
 }
 
-@keyframes powderFill {
-  0%, 18%  { height: 0%; }
-  22%      { height: 10%; }
-  28%      { height: 45%; }
-  35%      { height: 70%; }
-  40%      { height: 75%; }
-  /* Powder "empties" as it moves to brew */
-  44%      { height: 30%; }
-  48%      { height: 0%; }
-  48.1%, 100% { height: 0%; }
+@keyframes bp2Powder {
+  0%       { height: 0%; }
+  20%      { height: 0%; }
+  25%      { height: 15%; }
+  30%      { height: 40%; }
+  36%      { height: 65%; }
+  40%      { height: 72%; }
+  44%      { height: 40%; }
+  48%      { height: 10%; }
+  50%      { height: 0%; }
+  100%     { height: 0%; }
 }
 
 /* Handle arm */
-.grinder-v2-handle {
+.bp2-grinder-arm {
   position: absolute;
-  right: -6px;
-  top: 4px;
-  width: 14px;
-  height: 14px;
-  z-index: 3;
-}
-
-/* Handle arm line */
-.grinder-v2-handle::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 1.5px;
-  background: var(--muted);
+  right: -8px;
+  top: 5px;
+  width: 18px;
+  height: 2px;
+  background: #999;
   border-radius: 999px;
-  transform-origin: left center;
-  opacity: 0.5;
+  z-index: 3;
+  transform-origin: 4px center;
+  animation: bp2HandleSpin var(--cycle) ease-in-out infinite;
 }
 
-/* Handle knob */
-.grinder-v2-handle::after {
+.bp2-grinder-arm::after {
   content: "";
   position: absolute;
+  right: -1px;
   top: 50%;
-  right: 0;
-  width: 4px;
-  height: 4px;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: var(--muted);
-  transform: translate(0, -50%);
-  opacity: 0.6;
+  background: #888;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* Handle spins mostly during grind phase (20%-40%) */
-.grinder-v2-handle {
-  transform-origin: 2px 8px;
-  animation: handleSpin var(--cycle) ease-in-out infinite;
+@keyframes bp2HandleSpin {
+  0%       { transform: rotate(0deg); opacity: 0.4; }
+  18%      { transform: rotate(0deg); opacity: 0.4; }
+  20%      { transform: rotate(0deg); opacity: 0.85; }
+  23%      { transform: rotate(40deg); }
+  26%      { transform: rotate(-25deg); }
+  29%      { transform: rotate(35deg); }
+  32%      { transform: rotate(-20deg); }
+  35%      { transform: rotate(28deg); }
+  38%      { transform: rotate(-10deg); }
+  40%      { transform: rotate(0deg); opacity: 0.85; }
+  44%      { transform: rotate(0deg); opacity: 0.4; }
+  100%     { transform: rotate(0deg); opacity: 0.4; }
 }
 
-@keyframes handleSpin {
-  0%, 18%  { transform: rotate(0deg); opacity: 0.4; }
-  20%      { opacity: 0.8; }
-  24%      { transform: rotate(50deg); }
-  28%      { transform: rotate(-30deg); }
-  32%      { transform: rotate(45deg); }
-  36%      { transform: rotate(-25deg); }
-  38%      { transform: rotate(15deg); }
-  40%      { transform: rotate(0deg); opacity: 0.8; }
-  44%      { opacity: 0.4; }
-  44.1%, 100% { transform: rotate(0deg); opacity: 0.4; }
-}
-
-/* Tiny grinding particles — fly out during grind */
-.grind-particles {
+/* Grinding particles */
+.bp2-particles {
   position: absolute;
   left: 50%;
-  bottom: 8px;
-  width: 0;
-  height: 0;
+  bottom: 10px;
   z-index: 4;
 }
 
-.grind-particle {
+.bp2-particle {
   position: absolute;
-  width: 2px;
-  height: 2px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  background: var(--powder);
+  background: #a07040;
   opacity: 0;
 }
 
-.grind-particle:nth-child(1) { animation: particleFly1 var(--cycle) ease-out infinite; }
-.grind-particle:nth-child(2) { animation: particleFly2 var(--cycle) ease-out infinite 0.15s; }
-.grind-particle:nth-child(3) { animation: particleFly3 var(--cycle) ease-out infinite 0.3s; }
+.bp2-particle:nth-child(1) { animation: bp2P1 var(--cycle) ease-out infinite; }
+.bp2-particle:nth-child(2) { animation: bp2P2 var(--cycle) ease-out infinite; }
+.bp2-particle:nth-child(3) { animation: bp2P3 var(--cycle) ease-out infinite; }
 
-@keyframes particleFly1 {
-  0%, 22% { opacity: 0; transform: translate(0, 0); }
-  24%     { opacity: 0.7; transform: translate(-6px, -4px); }
-  30%     { opacity: 0; transform: translate(-10px, -8px); }
-  32%, 100% { opacity: 0; }
+@keyframes bp2P1 {
+  0%       { opacity: 0; transform: translate(0,0); }
+  23%      { opacity: 0; transform: translate(0,0); }
+  25%      { opacity: 0.7; transform: translate(-7px,-5px); }
+  31%      { opacity: 0; transform: translate(-12px,-10px); }
+  33%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
-@keyframes particleFly2 {
-  0%, 26% { opacity: 0; transform: translate(0, 0); }
-  28%     { opacity: 0.6; transform: translate(5px, -6px); }
-  34%     { opacity: 0; transform: translate(9px, -10px); }
-  36%, 100% { opacity: 0; }
+@keyframes bp2P2 {
+  0%       { opacity: 0; transform: translate(0,0); }
+  27%      { opacity: 0; transform: translate(0,0); }
+  29%      { opacity: 0.6; transform: translate(6px,-7px); }
+  35%      { opacity: 0; transform: translate(10px,-12px); }
+  37%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
-@keyframes particleFly3 {
-  0%, 30% { opacity: 0; transform: translate(0, 0); }
-  32%     { opacity: 0.5; transform: translate(-3px, -5px); }
-  38%     { opacity: 0; transform: translate(-7px, -9px); }
-  40%, 100% { opacity: 0; }
+@keyframes bp2P3 {
+  0%       { opacity: 0; transform: translate(0,0); }
+  31%      { opacity: 0; transform: translate(0,0); }
+  33%      { opacity: 0.5; transform: translate(-4px,-6px); }
+  39%      { opacity: 0; transform: translate(-8px,-11px); }
+  41%      { opacity: 0; }
+  100%     { opacity: 0; }
 }
 
-/* ============================================
-   STAGE 3: BREW — Filter cone + drip + steam
-   ============================================ */
-.brew-v2 {
+
+/* ────────────────────────────────────────────
+   STAGE 3 : BREW
+   ──────────────────────────────────────────── */
+.bp2-brew {
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 36px;
 }
 
-/* Filter cone (V-shape via trapezoid) */
-.brew-v2-filter {
+.bp2-filter {
   position: absolute;
-  left: 5px;
-  right: 5px;
+  left: 4px;
+  right: 4px;
   top: 0;
-  height: 12px;
-  background: linear-gradient(180deg, var(--surface) 0%, #e6e5e0 100%);
-  border: 1px solid var(--border);
-  border-radius: 4px 4px 2px 2px;
+  height: 14px;
+  background: linear-gradient(180deg, #e8e6e1, #dbd9d3);
+  border: 1.5px solid var(--border);
+  border-radius: 5px 5px 2px 2px;
+  clip-path: polygon(0% 0%, 100% 0%, 82% 100%, 18% 100%);
   z-index: 2;
-  clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);
+  overflow: hidden;
 }
 
-/* Filter rim */
-.brew-v2-filter::before {
+.bp2-filter::after {
   content: "";
   position: absolute;
-  top: -1px;
-  left: -1px;
-  right: -1px;
-  height: 3px;
-  background: var(--border);
-  border-radius: 4px 4px 0 0;
-}
-
-/* Coffee liquid inside filter — visible during brew */
-.brew-v2-filter::after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 20%;
-  right: 20%;
+  bottom: 3px;
+  left: 22%;
+  right: 22%;
   height: 0%;
-  background: rgba(122, 78, 45, 0.5);
-  border-radius: 1px;
-  animation: filterFill var(--cycle) ease-in-out infinite;
+  background: rgba(122,78,45,0.45);
+  border-radius: 2px;
+  animation: bp2FilterFill var(--cycle) ease-in-out infinite;
 }
 
-@keyframes filterFill {
-  0%, 43%  { height: 0%; opacity: 0; }
-  48%      { height: 50%; opacity: 0.7; }
-  55%      { height: 40%; opacity: 0.6; }
+@keyframes bp2FilterFill {
+  0%       { height: 0%; opacity: 0; }
+  44%      { height: 0%; opacity: 0; }
+  50%      { height: 50%; opacity: 0.8; }
+  56%      { height: 35%; opacity: 0.6; }
   62%      { height: 10%; opacity: 0.3; }
   66%      { height: 0%; opacity: 0; }
-  66.1%, 100% { height: 0%; opacity: 0; }
+  100%     { height: 0%; opacity: 0; }
 }
 
-/* Drip drop */
-.brew-v2-drip {
+.bp2-drip {
   position: absolute;
   left: 50%;
-  top: 11px;
+  top: 13px;
   width: 3px;
-  height: 0;
+  height: 0px;
   border-radius: 0 0 999px 999px;
-  background: var(--brew-brown);
+  background: rgba(122,78,45,0.75);
   transform: translateX(-50%);
   z-index: 1;
-  animation: dripFall var(--cycle) ease-in-out infinite;
+  animation: bp2Drip var(--cycle) ease-in-out infinite;
 }
 
-@keyframes dripFall {
-  0%, 46%  { height: 0; top: 11px; opacity: 0; }
-  48%      { height: 3px; top: 11px; opacity: 0.8; }
-  52%      { height: 8px; top: 12px; opacity: 0.9; }
-  56%      { height: 4px; top: 16px; opacity: 0.7; }
-  58%      { height: 2px; top: 18px; opacity: 0.4; }
-  60%      { height: 6px; top: 12px; opacity: 0.85; }
-  63%      { height: 3px; top: 16px; opacity: 0.5; }
-  66%      { height: 0; top: 11px; opacity: 0; }
-  66.1%, 100% { height: 0; opacity: 0; }
+@keyframes bp2Drip {
+  0%       { height: 0; top: 13px; opacity: 0; }
+  47%      { height: 0; top: 13px; opacity: 0; }
+  50%      { height: 4px; top: 13px; opacity: 0.85; }
+  53%      { height: 9px; top: 14px; opacity: 0.9; }
+  56%      { height: 5px; top: 17px; opacity: 0.7; }
+  59%      { height: 8px; top: 13px; opacity: 0.85; }
+  62%      { height: 4px; top: 17px; opacity: 0.5; }
+  65%      { height: 0; top: 13px; opacity: 0; }
+  100%     { height: 0; top: 13px; opacity: 0; }
 }
 
-/* Cup under the cone */
-.brew-v2-cup {
+.bp2-brew-cup {
   position: absolute;
   left: 7px;
   right: 7px;
   bottom: 0;
-  height: 10px;
-  border-radius: 3px 3px 5px 5px;
+  height: 12px;
+  border-radius: 3px 3px 6px 6px;
   background: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   overflow: hidden;
 }
 
-/* Coffee filling the brew cup */
-.brew-v2-cup::before {
+.bp2-brew-cup::after {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 1px;
-  right: 1px;
+  left: 2px;
+  right: 2px;
   height: 0%;
-  background: linear-gradient(180deg, rgba(139,99,56,0.5), rgba(122,78,45,0.7));
+  background: linear-gradient(180deg, rgba(140,100,55,0.45), rgba(122,78,45,0.7));
   border-radius: 0 0 4px 4px;
-  animation: brewCupFill var(--cycle) ease-in-out infinite;
+  animation: bp2BrewCupFill var(--cycle) ease-in-out infinite;
 }
 
-@keyframes brewCupFill {
-  0%, 48%    { height: 0%; }
-  54%        { height: 30%; }
-  60%        { height: 55%; }
-  66%        { height: 65%; }
-  /* Cup "empties" as we move to serve */
-  70%        { height: 30%; }
-  74%        { height: 0%; }
-  74.1%, 100% { height: 0%; }
+@keyframes bp2BrewCupFill {
+  0%       { height: 0%; }
+  50%      { height: 0%; }
+  55%      { height: 25%; }
+  60%      { height: 50%; }
+  65%      { height: 60%; }
+  69%      { height: 30%; }
+  72%      { height: 0%; }
+  100%     { height: 0%; }
 }
 
-/* Brew steam wisps — active during brew phase */
-.brew-v2-steam {
+/* Brew steam */
+.bp2-brew-steam {
   position: absolute;
-  width: 2.5px;
+  width: 3px;
   border-radius: 999px;
-  background: var(--steam);
+  background: rgba(107,107,102,0.3);
   opacity: 0;
   z-index: 3;
 }
 
-.brew-v2-steam.bs1 {
-  left: 10px;
-  top: -2px;
-  height: 8px;
-  animation: brewSteam var(--cycle) ease-in-out infinite;
+.bp2-brew-steam:nth-child(1) {
+  left: 11px; top: -4px; height: 9px;
+  animation: bp2BrewSteam var(--cycle) ease-in-out infinite;
+}
+.bp2-brew-steam:nth-child(2) {
+  left: 18px; top: -3px; height: 7px;
+  animation: bp2BrewSteam var(--cycle) ease-in-out infinite 0.4s;
 }
 
-.brew-v2-steam.bs2 {
-  left: 16px;
-  top: -1px;
-  height: 6px;
-  animation: brewSteam var(--cycle) ease-in-out infinite 0.4s;
-}
-
-@keyframes brewSteam {
-  0%, 46%  { opacity: 0; transform: translateY(2px) scaleY(0.5); }
-  50%      { opacity: 0.3; transform: translateY(0) scaleY(0.8); }
+@keyframes bp2BrewSteam {
+  0%       { opacity: 0; transform: translateY(3px) scaleY(0.4); }
+  48%      { opacity: 0; transform: translateY(3px) scaleY(0.4); }
+  53%      { opacity: 0.35; transform: translateY(0) scaleY(0.8); }
   58%      { opacity: 0.5; transform: translateY(-3px) scaleY(1); }
-  64%      { opacity: 0.2; transform: translateY(-6px) scaleY(0.7); }
-  68%      { opacity: 0; transform: translateY(-8px) scaleY(0.4); }
-  68.1%, 100% { opacity: 0; }
+  63%      { opacity: 0.2; transform: translateY(-7px) scaleY(0.6); }
+  66%      { opacity: 0; transform: translateY(-10px) scaleY(0.3); }
+  100%     { opacity: 0; transform: translateY(-10px) scaleY(0.3); }
 }
 
-/* ============================================
-   STAGE 4: SERVE — Cup + steam + jade glow
-   ============================================ */
-.serve-v2 {
+
+/* ────────────────────────────────────────────
+   STAGE 4 : SERVE
+   ──────────────────────────────────────────── */
+.bp2-serve-wrap {
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
 }
 
-/* Cup body */
-.serve-v2-cup {
+/* Jade glow */
+.bp2-glow {
   position: absolute;
-  left: 2px;
-  right: 6px;
-  bottom: 2px;
-  height: 14px;
-  border-radius: 4px 4px 6px 6px;
-  background: var(--card);
-  border: 1.5px solid var(--ink);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-  overflow: hidden;
-}
-
-/* Coffee inside serve cup — appears when runner arrives */
-.serve-v2-cup::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 1px;
-  right: 1px;
-  height: 0%;
-  background: linear-gradient(180deg, rgba(139,99,56,0.55), rgba(92,58,30,0.8));
-  border-radius: 0 0 4px 4px;
-  animation: serveFill var(--cycle) ease-in-out infinite;
-}
-
-@keyframes serveFill {
-  0%, 68%    { height: 0%; }
-  74%        { height: 60%; }
-  78%        { height: 75%; }
-  90%        { height: 75%; }
-  94%        { height: 40%; }
-  96%        { height: 0%; }
-  96.1%, 100% { height: 0%; }
-}
-
-/* Cup handle */
-.serve-v2-handle {
-  position: absolute;
-  right: 0;
-  bottom: 6px;
-  width: 8px;
-  height: 8px;
+  inset: -12px;
   border-radius: 50%;
-  border: 1.5px solid var(--ink);
-  border-left-color: transparent;
-}
-
-/* Saucer */
-.serve-v2-saucer {
-  position: absolute;
-  left: -1px;
-  right: 2px;
-  bottom: 0;
-  height: 3px;
-  border-radius: 0 0 999px 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: none;
-}
-
-/* Steam columns — most active during serve phase */
-.serve-v2-steam {
-  position: absolute;
-  width: 2.5px;
-  border-radius: 999px;
-  background: var(--steam);
+  background: radial-gradient(circle, rgba(45,157,120,0.22), transparent 68%);
   opacity: 0;
-  z-index: 2;
-}
-
-.serve-v2-steam.ss1 {
-  left: 7px;
-  bottom: 16px;
-  height: 10px;
-  animation: serveSteam var(--cycle) ease-in-out infinite;
-}
-
-.serve-v2-steam.ss2 {
-  left: 12px;
-  bottom: 17px;
-  height: 8px;
-  animation: serveSteam var(--cycle) ease-in-out infinite 0.5s;
-}
-
-.serve-v2-steam.ss3 {
-  left: 16px;
-  bottom: 15px;
-  height: 7px;
-  animation: serveSteam var(--cycle) ease-in-out infinite 1s;
-}
-
-@keyframes serveSteam {
-  0%, 68%  { opacity: 0; transform: translateY(4px) scaleY(0.4); }
-  74%      { opacity: 0.35; transform: translateY(1px) scaleY(0.8); }
-  80%      { opacity: 0.6; transform: translateY(-2px) scaleY(1); }
-  86%      { opacity: 0.4; transform: translateY(-5px) scaleY(0.8); }
-  92%      { opacity: 0.15; transform: translateY(-9px) scaleY(0.5); }
-  96%      { opacity: 0; transform: translateY(-12px) scaleY(0.3); }
-  96.1%, 100% { opacity: 0; }
-}
-
-/* Jade glow — strongest during serve phase */
-.serve-v2-glow {
-  position: absolute;
-  inset: -10px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(45, 157, 120, 0.2),
-    transparent 70%
-  );
-  opacity: 0;
-  animation: serveGlow var(--cycle) ease-in-out infinite;
   pointer-events: none;
+  animation: bp2Glow var(--cycle) ease-in-out infinite;
   z-index: 0;
 }
 
-@keyframes serveGlow {
-  0%, 66%  { opacity: 0; transform: scale(0.8); }
-  74%      { opacity: 0.5; transform: scale(1); }
-  82%      { opacity: 0.8; transform: scale(1.05); }
-  88%      { opacity: 0.6; transform: scale(1); }
-  94%      { opacity: 0.2; transform: scale(0.9); }
-  96%      { opacity: 0; transform: scale(0.8); }
-  96.1%, 100% { opacity: 0; }
+@keyframes bp2Glow {
+  0%       { opacity: 0; transform: scale(0.7); }
+  66%      { opacity: 0; transform: scale(0.7); }
+  74%      { opacity: 0.6; transform: scale(1); }
+  82%      { opacity: 1; transform: scale(1.08); }
+  88%      { opacity: 0.7; transform: scale(1); }
+  93%      { opacity: 0.2; transform: scale(0.85); }
+  96%      { opacity: 0; transform: scale(0.7); }
+  100%     { opacity: 0; transform: scale(0.7); }
 }
 
-/* Serve stage name turns jade when active */
-.bp-stage--serve .bp-stage-name {
-  animation: serveNameColor var(--cycle) ease-in-out infinite;
+/* Cup body */
+.bp2-serve-cup {
+  position: absolute;
+  left: 3px;
+  right: 8px;
+  bottom: 6px;
+  height: 16px;
+  border-radius: 4px 4px 7px 7px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.14);
+  overflow: hidden;
+  z-index: 2;
 }
 
-@keyframes serveNameColor {
-  0%, 66%    { color: var(--ink); }
-  74%, 90%   { color: var(--jade); }
-  96%, 100%  { color: var(--ink); }
+/* Coffee inside */
+.bp2-serve-cup::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  right: 2px;
+  height: 0%;
+  background: linear-gradient(180deg, rgba(140,100,55,0.5), rgba(92,58,30,0.8));
+  border-radius: 0 0 5px 5px;
+  animation: bp2ServeFill var(--cycle) ease-in-out infinite;
 }
 
-/* ============================================
-   ACTIVE STAGE INDICATOR — subtle scale bump
-   ============================================ */
-.bp-stage--beans .bp-stage-icon {
-  animation: stageActiveBeans var(--cycle) ease-in-out infinite;
-}
-.bp-stage--grind .bp-stage-icon {
-  animation: stageActiveGrind var(--cycle) ease-in-out infinite;
-}
-.bp-stage--brew .bp-stage-icon {
-  animation: stageActiveBrew var(--cycle) ease-in-out infinite;
-}
-.bp-stage--serve .bp-stage-icon {
-  animation: stageActiveServe var(--cycle) ease-in-out infinite;
+@keyframes bp2ServeFill {
+  0%       { height: 0%; }
+  68%      { height: 0%; }
+  74%      { height: 55%; }
+  78%      { height: 72%; }
+  90%      { height: 72%; }
+  94%      { height: 35%; }
+  97%      { height: 0%; }
+  100%     { height: 0%; }
 }
 
-@keyframes stageActiveBeans {
-  0%, 2%   { transform: scale(1); }
-  8%       { transform: scale(1.08); }
-  15%, 100%{ transform: scale(1); }
-}
-@keyframes stageActiveGrind {
-  0%, 18%  { transform: scale(1); }
-  30%      { transform: scale(1.06); }
-  42%, 100%{ transform: scale(1); }
-}
-@keyframes stageActiveBrew {
-  0%, 43%  { transform: scale(1); }
-  55%      { transform: scale(1.06); }
-  67%, 100%{ transform: scale(1); }
-}
-@keyframes stageActiveServe {
-  0%, 68%  { transform: scale(1); }
-  80%      { transform: scale(1.08); }
-  92%, 100%{ transform: scale(1); }
+/* Handle */
+.bp2-serve-handle {
+  position: absolute;
+  right: 2px;
+  bottom: 10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  border-left-color: transparent;
+  z-index: 2;
 }
 
-/* ============================================
-   REDUCED MOTION
-   ============================================ */
+/* Saucer */
+.bp2-saucer {
+  position: absolute;
+  left: 0;
+  right: 4px;
+  bottom: 4px;
+  height: 3px;
+  border-radius: 0 0 999px 999px;
+  background: #dddbd5;
+  border: 1px solid var(--border);
+  border-top: none;
+  z-index: 1;
+}
+
+/* Serve steam */
+.bp2-serve-steam {
+  position: absolute;
+  width: 3px;
+  border-radius: 999px;
+  background: rgba(107,107,102,0.3);
+  opacity: 0;
+  z-index: 3;
+}
+
+.bp2-serve-steam:nth-child(1) {
+  left: 8px; bottom: 22px; height: 12px;
+  animation: bp2ServeSteam var(--cycle) ease-in-out infinite;
+}
+.bp2-serve-steam:nth-child(2) {
+  left: 14px; bottom: 23px; height: 10px;
+  animation: bp2ServeSteam var(--cycle) ease-in-out infinite 0.5s;
+}
+.bp2-serve-steam:nth-child(3) {
+  left: 19px; bottom: 21px; height: 8px;
+  animation: bp2ServeSteam var(--cycle) ease-in-out infinite 1s;
+}
+
+@keyframes bp2ServeSteam {
+  0%       { opacity: 0; transform: translateY(4px) scaleY(0.3); }
+  68%      { opacity: 0; transform: translateY(4px) scaleY(0.3); }
+  74%      { opacity: 0.3; transform: translateY(1px) scaleY(0.7); }
+  80%      { opacity: 0.6; transform: translateY(-2px) scaleY(1); }
+  86%      { opacity: 0.4; transform: translateY(-6px) scaleY(0.75); }
+  92%      { opacity: 0.15; transform: translateY(-10px) scaleY(0.4); }
+  96%      { opacity: 0; transform: translateY(-14px) scaleY(0.2); }
+  100%     { opacity: 0; transform: translateY(-14px) scaleY(0.2); }
+}
+
+/* Serve label turns jade */
+.bp2-stage--serve .bp2-name {
+  animation: bp2ServeName var(--cycle) ease-in-out infinite;
+}
+
+@keyframes bp2ServeName {
+  0%       { color: var(--ink); }
+  66%      { color: var(--ink); }
+  74%      { color: var(--jade); }
+  90%      { color: var(--jade); }
+  96%      { color: var(--ink); }
+  100%     { color: var(--ink); }
+}
+
+
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  .barista-pipeline *,
+  .barista-pipeline *::before,
+  .barista-pipeline *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
-  .runner-dot { box-shadow: none; }
-  .serve-v2-glow { display: none; }
+  .bp2-glow { display: none; }
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* ── Mobile ── */
 @media (max-width: 480px) {
-  .barista-track {
+  .bp2-track {
+    max-width: 100%;
     padding: 14px 14px 12px;
-    gap: 4px;
+    gap: 6px;
   }
-  .pipeline-rail {
+  .bp2-rail {
     left: 20px;
     right: 20px;
-    top: 40px;
+    top: 42px;
   }
-  .bp-stage-name { font-size: 0.65rem; }
-  .bp-stage-sub  { font-size: 0.56rem; }
+  .bp2-icon {
+    width: 38px;
+    height: 38px;
+  }
+  .bp2-name { font-size: 0.66rem; }
+  .bp2-sub  { font-size: 0.58rem; }
 }
 
 /* Hero skill tags */
@@ -2149,86 +2050,87 @@ barista-pipeline-v2 {
           <img src="avatar.png" alt="Harsh Patel — Data Analyst illustration" width="260" height="260" loading="eager">
         </div>
 
-        <!-- Mini pipeline flow diagram -->
-        <!-- Advanced Data Barista Pipeline -->
-<div class="barista-pipeline-v2" aria-label="Data pipeline animation: raw data flows through cleaning, modeling, and into a decision-ready dashboard">
-  <div class="barista-track">
+   <!-- ============================================================
+     ▼▼▼  PIPELINE HTML — Replace your <div class="barista-pipeline"> with this  ▼▼▼
+     ============================================================ -->
+<div class="barista-pipeline" aria-label="Data pipeline: raw data → clean → model → decision-ready dashboard">
+  <div class="bp2-track">
 
-    <!-- Horizontal rail + runner -->
-    <div class="pipeline-rail" aria-hidden="true">
-      <div class="runner">
-        <div class="runner-dot"></div>
+    <!-- Rail + runner -->
+    <div class="bp2-rail" aria-hidden="true">
+      <div class="bp2-runner">
+        <div class="bp2-runner-dot"></div>
       </div>
     </div>
 
-    <!-- Stage 1: Beans (Raw data) -->
-    <div class="bp-stage bp-stage--beans">
-      <div class="bp-stage-icon">
-        <div class="beans-group">
-          <span class="bp-bean"></span>
-          <span class="bp-bean"></span>
-          <span class="bp-bean"></span>
+    <!-- Stage 1: Beans -->
+    <div class="bp2-stage bp2-stage--beans">
+      <div class="bp2-icon">
+        <div class="bp2-beans">
+          <span class="bp2-bean"></span>
+          <span class="bp2-bean"></span>
+          <span class="bp2-bean"></span>
         </div>
       </div>
-      <div class="bp-stage-label">
-        <span class="bp-stage-name">Beans</span>
-        <span class="bp-stage-sub">Raw data</span>
+      <div class="bp2-label">
+        <span class="bp2-name">Beans</span>
+        <span class="bp2-sub">Raw data</span>
       </div>
     </div>
 
-    <!-- Stage 2: Grind (Clean & prep) -->
-    <div class="bp-stage bp-stage--grind">
-      <div class="bp-stage-icon">
-        <div class="grinder-v2">
-          <div class="grinder-v2-hopper"></div>
-          <div class="grinder-v2-body"></div>
-          <div class="grinder-v2-handle"></div>
-          <div class="grind-particles">
-            <span class="grind-particle"></span>
-            <span class="grind-particle"></span>
-            <span class="grind-particle"></span>
+    <!-- Stage 2: Grind -->
+    <div class="bp2-stage bp2-stage--grind">
+      <div class="bp2-icon">
+        <div class="bp2-grinder">
+          <div class="bp2-grinder-hopper"></div>
+          <div class="bp2-grinder-body"></div>
+          <div class="bp2-grinder-arm"></div>
+          <div class="bp2-particles">
+            <span class="bp2-particle"></span>
+            <span class="bp2-particle"></span>
+            <span class="bp2-particle"></span>
           </div>
         </div>
       </div>
-      <div class="bp-stage-label">
-        <span class="bp-stage-name">Grind</span>
-        <span class="bp-stage-sub">Clean &amp; prep</span>
+      <div class="bp2-label">
+        <span class="bp2-name">Grind</span>
+        <span class="bp2-sub">Clean &amp; prep</span>
       </div>
     </div>
 
-    <!-- Stage 3: Brew (Model & logic) -->
-    <div class="bp-stage bp-stage--brew">
-      <div class="bp-stage-icon">
-        <div class="brew-v2">
-          <div class="brew-v2-filter"></div>
-          <div class="brew-v2-drip"></div>
-          <div class="brew-v2-cup"></div>
-          <span class="brew-v2-steam bs1"></span>
-          <span class="brew-v2-steam bs2"></span>
+    <!-- Stage 3: Brew -->
+    <div class="bp2-stage bp2-stage--brew">
+      <div class="bp2-icon">
+        <div class="bp2-brew">
+          <span class="bp2-brew-steam"></span>
+          <span class="bp2-brew-steam"></span>
+          <div class="bp2-filter"></div>
+          <div class="bp2-drip"></div>
+          <div class="bp2-brew-cup"></div>
         </div>
       </div>
-      <div class="bp-stage-label">
-        <span class="bp-stage-name">Brew</span>
-        <span class="bp-stage-sub">Model &amp; logic</span>
+      <div class="bp2-label">
+        <span class="bp2-name">Brew</span>
+        <span class="bp2-sub">Model &amp; logic</span>
       </div>
     </div>
 
-    <!-- Stage 4: Serve (Decision view) -->
-    <div class="bp-stage bp-stage--serve">
-      <div class="bp-stage-icon">
-        <div class="serve-v2-glow"></div>
-        <div class="serve-v2">
-          <span class="serve-v2-steam ss1"></span>
-          <span class="serve-v2-steam ss2"></span>
-          <span class="serve-v2-steam ss3"></span>
-          <div class="serve-v2-cup"></div>
-          <div class="serve-v2-handle"></div>
-          <div class="serve-v2-saucer"></div>
+    <!-- Stage 4: Serve -->
+    <div class="bp2-stage bp2-stage--serve">
+      <div class="bp2-icon">
+        <div class="bp2-glow"></div>
+        <div class="bp2-serve-wrap">
+          <span class="bp2-serve-steam"></span>
+          <span class="bp2-serve-steam"></span>
+          <span class="bp2-serve-steam"></span>
+          <div class="bp2-serve-cup"></div>
+          <div class="bp2-serve-handle"></div>
+          <div class="bp2-saucer"></div>
         </div>
       </div>
-      <div class="bp-stage-label">
-        <span class="bp-stage-name">Serve</span>
-        <span class="bp-stage-sub">Decision view</span>
+      <div class="bp2-label">
+        <span class="bp2-name">Serve</span>
+        <span class="bp2-sub">Decision view</span>
       </div>
     </div>
 
