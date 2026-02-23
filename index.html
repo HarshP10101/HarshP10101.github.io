@@ -1637,65 +1637,134 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 /* ============================================
    SKILLS
    ============================================ */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
-}
+/* ============================================
+   SKILLS ICON GRID — Drop-in replacement
+   ============================================
+   
+   INTEGRATION:
+   1. Delete the old .skills-grid, .skill-group, .skill-group-title,
+      .skill-group-icon, .skill-list CSS blocks
+   2. Paste this CSS into your <style> tag
+   3. Replace the <div class="skills-grid">...</div> HTML block
+      with the HTML from skills-section-html.html
+   ============================================ */
 
-.skill-group {
+.skills-table {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.03);
 }
 
-.skill-group-title {
+/* Column headers */
+.skills-col-header {
+  padding: 20px 12px 16px;
+  text-align: center;
+  border-bottom: 2px solid var(--jade);
+  background: linear-gradient(180deg, var(--jade-soft), rgba(232,245,240,0.3));
+}
+
+.skills-col-header h3 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--jade);
+  line-height: 1;
+}
+
+/* Columns */
+.skills-col {
   display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--border);
+  flex-direction: column;
+  border-right: 1px solid var(--border);
 }
 
-.skill-group-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
+.skills-col:last-child {
+  border-right: none;
+}
+
+/* Individual skill cells */
+.skill-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 8px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--duration) var(--ease);
+}
+
+.skill-cell:last-child {
+  border-bottom: none;
+}
+
+.skill-cell:hover {
   background: var(--jade-soft);
+}
+
+.skill-cell:hover .skill-icon-wrap {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45,157,120,0.12);
+}
+
+/* Icon container */
+.skill-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-}
-
-.skill-group-title h3 {
-  font-size: 0.95rem;
-}
-
-.skill-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.skill-list li {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: 0.875rem;
-  color: var(--text);
-}
-
-.skill-list li::before {
-  content: "";
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--jade);
+  transition: all var(--duration) var(--ease);
+  background: var(--surface);
+  border: 1px solid var(--border);
   flex-shrink: 0;
+}
+
+.skill-icon-wrap svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Skill label */
+.skill-cell-name {
+  font-size: 0.74rem;
+  font-weight: 550;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .skills-table {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .skills-table {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .skills-table {
+    grid-template-columns: 1fr;
+  }
+  .skills-col {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .skills-col:last-child {
+    border-bottom: none;
+  }
 }
 
 /* ============================================
@@ -2547,48 +2616,282 @@ h4 { font-size: 0.95rem; font-weight: 600; }
       <h2>What I bring to the table</h2>
     </div>
 
-    <div class="skills-grid">
+    <div class="skills-table fade-in">
+      <!-- paste skills-section-html.html content here -->
 
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">
-          <div class="skill-group-icon" aria-hidden="true">📊</div>
-          <h3>Analytics</h3>
+      <!-- - Column 1: Languages -->
+      <div class="skills-col">
+        <div class="skills-col-header"><h3>Languages</h3></div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Python -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M11.9 2c-2.8 0-4.6.6-5.5 1.4-.9.8-1.1 1.8-1.1 2.9V8h5.5v1H4.5c-1.6 0-3 1-3.4 2.8-.5 2 0 4.2 0 4.2s.6 1.8 2.2 1.8H5V15c0-1.7 1.5-3.2 3.2-3.2h5.5c1.5 0 2.7-1.2 2.7-2.7V4.3c0-1.5-1.3-2.3-2.7-2.3h-1.8zM8.8 4c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .5-1 1-1z" fill="#306998"/>
+              <path d="M12.1 22c2.8 0 4.6-.6 5.5-1.4.9-.8 1.1-1.8 1.1-2.9V16h-5.5v-1h6.3c1.6 0 3-1 3.4-2.8.5-2 0-4.2 0-4.2s-.6-1.8-2.2-1.8H19V9c0 1.7-1.5 3.2-3.2 3.2h-5.5c-1.5 0-2.7 1.2-2.7 2.7v4.8c0 1.5 1.3 2.3 2.7 2.3h1.8zm3.1-2c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.5 1-1 1z" fill="#FFD43B"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Python</span>
         </div>
-        <ul class="skill-list" role="list">
-          <li>SQL (Complex Queries, CTEs, Window Functions)</li>
-          <li>Python (Pandas, NumPy, Matplotlib)</li>
-          <li>Statistical Analysis &amp; A/B Testing</li>
-          <li>Exploratory Data Analysis</li>
-          <li>Data Cleaning &amp; Validation</li>
-        </ul>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- SQL -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <ellipse cx="12" cy="6" rx="8" ry="3" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
+              <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
+              <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">SQL</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- DAX -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="16" rx="2" stroke="#E8A117" stroke-width="1.5" fill="none"/>
+              <path d="M7 14l3-4 2 2 3-4" stroke="#E8A117" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="12" y="19.5" text-anchor="middle" fill="#E8A117" font-size="4" font-weight="700" font-family="sans-serif">DAX</text>
+            </svg>
+          </div>
+          <span class="skill-cell-name">DAX</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- R -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8.5" stroke="#276DC3" stroke-width="1.5" fill="none"/>
+              <text x="12" y="16" text-anchor="middle" fill="#276DC3" font-size="10" font-weight="700" font-family="sans-serif">R</text>
+            </svg>
+          </div>
+          <span class="skill-cell-name">R</span>
+        </div>
       </div>
 
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">
-          <div class="skill-group-icon" aria-hidden="true">⚙️</div>
-          <h3>Analytics Engineering</h3>
+      <!-- - Column 2: Databases -->
+      <div class="skills-col">
+        <div class="skills-col-header"><h3>Databases</h3></div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- MySQL -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3C7 3 4 5 4 7v10c0 2 3 4 8 4s8-2 8-4V7c0-2-3-4-8-4z" stroke="#00758F" stroke-width="1.5" fill="none"/>
+              <path d="M4 7c0 2 3 4 8 4s8-2 8-4" stroke="#00758F" stroke-width="1.5" fill="none"/>
+              <path d="M4 12c0 2 3 4 8 4s8-2 8-4" stroke="#00758F" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">MySQL</span>
         </div>
-        <ul class="skill-list" role="list">
-          <li>Microsoft Fabric</li>
-          <li>ETL / ELT Pipeline Design</li>
-          <li>Data Modeling (Star Schema, Normalization)</li>
-          <li>dbt (Data Build Tool)</li>
-          <li>Data Quality &amp; Testing</li>
-        </ul>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- PostgreSQL -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3C7 3 4 5.5 4 7.5v9C4 18.5 7 21 12 21s8-2.5 8-4.5v-9C20 5.5 17 3 12 3z" stroke="#336791" stroke-width="1.5" fill="none"/>
+              <path d="M4 7.5c0 2 3 4 8 4s8-2 8-4" stroke="#336791" stroke-width="1.5"/>
+              <circle cx="14.5" cy="12" r="2" stroke="#336791" stroke-width="1.2" fill="none"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">PostgreSQL</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- MongoDB -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C12 2 8 6 8 12c0 4 2 8 4 10 2-2 4-6 4-10 0-6-4-10-4-10z" stroke="#4DB33D" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+              <line x1="12" y1="14" x2="12" y2="22" stroke="#4DB33D" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">MongoDB</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Oracle SQL -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <ellipse cx="12" cy="12" rx="9" ry="5.5" stroke="#C74634" stroke-width="1.8" fill="none"/>
+              <ellipse cx="12" cy="12" rx="5" ry="3" stroke="#C74634" stroke-width="1.2" fill="none"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Oracle SQL</span>
+        </div>
       </div>
 
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">
-          <div class="skill-group-icon" aria-hidden="true">💡</div>
-          <h3>Business Intelligence</h3>
+      <!-- - Column 3: Libraries -->
+      <div class="skills-col">
+        <div class="skills-col-header"><h3>Libraries</h3></div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Pandas -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="3" width="3" height="7" rx="1" fill="#150458"/>
+              <rect x="5" y="14" width="3" height="7" rx="1" fill="#150458"/>
+              <rect x="10.5" y="7" width="3" height="10" rx="1" fill="#150458"/>
+              <rect x="16" y="3" width="3" height="7" rx="1" fill="#150458"/>
+              <rect x="16" y="14" width="3" height="7" rx="1" fill="#150458"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Pandas</span>
         </div>
-        <ul class="skill-list" role="list">
-          <li>Power BI (DAX, Data Modeling)</li>
-          <li>Tableau</li>
-          <li>Dashboard Storytelling</li>
-          <li>Stakeholder Communication</li>
-          <li>KPI Design &amp; Metric Frameworks</li>
-        </ul>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- NumPy -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" stroke="#4DABCF" stroke-width="1.5" fill="none"/>
+              <polygon points="12,7 17,9.5 17,14.5 12,17 7,14.5 7,9.5" fill="#4DABCF" opacity="0.25"/>
+              <text x="12" y="14" text-anchor="middle" fill="#4DABCF" font-size="5" font-weight="700" font-family="sans-serif">NP</text>
+            </svg>
+          </div>
+          <span class="skill-cell-name">NumPy</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Matplotlib -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke="#11557C" stroke-width="1.5" fill="none"/>
+              <polyline points="6,17 9,12 12,14 15,8 18,10" stroke="#E24A33" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="6,15 10,10 13,13 17,7" stroke="#348ABD" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Matplotlib</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Scikit-learn -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="8" cy="8" r="2.5" stroke="#F89939" stroke-width="1.3" fill="none"/>
+              <circle cx="16" cy="8" r="2.5" stroke="#3499CD" stroke-width="1.3" fill="none"/>
+              <circle cx="12" cy="16" r="2.5" stroke="#F89939" stroke-width="1.3" fill="none"/>
+              <line x1="10" y1="9" x2="12" y2="14" stroke="var(--border)" stroke-width="1"/>
+              <line x1="14" y1="9" x2="12" y2="14" stroke="var(--border)" stroke-width="1"/>
+              <line x1="10" y1="8" x2="14" y2="8" stroke="var(--border)" stroke-width="1"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Scikit-learn</span>
+        </div>
+      </div>
+
+      <!-- - Column 4: Dashboards -->
+      <div class="skills-col">
+        <div class="skills-col-header"><h3>Dashboards</h3></div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Power BI -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="14" y="4" width="4" height="16" rx="1" fill="#F2C811"/>
+              <rect x="8.5" y="8" width="4" height="12" rx="1" fill="#F2C811" opacity="0.7"/>
+              <rect x="3" y="12" width="4" height="8" rx="1" fill="#F2C811" opacity="0.45"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Power BI</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Tableau -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <line x1="12" y1="2" x2="12" y2="22" stroke="#E97627" stroke-width="2"/>
+              <line x1="2" y1="12" x2="22" y2="12" stroke="#E97627" stroke-width="2"/>
+              <line x1="12" y1="6" x2="12" y2="18" stroke="#C72B28" stroke-width="1.2"/>
+              <line x1="6" y1="12" x2="18" y2="12" stroke="#C72B28" stroke-width="1.2"/>
+              <line x1="7" y1="4.5" x2="7" y2="9.5" stroke="#5B879B" stroke-width="1.2"/>
+              <line x1="4.5" y1="7" x2="9.5" y2="7" stroke="#5B879B" stroke-width="1.2"/>
+              <line x1="17" y1="14.5" x2="17" y2="19.5" stroke="#5B879B" stroke-width="1.2"/>
+              <line x1="14.5" y1="17" x2="19.5" y2="17" stroke="#5B879B" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Tableau</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Excel -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="18" height="18" rx="2" fill="#217346" opacity="0.12" stroke="#217346" stroke-width="1.5"/>
+              <text x="12" y="15.5" text-anchor="middle" fill="#217346" font-size="9" font-weight="800" font-family="sans-serif">X</text>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Excel</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Looker -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" stroke="#4285F4" stroke-width="1.8" fill="none"/>
+              <circle cx="12" cy="12" r="1.5" fill="#4285F4"/>
+              <path d="M12 4v3M12 17v3M4 12h3M17 12h3" stroke="#4285F4" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M6.3 6.3l2.1 2.1M15.6 15.6l2.1 2.1M6.3 17.7l2.1-2.1M15.6 8.4l2.1-2.1" stroke="#4285F4" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Looker</span>
+        </div>
+      </div>
+
+      <!-- - Column 5: Infrastructure -->
+      <div class="skills-col">
+        <div class="skills-col-header"><h3>Infrastructure</h3></div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Docker -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="11" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
+              <rect x="7" y="11" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
+              <rect x="12" y="11" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
+              <rect x="7" y="7" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
+              <rect x="12" y="7" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
+              <rect x="12" y="3" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
+              <path d="M1 15c2-1 4-.5 5 0 1.5.7 3 1 5 .5 2.5-.5 4-2 5-3" stroke="#2496ED" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">Docker</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- Microsoft Fabric -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="5" width="7" height="7" rx="1.5" fill="#0078D4" opacity="0.8"/>
+              <rect x="14" y="5" width="7" height="7" rx="1.5" fill="#50E6FF" opacity="0.8"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#50E6FF" opacity="0.6"/>
+              <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#0078D4" opacity="0.6"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">MS Fabric</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- dbt -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8.5" stroke="#FF694A" stroke-width="1.5" fill="none"/>
+              <text x="12" y="15" text-anchor="middle" fill="#FF694A" font-size="6.5" font-weight="700" font-family="sans-serif">dbt</text>
+            </svg>
+          </div>
+          <span class="skill-cell-name">dbt</span>
+        </div>
+
+        <div class="skill-cell">
+          <div class="skill-icon-wrap">
+            <!-- ETL -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="9" width="6" height="6" rx="1.5" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
+              <rect x="16" y="9" width="6" height="6" rx="1.5" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
+              <path d="M8 12h2l1.5-3 1 6 1.5-3H16" stroke="var(--jade)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="skill-cell-name">ETL Pipelines</span>
+        </div>
       </div>
 
     </div>
