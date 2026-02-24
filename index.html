@@ -1272,28 +1272,37 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 }
 
 /* ============================================
-   PROJECTS
+   CONTRIBUTION LOG — Two-Panel Layout
+   (Replaces the old PROJECTS CSS block)
    ============================================ */
-.projects-grid {
+.contrib-layout {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--space-xl);
+  align-items: start;
 }
 
-.project-card {
+/* ── Employer Panel ── */
+.employer-panel {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  transition: all var(--duration) var(--ease);
-  position: relative;
   overflow: hidden;
+  transition: box-shadow var(--duration) var(--ease);
 }
 
-.project-card::before {
+.employer-panel:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+}
+
+/* Panel header */
+.employer-header {
+  padding: var(--space-xl) var(--space-xl) var(--space-lg);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.employer-header::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1301,82 +1310,179 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   right: 0;
   height: 3px;
   background: var(--jade);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s var(--ease);
 }
 
-.project-card:hover::before {
-  transform: scaleX(1);
+.employer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: 6px;
 }
 
-.project-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-  border-color: transparent;
-}
-
-.project-number {
-  font-size: 0.7rem;
+.employer-name {
+  font-size: 1.1rem;
   font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.employer-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
   color: var(--jade);
-  letter-spacing: 0.08em;
+  background: var(--jade-soft);
+  padding: 4px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
 }
 
-.project-card h3 {
-  margin-bottom: var(--space-xs);
+.employer-role {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
 }
 
-.project-section {
+.employer-context {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+  font-style: italic;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+
+/* ── Contribution entries ── */
+.contrib-entries {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
-.project-section-label {
-  font-size: 0.7rem;
-  font-weight: 600;
+.contrib-entry {
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background var(--duration) var(--ease);
+}
+
+.contrib-entry:last-child {
+  border-bottom: none;
+}
+
+.contrib-entry:hover {
+  background: rgba(45,157,120,0.02);
+}
+
+/* Jade left accent */
+.contrib-entry::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: var(--space-lg);
+  bottom: var(--space-lg);
+  width: 3px;
+  background: var(--jade);
+  border-radius: 0 2px 2px 0;
+  opacity: 0.4;
+  transition: opacity var(--duration) var(--ease);
+}
+
+.contrib-entry:hover::before {
+  opacity: 1;
+}
+
+.contrib-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.contrib-context {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.contrib-work {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+/* Impact callout — matches lab-why card style */
+.contrib-impact {
+  margin-top: 2px;
+  padding: 10px 11px;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    135deg,
+    rgba(232,245,240,0.85),
+    rgba(245,240,234,0.8)
+  );
+  border: 1px solid rgba(45,157,120,0.18);
+  margin-bottom: 12px;
+}
+
+.contrib-impact-label {
+  display: inline-block;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  font-weight: 650;
   color: var(--jade);
+  margin-bottom: 2px;
 }
 
-.project-section p {
-  font-size: 0.875rem;
-  color: var(--muted);
-  line-height: 1.55;
+.contrib-impact p {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+  margin: 0;
 }
 
-.project-impact {
-  background: var(--jade-soft);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-}
-
-.project-impact p {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--jade);
-  line-height: 1.5;
-}
-
-.project-tools {
+/* Tool tags */
+.contrib-tools {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: auto;
-  padding-top: var(--space-sm);
+  gap: 5px;
 }
 
-.tool-tag {
-  font-size: 0.72rem;
+.contrib-tools .tool-tag {
+  font-size: 0.68rem;
   font-weight: 500;
-  padding: 4px 10px;
+  padding: 3px 9px;
   background: var(--surface);
   border-radius: 100px;
   color: var(--muted);
+  border: 1px solid var(--border);
 }
 
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .contrib-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .employer-header {
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+  }
+  .contrib-entry {
+    padding: var(--space-md) var(--space-lg);
+  }
+}
+   
 /* ============================================
    LAB / SIDE PROJECTS — SLIDER
    ============================================ */
@@ -2262,178 +2368,168 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 </section>
 
 <!-- ============================================
-     WORK EXPERIENCE HIGHLIGHTS
+     WORK EXPERIENCE
      ============================================ -->
+   
 <section class="section" id="projects">
   <div class="container">
-    <div class="section-header fade-in">
-      <div class="section-label">
-        <span class="overline">Work experience</span>
-      </div>
-      <h2>Real work I contributed to</h2>
-      <p class="section-subtitle">
-        These are systems and analyses I worked on as a Data &amp; Reporting Analyst and Data Analyst Intern. 
-        They were used by real teams, not just for practice.
-      </p>
+    <div class="section-header">
+      <div class="section-label"><span class="overline">Work experience</span></div>
+      <h2>Where I've been doing the work</h2>
     </div>
 
-    <div class="projects-grid">
+    <div class="contrib-layout">
 
-      <!-- 01 -->
-      <article class="project-card fade-in">
-        <span class="project-number">01</span>
-        <p class="project-meta">Alberta Innovates · Data &amp; Reporting Analyst · 2025</p>
-        <h3>Post-investment metrics - one place for the truth</h3>
-
-        <div class="project-section">
-          <span class="project-section-label">Context</span>
-          <p>
-            Grant performance data lived in different spreadsheets across teams. 
-            It was hard to line up programs and answer simple questions about how the portfolio was doing.
-          </p>
+      <!-- ═══════════════════════════════════════
+           PANEL 1 — Alberta Innovates (primary)
+           ═══════════════════════════════════════ -->
+      <div class="employer-panel">
+        <div class="employer-header">
+          <div class="employer-meta">
+            <span class="employer-name">Alberta Innovates</span>
+            <span class="employer-duration">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              8 months · 2025
+            </span>
+          </div>
+          <div class="employer-role">Data &amp; Reporting Analyst · Contract</div>
+          <p class="employer-context">Provincial innovation agency funding Alberta's tech ecosystem. I worked with the data team on corporate planning and leadership reporting.</p>
         </div>
 
-        <div class="project-section">
-          <span class="project-section-label">What I worked on</span>
-          <p>
-            I helped move the reporting into Microsoft Fabric, worked on a star-schema model for programs and projects, 
-            and supported the migration and cleaning of legacy spreadsheets into that model. 
-            I also helped document how key metrics were calculated so teams used the same definitions.
-          </p>
+        <div class="contrib-entries">
+
+          <!-- Entry 1 -->
+          <div class="contrib-entry">
+            <div class="contrib-title">Post-investment metrics — getting to one place for the truth</div>
+            <p class="contrib-context">Grant performance data over 8+ years lived in different spreadsheets and trackers. Every big review started with “which version of this is right?”</p>
+            <p class="contrib-work">Helped build a reusable reporting model in Microsoft Fabric and Power BI so leaders could pull numbers from one place instead of chasing files. I worked on loading and cleaning historical spreadsheets, shaping them into a simple star schema for programs and projects, and running reconciliation checks so the new numbers matched what finance expected. I also documented how key metrics were calculated so different teams stopped maintaining their own formulas.</p>
+            <div class="contrib-impact">
+              <span class="contrib-impact-label">Impact</span>
+              <p>Made executive reports easier to trust: one source of metrics, fewer last-minute fixes, and clearer answers when someone asked, “where did this number come from?”</p>
+            </div>
+            <div class="contrib-tools">
+              <span class="tool-tag">Microsoft Fabric</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">Excel</span>
+            </div>
+          </div>
+
+          <!-- Entry 2 -->
+          <div class="contrib-entry">
+            <div class="contrib-title">Alberta tech landscape — research pack for strategy conversations</div>
+            <p class="contrib-context">Leadership wanted a clearer, data-backed picture of Alberta's tech ecosystem to guide program focus, but information lived across reports, websites, and one-off discussions.</p>
+            <p class="contrib-work">Pulled together public datasets, internal notes, and stakeholder input into a structured view of sectors, stages, regions, and funding gaps. Built summary tables and simple visuals that could drop into slide decks and briefings, and kept a small “sources & assumptions” log so people knew what the numbers actually represented.</p>
+            <div class="contrib-impact">
+              <span class="contrib-impact-label">Impact</span>
+              <p>Gave leaders a concrete starting point for program discussions and made it easier to explain the province’s tech story to government partners.</p>
+            </div>
+            <div class="contrib-tools">
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">Excel</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">SharePoint</span>
+            </div>
+          </div>
+
+          <!-- Entry 3 -->
+          <div class="contrib-entry">
+            <div class="contrib-title">Funding dashboards &amp; refreshes — monthly reports without the scramble</div>
+            <p class="contrib-context">Monthly funding summaries were built by copying numbers between spreadsheets. Any last-minute question meant starting another manual version.</p>
+            <p class="contrib-work">Helped design a Power BI model on top of Fabric dataflows so core funding KPIs were always available in one dashboard. I contributed queries for program and project views, set up scheduled refreshes, and added simple validation checks so we could spot issues before meetings. For a few recurring asks, I used Python to tidy raw extracts into shapes the model could consume.</p>
+            <div class="contrib-impact">
+              <span class="contrib-impact-label">Impact</span>
+              <p>Shifted monthly reviews from “build the pack” to “open the dashboard,” and cut down the time spent rebuilding the same views every cycle.</p>
+            </div>
+            <div class="contrib-tools">
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">Microsoft Fabric</span>
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">DAX</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+           PANEL 2 — Whistling Solutions (secondary)
+           ═══════════════════════════════════════ -->
+      <div class="employer-panel">
+        <div class="employer-header">
+          <div class="employer-meta">
+            <span class="employer-name">Whistling Solutions</span>
+            <span class="employer-duration">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              4 months · 2023
+            </span>
+          </div>
+          <div class="employer-role">Data Analyst Intern</div>
+          <p class="employer-context">Joined a small team supporting operations and product with reporting, data cleaning, and keeping KPIs consistent across dashboards.</p>
         </div>
 
-        <div class="project-impact">
-          <p>
-            <strong>Impact for the team:</strong> It became easier for corporate planning and leadership to compare programs 
-            and review the portfolio without spending time reconciling different versions of the numbers.
-          </p>
+        <div class="contrib-entries">
+
+          <!-- Entry 1 -->
+          <div class="contrib-entry">
+            <div class="contrib-title">Reporting workflows — less copy-paste, more answers</div>
+            <p class="contrib-context">Several recurring reports were rebuilt by hand in spreadsheets every week, which left little time to discuss what the numbers meant.</p>
+            <p class="contrib-work">Helped set up Power Automate flows and scheduled refreshes so key reports pulled their own data. Worked with my manager to test the new process against the old spreadsheets and fix mismatches before handing it over to the team.</p>
+            <div class="contrib-impact">
+              <span class="contrib-impact-label">Impact</span>
+              <p>Freed up time that used to go into updating spreadsheets so the team could spend more of their weekly check-ins talking about trends and next steps.</p>
+            </div>
+            <div class="contrib-tools">
+              <span class="tool-tag">Power Automate</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">Excel</span>
+            </div>
+          </div>
+
+          <!-- Entry 2 -->
+          <div class="contrib-entry">
+            <div class="contrib-title">Data cleaning &amp; reconciliation — making 50K+ rows usable</div>
+            <p class="contrib-context">Operational data came in with duplicates, inconsistent IDs, and missing values, which made simple questions hard to answer confidently.</p>
+            <p class="contrib-work">Used SQL and Python (Pandas) to clean and reconcile 50K+ records into analysis-ready tables for leadership dashboards and ad-hoc questions. Logged the main assumptions and filters so future queries could follow the same rules.</p>
+            <div class="contrib-impact">
+              <span class="contrib-impact-label">Impact</span>
+              <p>Reduced “is this data clean?” conversations in reviews and gave stakeholders a clearer, repeatable base for their own analysis.</p>
+            </div>
+            <div class="contrib-tools">
+              <span class="tool-tag">SQL</span>
+              <span class="tool-tag">Python</span>
+              <span class="tool-tag">Pandas</span>
+            </div>
+          </div>
+
+          <!-- Entry 3 -->
+          <div class="contrib-entry">
+            <div class="contrib-title">KPI definitions — everyone talking about the same numbers</div>
+            <p class="contrib-context">Different teams reused the same metric names but calculated them slightly differently, which made cross-team dashboards confusing.</p>
+            <p class="contrib-work">Worked with analysts and managers to write down 10+ KPI definitions, including formulas, filters, and caveats. Updated dashboard labels and notes so people could quickly see how a metric was built.</p>
+            <div class="contrib-impact">
+              <span class="contrib-impact-label">Impact</span>
+              <p>Made it easier for teams to compare results and reduced time spent in meetings debating definitions instead of outcomes.</p>
+            </div>
+            <div class="contrib-tools">
+              <span class="tool-tag">Documentation</span>
+              <span class="tool-tag">Power BI</span>
+              <span class="tool-tag">Tableau</span>
+            </div>
+          </div>
+
         </div>
-
-        <div class="project-tools">
-          <span class="tool-tag">Microsoft Fabric</span>
-          <span class="tool-tag">Power BI</span>
-          <span class="tool-tag">SQL</span>
-          <span class="tool-tag">Excel</span>
-        </div>
-      </article>
-
-      <!-- 02 -->
-      <article class="project-card fade-in">
-        <span class="project-number">02</span>
-        <p class="project-meta">Alberta Innovates · Data &amp; Reporting Analyst · 2025</p>
-        <h3>Alberta tech landscape - strategy support pack</h3>
-
-        <div class="project-section">
-          <span class="project-section-label">Context</span>
-          <p>
-            Leadership wanted a clearer, data driven picture of Alberta's tech ecosystem to help guide future programs and funding, 
-            but information was spread across reports, public sources, and conversations.
-          </p>
-        </div>
-
-        <div class="project-section">
-          <span class="project-section-label">What I worked on</span>
-          <p>
-            I helped pull together public datasets, internal notes, and stakeholder input into a structured view of sectors, stages, 
-            regions, and gaps. I supported building summary tables and visuals that could be shared in slide decks and discussions 
-            with partners.
-          </p>
-        </div>
-
-        <div class="project-impact">
-          <p>
-            <strong>Impact for the team:</strong> The work gave leaders a clearer starting point for where to focus upcoming 
-            programs and made it easier to explain the landscape to government partners.
-          </p>
-        </div>
-
-        <div class="project-tools">
-          <span class="tool-tag">Python</span>
-          <span class="tool-tag">Excel</span>
-          <span class="tool-tag">Power BI</span>
-          <span class="tool-tag">SharePoint</span>
-        </div>
-      </article>
-
-      <!-- 03 -->
-      <article class="project-card fade-in">
-        <span class="project-number">03</span>
-        <p class="project-meta">Whistling Solutions · Data Analyst Intern · 2023</p>
-        <h3>Experiment insights - simple A/B testing workflow</h3>
-
-        <div class="project-section">
-          <span class="project-section-label">Context</span>
-          <p>
-            Product changes were often shipped based on gut feel. The team wanted a simple way to check if a new feature 
-            actually improved user behaviour.
-          </p>
-        </div>
-
-        <div class="project-section">
-          <span class="project-section-label">What I worked on</span>
-          <p>
-            I helped build a small A/B testing workflow in Python and SQL. 
-            That included data cleaning steps, basic experiment metrics, significance checks, 
-            and standard result views in Power BI and Tableau so PMs could review outcomes without asking for a new analysis every time.
-          </p>
-        </div>
-
-        <div class="project-impact">
-          <p>
-            <strong>Impact for the team:</strong> It became easier to see whether a change helped, hurt, or made no real difference, 
-            so product discussions were based more on results and less on guesses.
-          </p>
-        </div>
-
-        <div class="project-tools">
-          <span class="tool-tag">Python</span>
-          <span class="tool-tag">SQL</span>
-          <span class="tool-tag">Power BI</span>
-          <span class="tool-tag">Tableau</span>
-        </div>
-      </article>
-
-      <!-- 04 -->
-      <article class="project-card fade-in">
-        <span class="project-number">04</span>
-        <p class="project-meta">Alberta Innovates · Data &amp; Reporting Analyst · 2025</p>
-        <h3>Funding dashboard - monthly reports without the scramble</h3>
-
-        <div class="project-section">
-          <span class="project-section-label">Context</span>
-          <p>
-            Monthly funding reports were put together by copying and pasting between several spreadsheets. 
-            It worked, but it was slow and stressful around review time.
-          </p>
-        </div>
-
-        <div class="project-section">
-          <span class="project-section-label">What I worked on</span>
-          <p>
-            I helped design a Power BI model, connected it to Fabric dataflows, and set up views for funding amounts, timelines, 
-            and key KPIs. I also supported setting up scheduled refresh and basic checks so the data was ready before meetings.
-          </p>
-        </div>
-
-        <div class="project-impact">
-          <p>
-            <strong>Impact for the team:</strong> Report prep shifted from manual assembly to reviewing an updated dashboard, 
-            which saved time and reduced last minute fixes before leadership reviews.
-          </p>
-        </div>
-
-        <div class="project-tools">
-          <span class="tool-tag">Power BI</span>
-          <span class="tool-tag">Microsoft Fabric</span>
-          <span class="tool-tag">SQL</span>
-          <span class="tool-tag">DAX</span>
-        </div>
-      </article>
+      </div>
 
     </div>
   </div>
 </section>
 
+<!-- ============================================
+     PERSONAL PROJECTS
+     ============================================ -->
+   
 <section class="section" id="lab">
   <div class="container">
     <div class="section-header fade-in">
