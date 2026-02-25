@@ -1272,155 +1272,160 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 }
 
 /* ============================================
-   CONTRIBUTION LOG — Two-Panel Layout
-   (Replaces the old PROJECTS CSS block)
+   WORK EXPERIENCE — Employer Sections
    ============================================ */
-.contrib-layout {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xl);
+.work-section {
+  margin-bottom: var(--space-3xl);
 }
 
-/* ── Employer Panel ── */
-.employer-panel {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: box-shadow var(--duration) var(--ease);
+.work-section:last-child {
+  margin-bottom: 0;
 }
 
-.employer-panel:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-}
-
-/* Panel header */
-.employer-header {
-  padding: var(--space-xl) var(--space-xl) var(--space-lg);
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-
-.employer-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--jade);
-}
-
-.employer-meta {
+/* ── Employer Header Strip ── */
+.employer-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-bottom: 6px;
+  gap: var(--space-md);
+  padding-bottom: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--jade);
 }
 
-.employer-name {
-  font-size: 1.1rem;
+.employer-strip-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.employer-strip-name {
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
-.employer-duration {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--jade);
-  background: var(--jade-soft);
-  padding: 4px 12px;
-  border-radius: 100px;
-  letter-spacing: 0.02em;
-}
-
-.employer-role {
-  font-size: 0.82rem;
+.employer-strip-role {
+  font-size: 0.85rem;
   color: var(--muted);
   font-weight: 500;
 }
 
-.employer-context {
-  margin-top: 10px;
+.employer-strip-context {
   font-size: 0.78rem;
-  line-height: 1.5;
   color: var(--muted);
   font-style: italic;
-  padding-left: 12px;
-  border-left: 2px solid var(--border);
+  max-width: 520px;
+  line-height: 1.45;
+  margin-top: 4px;
 }
 
-/* ── Contribution entries ── */
-.contrib-entries {
+.employer-strip-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.employer-strip-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--jade);
+  background: var(--jade-soft);
+  padding: 6px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Contribution Card Slider ── */
+.work-slider-wrapper {
+  position: relative;
+}
+
+.work-slider-track {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--space-md);
+  scrollbar-width: none;
+}
+
+.work-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Contribution Card ── */
+.work-card {
+  min-width: 340px;
+  max-width: 400px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
   display: flex;
   flex-direction: column;
-}
-
-.contrib-entry {
-  padding: var(--space-lg) var(--space-xl);
-  border-bottom: 1px solid var(--border);
+  gap: 14px;
+  transition: transform var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease),
+              border-color var(--duration) var(--ease);
   position: relative;
-  transition: background var(--duration) var(--ease);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 12px 36px rgba(0,0,0,0.04);
 }
 
-.contrib-entry:last-child {
-  border-bottom: none;
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+  border-color: rgba(45,157,120,0.25);
 }
 
-.contrib-entry:hover {
-  background: rgba(45,157,120,0.02);
-}
-
-/* Jade left accent */
-.contrib-entry::before {
+/* Card jade top accent on hover */
+.work-card::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: var(--space-lg);
-  bottom: var(--space-lg);
-  width: 3px;
+  top: 0; left: 0; right: 0;
+  height: 3px;
   background: var(--jade);
-  border-radius: 0 2px 2px 0;
-  opacity: 0.4;
-  transition: opacity var(--duration) var(--ease);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
 }
 
-.contrib-entry:hover::before {
-  opacity: 1;
+.work-card:hover::before {
+  transform: scaleX(1);
 }
 
-.contrib-title {
-  font-size: 0.95rem;
+.work-card-title {
+  font-size: 1rem;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 8px;
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
-.contrib-context {
+.work-card-context {
   font-size: 0.78rem;
   color: var(--muted);
   line-height: 1.5;
-  margin-bottom: 10px;
 }
 
-.contrib-work {
+.work-card-work {
   font-size: 0.82rem;
   color: var(--text);
   line-height: 1.6;
-  margin-bottom: 12px;
 }
 
-/* Impact callout — matches lab-why card style */
-.contrib-impact {
-  margin-top: 2px;
+/* Impact — lab-why style */
+.work-card-impact {
   padding: 10px 11px;
   border-radius: var(--radius);
   background: linear-gradient(
@@ -1429,10 +1434,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
     rgba(245,240,234,0.8)
   );
   border: 1px solid rgba(45,157,120,0.18);
-  margin-bottom: 12px;
 }
 
-.contrib-impact-label {
+.work-card-impact-label {
   display: inline-block;
   font-size: 0.68rem;
   text-transform: uppercase;
@@ -1442,21 +1446,23 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   margin-bottom: 2px;
 }
 
-.contrib-impact p {
+.work-card-impact p {
+  margin: 0;
   font-size: 0.78rem;
   line-height: 1.45;
   color: var(--text);
-  margin: 0;
 }
 
 /* Tool tags */
-.contrib-tools {
+.work-card-tools {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  margin-top: auto;
+  padding-top: 4px;
 }
 
-.contrib-tools .tool-tag {
+.work-card-tools .tool-tag {
   font-size: 0.68rem;
   font-weight: 500;
   padding: 3px 9px;
@@ -1466,14 +1472,112 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   border: 1px solid var(--border);
 }
 
-/* ── Responsive ── */
+/* ── Slider Controls ── */
+.work-slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-lg);
+}
 
+.work-slider-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.work-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all var(--duration) var(--ease);
+}
+
+.work-dot.active {
+  width: 20px;
+  border-radius: 100px;
+  background: var(--jade);
+}
+
+.work-slider-nav {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.work-slider-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration) var(--ease);
+  color: var(--muted);
+}
+
+.work-slider-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  transform: scale(1.05);
+}
+
+.work-slider-btn:active {
+  transform: scale(0.95);
+}
+
+.work-slider-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Fade edges */
+.work-slider-wrapper::before,
+.work-slider-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: var(--space-md);
+  width: 48px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.work-slider-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+.work-slider-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.work-slider-wrapper.scrolled::before {
+  opacity: 1;
+}
+
+/* ── Responsive ── */
 @media (max-width: 680px) {
-  .employer-header {
-    padding: var(--space-lg) var(--space-lg) var(--space-md);
+  .employer-strip {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .contrib-entry {
-    padding: var(--space-md) var(--space-lg);
+  .work-card {
+    min-width: 290px;
+    max-width: 330px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
    
@@ -2372,151 +2476,188 @@ h4 { font-size: 0.95rem; font-weight: 600; }
       <h2>Where I've been doing the work</h2>
     </div>
 
-    <div class="contrib-layout">
-
-      <!-- ═══════════════════════════════════════
-           PANEL 1 — Alberta Innovates (primary)
-           ═══════════════════════════════════════ -->
-      <div class="employer-panel">
-        <div class="employer-header">
-          <div class="employer-meta">
-            <span class="employer-name">Alberta Innovates</span>
-            <span class="employer-duration">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              8 months · 2025
-            </span>
-          </div>
-          <div class="employer-role">Data &amp; Reporting Analyst · Contract</div>
-          <p class="employer-context">Provincial innovation agency funding Alberta's tech ecosystem. I worked with the data team on corporate planning and leadership reporting.</p>
+    <!-- ═══════════════════════════════════════════
+         ALBERTA INNOVATES
+         ═══════════════════════════════════════════ -->
+    <div class="work-section">
+      <div class="employer-strip">
+        <div class="employer-strip-left">
+          <span class="employer-strip-name">Alberta Innovates</span>
+          <span class="employer-strip-role">Data &amp; Reporting Analyst · Contract</span>
+          <p class="employer-strip-context">Provincial innovation agency funding Alberta's tech ecosystem. I worked with the data team on corporate planning and leadership reporting.</p>
         </div>
+        <div class="employer-strip-right">
+          <span class="employer-strip-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            8 months · 2025
+          </span>
+        </div>
+      </div>
 
-        <div class="contrib-entries">
+      <div class="work-slider-wrapper" data-slider="ai">
+        <div class="work-slider-track">
 
-          <!-- Entry 1 -->
-          <div class="contrib-entry">
-            <div class="contrib-title">Post-investment metrics — getting to one place for the truth</div>
-            <p class="contrib-context">Grant performance data over 8+ years lived in different spreadsheets and trackers. Every big review started with “which version of this is right?”</p>
-            <p class="contrib-work">Helped build a reusable reporting model in Microsoft Fabric and Power BI so leaders could pull numbers from one place instead of chasing files. I worked on loading and cleaning historical spreadsheets, shaping them into a simple star schema for programs and projects, and running reconciliation checks so the new numbers matched what finance expected. I also documented how key metrics were calculated so different teams stopped maintaining their own formulas.</p>
-            <div class="contrib-impact">
-              <span class="contrib-impact-label">Impact</span>
-              <p>Made executive reports easier to trust: one source of metrics, fewer last-minute fixes, and clearer answers when someone asked, “where did this number come from?”</p>
+          <!-- Card 1 -->
+          <article class="work-card">
+            <div class="work-card-title">Post-investment metrics — getting to one place for the truth</div>
+            <p class="work-card-context">Grant performance data over 8+ years lived in different spreadsheets and trackers. Every big review started with "which version of this is right?"</p>
+            <p class="work-card-work">Helped build a reusable reporting model in Microsoft Fabric and Power BI so leaders could pull numbers from one place instead of chasing files. I worked on loading and cleaning historical spreadsheets, shaping them into a simple star schema for programs and projects, and running reconciliation checks so the new numbers matched what finance expected. I also documented how key metrics were calculated so different teams stopped maintaining their own formulas.</p>
+            <div class="work-card-impact">
+              <span class="work-card-impact-label">Impact</span>
+              <p>Made executive reports easier to trust: one source of metrics, fewer last-minute fixes, and clearer answers when someone asked, "where did this number come from?"</p>
             </div>
-            <div class="contrib-tools">
+            <div class="work-card-tools">
               <span class="tool-tag">Microsoft Fabric</span>
               <span class="tool-tag">Power BI</span>
               <span class="tool-tag">SQL</span>
               <span class="tool-tag">Excel</span>
             </div>
-          </div>
+          </article>
 
-          <!-- Entry 2 -->
-          <div class="contrib-entry">
-            <div class="contrib-title">Alberta tech landscape — research pack for strategy conversations</div>
-            <p class="contrib-context">Leadership wanted a clearer, data-backed picture of Alberta's tech ecosystem to guide program focus, but information lived across reports, websites, and one-off discussions.</p>
-            <p class="contrib-work">Pulled together public datasets, internal notes, and stakeholder input into a structured view of sectors, stages, regions, and funding gaps. Built summary tables and simple visuals that could drop into slide decks and briefings, and kept a small “sources & assumptions” log so people knew what the numbers actually represented.</p>
-            <div class="contrib-impact">
-              <span class="contrib-impact-label">Impact</span>
-              <p>Gave leaders a concrete starting point for program discussions and made it easier to explain the province’s tech story to government partners.</p>
+          <!-- Card 2 -->
+          <article class="work-card">
+            <div class="work-card-title">Alberta tech landscape — research pack for strategy conversations</div>
+            <p class="work-card-context">Leadership wanted a clearer, data-backed picture of Alberta's tech ecosystem to guide program focus, but information lived across reports, websites, and one-off discussions.</p>
+            <p class="work-card-work">Pulled together public datasets, internal notes, and stakeholder input into a structured view of sectors, stages, regions, and funding gaps. Built summary tables and simple visuals that could drop into slide decks and briefings, and kept a small "sources &amp; assumptions" log so people knew what the numbers actually represented.</p>
+            <div class="work-card-impact">
+              <span class="work-card-impact-label">Impact</span>
+              <p>Gave leaders a concrete starting point for program discussions and made it easier to explain the province's tech story to government partners.</p>
             </div>
-            <div class="contrib-tools">
+            <div class="work-card-tools">
               <span class="tool-tag">Python</span>
               <span class="tool-tag">Excel</span>
               <span class="tool-tag">Power BI</span>
               <span class="tool-tag">SharePoint</span>
             </div>
-          </div>
+          </article>
 
-          <!-- Entry 3 -->
-          <div class="contrib-entry">
-            <div class="contrib-title">Funding dashboards &amp; refreshes — monthly reports without the scramble</div>
-            <p class="contrib-context">Monthly funding summaries were built by copying numbers between spreadsheets. Any last-minute question meant starting another manual version.</p>
-            <p class="contrib-work">Helped design a Power BI model on top of Fabric dataflows so core funding KPIs were always available in one dashboard. I contributed queries for program and project views, set up scheduled refreshes, and added simple validation checks so we could spot issues before meetings. For a few recurring asks, I used Python to tidy raw extracts into shapes the model could consume.</p>
-            <div class="contrib-impact">
-              <span class="contrib-impact-label">Impact</span>
-              <p>Shifted monthly reviews from “build the pack” to “open the dashboard,” and cut down the time spent rebuilding the same views every cycle.</p>
+          <!-- Card 3 -->
+          <article class="work-card">
+            <div class="work-card-title">Funding dashboards &amp; refreshes — monthly reports without the scramble</div>
+            <p class="work-card-context">Monthly funding summaries were built by copying numbers between spreadsheets. Any last-minute question meant starting another manual version.</p>
+            <p class="work-card-work">Helped design a Power BI model on top of Fabric dataflows so core funding KPIs were always available in one dashboard. I contributed queries for program and project views, set up scheduled refreshes, and added simple validation checks so we could spot issues before meetings. For a few recurring asks, I used Python to tidy raw extracts into shapes the model could consume.</p>
+            <div class="work-card-impact">
+              <span class="work-card-impact-label">Impact</span>
+              <p>Shifted monthly reviews from "build the pack" to "open the dashboard," and cut down the time spent rebuilding the same views every cycle.</p>
             </div>
-            <div class="contrib-tools">
+            <div class="work-card-tools">
               <span class="tool-tag">Power BI</span>
               <span class="tool-tag">Microsoft Fabric</span>
               <span class="tool-tag">Python</span>
               <span class="tool-tag">SQL</span>
               <span class="tool-tag">DAX</span>
             </div>
-          </div>
+          </article>
 
+        </div>
+
+        <div class="work-slider-controls">
+          <div class="work-slider-dots">
+            <span class="work-dot active"></span>
+            <span class="work-dot"></span>
+            <span class="work-dot"></span>
+          </div>
+          <div class="work-slider-nav">
+            <button class="work-slider-btn" data-dir="prev" aria-label="Previous">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="work-slider-btn" data-dir="next" aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         WHISTLING SOLUTIONS
+         ═══════════════════════════════════════════ -->
+    <div class="work-section">
+      <div class="employer-strip">
+        <div class="employer-strip-left">
+          <span class="employer-strip-name">Whistling Solutions</span>
+          <span class="employer-strip-role">Data Analyst Intern</span>
+          <p class="employer-strip-context">Joined a small team supporting operations and product with reporting, data cleaning, and keeping KPIs consistent across dashboards.</p>
+        </div>
+        <div class="employer-strip-right">
+          <span class="employer-strip-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            4 months · 2023
+          </span>
         </div>
       </div>
 
-      <!-- ═══════════════════════════════════════
-           PANEL 2 — Whistling Solutions (secondary)
-           ═══════════════════════════════════════ -->
-      <div class="employer-panel">
-        <div class="employer-header">
-          <div class="employer-meta">
-            <span class="employer-name">Whistling Solutions</span>
-            <span class="employer-duration">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              4 months · 2023
-            </span>
-          </div>
-          <div class="employer-role">Data Analyst Intern</div>
-          <p class="employer-context">Joined a small team supporting operations and product with reporting, data cleaning, and keeping KPIs consistent across dashboards.</p>
-        </div>
+      <div class="work-slider-wrapper" data-slider="ws">
+        <div class="work-slider-track">
 
-        <div class="contrib-entries">
-
-          <!-- Entry 1 -->
-          <div class="contrib-entry">
-            <div class="contrib-title">Reporting workflows — less copy-paste, more answers</div>
-            <p class="contrib-context">Several recurring reports were rebuilt by hand in spreadsheets every week, which left little time to discuss what the numbers meant.</p>
-            <p class="contrib-work">Helped set up Power Automate flows and scheduled refreshes so key reports pulled their own data. Worked with my manager to test the new process against the old spreadsheets and fix mismatches before handing it over to the team.</p>
-            <div class="contrib-impact">
-              <span class="contrib-impact-label">Impact</span>
+          <!-- Card 1 -->
+          <article class="work-card">
+            <div class="work-card-title">Reporting workflows — less copy-paste, more answers</div>
+            <p class="work-card-context">Several recurring reports were rebuilt by hand in spreadsheets every week, which left little time to discuss what the numbers meant.</p>
+            <p class="work-card-work">Helped set up Power Automate flows and scheduled refreshes so key reports pulled their own data. Worked with my manager to test the new process against the old spreadsheets and fix mismatches before handing it over to the team.</p>
+            <div class="work-card-impact">
+              <span class="work-card-impact-label">Impact</span>
               <p>Freed up time that used to go into updating spreadsheets so the team could spend more of their weekly check-ins talking about trends and next steps.</p>
             </div>
-            <div class="contrib-tools">
+            <div class="work-card-tools">
               <span class="tool-tag">Power Automate</span>
               <span class="tool-tag">Power BI</span>
               <span class="tool-tag">Excel</span>
             </div>
-          </div>
+          </article>
 
-          <!-- Entry 2 -->
-          <div class="contrib-entry">
-            <div class="contrib-title">Data cleaning &amp; reconciliation — making 50K+ rows usable</div>
-            <p class="contrib-context">Operational data came in with duplicates, inconsistent IDs, and missing values, which made simple questions hard to answer confidently.</p>
-            <p class="contrib-work">Used SQL and Python (Pandas) to clean and reconcile 50K+ records into analysis-ready tables for leadership dashboards and ad-hoc questions. Logged the main assumptions and filters so future queries could follow the same rules.</p>
-            <div class="contrib-impact">
-              <span class="contrib-impact-label">Impact</span>
-              <p>Reduced “is this data clean?” conversations in reviews and gave stakeholders a clearer, repeatable base for their own analysis.</p>
+          <!-- Card 2 -->
+          <article class="work-card">
+            <div class="work-card-title">Data cleaning &amp; reconciliation — making 50K+ rows usable</div>
+            <p class="work-card-context">Operational data came in with duplicates, inconsistent IDs, and missing values, which made simple questions hard to answer confidently.</p>
+            <p class="work-card-work">Used SQL and Python (Pandas) to clean and reconcile 50K+ records into analysis-ready tables for leadership dashboards and ad-hoc questions. Logged the main assumptions and filters so future queries could follow the same rules.</p>
+            <div class="work-card-impact">
+              <span class="work-card-impact-label">Impact</span>
+              <p>Reduced "is this data clean?" conversations in reviews and gave stakeholders a clearer, repeatable base for their own analysis.</p>
             </div>
-            <div class="contrib-tools">
+            <div class="work-card-tools">
               <span class="tool-tag">SQL</span>
               <span class="tool-tag">Python</span>
               <span class="tool-tag">Pandas</span>
             </div>
-          </div>
+          </article>
 
-          <!-- Entry 3 -->
-          <div class="contrib-entry">
-            <div class="contrib-title">KPI definitions — everyone talking about the same numbers</div>
-            <p class="contrib-context">Different teams reused the same metric names but calculated them slightly differently, which made cross-team dashboards confusing.</p>
-            <p class="contrib-work">Worked with analysts and managers to write down 10+ KPI definitions, including formulas, filters, and caveats. Updated dashboard labels and notes so people could quickly see how a metric was built.</p>
-            <div class="contrib-impact">
-              <span class="contrib-impact-label">Impact</span>
+          <!-- Card 3 -->
+          <article class="work-card">
+            <div class="work-card-title">KPI definitions — everyone talking about the same numbers</div>
+            <p class="work-card-context">Different teams reused the same metric names but calculated them slightly differently, which made cross-team dashboards confusing.</p>
+            <p class="work-card-work">Worked with analysts and managers to write down 10+ KPI definitions, including formulas, filters, and caveats. Updated dashboard labels and notes so people could quickly see how a metric was built.</p>
+            <div class="work-card-impact">
+              <span class="work-card-impact-label">Impact</span>
               <p>Made it easier for teams to compare results and reduced time spent in meetings debating definitions instead of outcomes.</p>
             </div>
-            <div class="contrib-tools">
+            <div class="work-card-tools">
               <span class="tool-tag">Documentation</span>
               <span class="tool-tag">Power BI</span>
               <span class="tool-tag">Tableau</span>
             </div>
-          </div>
+          </article>
 
         </div>
-      </div>
 
+        <div class="work-slider-controls">
+          <div class="work-slider-dots">
+            <span class="work-dot active"></span>
+            <span class="work-dot"></span>
+            <span class="work-dot"></span>
+          </div>
+          <div class="work-slider-nav">
+            <button class="work-slider-btn" data-dir="prev" aria-label="Previous">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="work-slider-btn" data-dir="next" aria-label="Next">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -3228,5 +3369,40 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 </script>
 
+<!-- ── Slider JS (same pattern as Lab slider) ── -->
+<script>
+document.querySelectorAll('.work-slider-wrapper').forEach(wrapper => {
+  const track = wrapper.querySelector('.work-slider-track');
+  const dots = wrapper.querySelectorAll('.work-dot');
+  const prevBtn = wrapper.querySelector('[data-dir="prev"]');
+  const nextBtn = wrapper.querySelector('[data-dir="next"]');
+
+  function getCardWidth() {
+    const card = track.querySelector('.work-card');
+    return card.offsetWidth + 24; // card width + gap
+  }
+
+  function getCurrentIndex() {
+    return Math.round(track.scrollLeft / getCardWidth());
+  }
+
+  function updateDots() {
+    const idx = getCurrentIndex();
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    wrapper.classList.toggle('scrolled', track.scrollLeft > 10);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+  });
+
+  track.addEventListener('scroll', updateDots, { passive: true });
+});
+</script>
+   
 </body>
 </html>
