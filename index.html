@@ -1694,6 +1694,26 @@ h4 { font-size: 0.95rem; font-weight: 600; }
   height: 14px;
 }
 
+.lab-card-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.lab-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.lab-card:hover .lab-card-thumb img {
+  transform: scale(1.03);
+}
+
 .lab-card > p {
   font-size: 0.82rem;
   line-height: 1.5;
@@ -2682,6 +2702,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/Maven-Market-Power-BI-Project/main/Maven%20Market%20Dashboard.png" alt="Maven Market Power BI Dashboard" loading="lazy">
+          </div>
           <p>End to end Power BI solution for a multi national retail chain. Built a star schema from raw CSVs, wrote DAX measures for time intelligence and KPI tracking, and designed an interactive dashboard covering revenue, profit, returns, and regional store performance.</p>
 
           <div class="lab-why">
@@ -2704,6 +2727,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
             <a href="https://github.com/HarshP10101/ETL-breweries" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
+          </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/ETL-breweries/main/etl_architecture.png" alt="ETL Pipeline Architecture" loading="lazy">
           </div>
           <p>Built a bronze to silver to gold ETL pipeline that ingests REST API data into MySQL. Includes hash based change detection, a simple data quality framework with logged checks, and advanced SQL analytics using CTEs, window functions, HHI, and Shannon entropy.</p>
 
@@ -2728,6 +2754,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/Market-Basket-Analysis/main/market_basket_heatmap.png" alt="Market Basket Analysis Heatmap" loading="lazy">
+          </div>
           <p>Analyzed customer purchasing patterns to uncover product associations using Apriori based association rule mining. Used clustering to explore simple customer segments and surfaced practical cross sell and upsell opportunities.</p>
 
           <div class="lab-why">
@@ -2746,10 +2775,39 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 
         <article class="lab-card">
           <div class="lab-card-header">
+            <h3>Edmonton Property Value Drivers</h3>
+            <a href="https://github.com/HarshP10101/Edmonton-Property-Analysis" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+            </a>
+          </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/Edmonton-Property-Analysis/main/visuals/08_neighbourhood_appreciation.png" alt="Edmonton Neighbourhood Appreciation Rates" loading="lazy">
+          </div>
+          <p>Statistical analysis of 1.2M property assessment records (2022-2024) from the City of Edmonton Open Data Portal. Used t-tests, ANOVA, and OLS regression to identify what drives assessed values and which neighbourhoods gained or lost value.</p>
+
+          <div class="lab-why">
+            <span class="lab-why-label">Why it matters</span>
+            <p>Shows how I work with real civic data end to end: cleaning messy records, picking the right statistical test for each question, and turning regression output into findings a non-technical audience can act on.</p>
+          </div>
+
+          <div class="project-tools">
+            <span class="tool-tag">Python</span>
+            <span class="tool-tag">Pandas</span>
+            <span class="tool-tag">Statsmodels</span>
+            <span class="tool-tag">Scipy</span>
+          </div>
+          <span class="lab-lang"><span class="lab-lang-dot jupyter" aria-hidden="true"></span>Jupyter Notebook</span>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-card-header">
             <h3>HR Analytics Dashboard</h3>
             <a href="https://github.com/HarshP10101/HR-Analytics-Dashboard" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
+          </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/HR-Analytics-Dashboard/main/hr_dashboard.png" alt="HR Analytics Dashboard" loading="lazy">
           </div>
           <p>Interactive Power BI dashboard analyzing employee attrition trends inspired by real IT industry data. Includes KPI cards, attrition breakdowns by age, department, salary, and job role, plus job satisfaction views for retention conversations.</p>
 
@@ -2774,6 +2832,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/Mongo-DB-Query-Performance/main/mongodb_benchmark.png" alt="MongoDB Query Performance Benchmark" loading="lazy">
+          </div>
           <p>Explored data modeling tradeoffs in MongoDB by comparing normalized and embedded document models on a music dataset. Benchmarked songwriter and recording queries to see the real performance impact of schema choices.</p>
 
           <div class="lab-why">
@@ -2797,6 +2858,9 @@ h4 { font-size: 0.95rem; font-weight: 600; }
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
             </a>
           </div>
+          <div class="lab-card-thumb">
+            <img src="https://raw.githubusercontent.com/HarshP10101/Optimizing-Database-Query-Performance/main/query_optimization.png" alt="SQL Query Optimization Results" loading="lazy">
+          </div>
           <p>Benchmarked SQL query execution on e commerce style datasets with different indexing strategies. Used Python scripts to collect execution times and visualize performance improvements to see which indexes actually matter.</p>
 
           <div class="lab-why">
@@ -2818,6 +2882,7 @@ h4 { font-size: 0.95rem; font-weight: 600; }
       <div class="lab-slider-controls">
         <div class="lab-slider-dots" id="labDots">
           <span class="lab-dot active"></span>
+          <span class="lab-dot"></span>
           <span class="lab-dot"></span>
           <span class="lab-dot"></span>
           <span class="lab-dot"></span>
@@ -3225,7 +3290,7 @@ h4 { font-size: 0.95rem; font-weight: 600; }
       <p class="subtitle">Open to data analyst and analytics engineer roles across Canada. Always happy to chat about data problems.</p>
 
       <div class="contact-links">
-        <a href="mailto:connectwithharshpatel03@gmail.com" class="contact-link">
+        <a href="/cdn-cgi/l/email-protection#0a696564646f697e7d637e62626b7879627a6b7e6f663a394a6d676b636624696567" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Email
         </a>
@@ -3259,7 +3324,7 @@ h4 { font-size: 0.95rem; font-weight: 600; }
 <!-- ============================================
      JS — Nav, animations, slider, typewriter
      ============================================ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Mobile nav toggle
 const toggle = document.querySelector('.nav-toggle');
 const navLinks = document.querySelector('.nav-links');
@@ -3397,12 +3462,4 @@ document.querySelectorAll('.work-slider-wrapper').forEach(wrapper => {
   });
 
   nextBtn.addEventListener('click', () => {
-    track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
-  });
-
-  track.addEventListener('scroll', updateDots, { passive: true });
-});
-</script>
-   
-</body>
-</html>
+    track.
