@@ -3556,4 +3556,11 @@ document.querySelectorAll('.work-slider-wrapper').forEach(wrapper => {
   });
 
   nextBtn.addEventListener('click', () => {
-    track.
+    track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+  });
+
+  track.addEventListener('scroll', updateDots, { passive: true });
+});
+</script>
+</body>
+</html>
