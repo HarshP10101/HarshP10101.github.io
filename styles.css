@@ -25,7 +25,7 @@ a,button {-webkit-tap-highlight-color:transparent}
 a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outline-offset:5px}
 .page-shell {width:min(100%,1540px);margin-inline:auto;padding-inline:var(--page-pad)}
 .section {padding-block:var(--section-space)}
-.section-heading,.hero-grid,.experience-layout,.capability-workbench,.experience-row,.project-feature,.archive,.statement-grid,.about-heading,.about-grid,.principles,.contact-grid,.footer-grid {display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter)}
+.section-heading,.hero-grid,.experience-layout,.capability-workbench,.experience-row,.project-feature,.archive,.about-heading,.about-grid,.principles,.contact-grid,.footer-grid {display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter)}
 :where(.page-shell,.hero-grid,.experience-row,.project-feature,.capability-row,.about-grid,.principles)>* {min-width:0}
 .section-index,.eyebrow,.experience-date,.experience-role,.project-meta,.project-stack {font-size:.69rem;letter-spacing:.065em;text-transform:uppercase;line-height:1.65}
 .section-index {grid-column:1/4;padding-top:.6rem}
@@ -235,26 +235,6 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .maven-model ol {list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:.55rem}
 .maven-model li {font-size:.75rem}
 .maven-model li>span {display:inline-block;width:2rem;color:var(--on-dark-muted);font-size:.6rem}
-/* Point of view: many inputs, one signal. */
-.statement {padding-block:var(--section-space);background:var(--ink);color:var(--paper)}
-.statement blockquote {grid-column:4/-1;font-size:clamp(3.2rem,5.75vw,6.3rem);line-height:.98;letter-spacing:-.055em}
-.statement blockquote em {letter-spacing:-.05em}
-.statement-copy {grid-column:8/-1;margin-top:2.5rem;max-width:28rem;font-size:.85rem;color:var(--on-dark-muted);line-height:1.7}
-.statement-copy>a {display:block;min-height:44px;margin-top:1.4rem;padding-top:1rem;border-top:1px solid var(--dark-line);color:var(--paper)}
-.statement-copy>a>span {display:block;color:var(--signal);font-size:.6875rem;letter-spacing:.05em;text-transform:uppercase}
-.statement-copy>a>b {font-weight:400}
-.statement-visual {grid-column:4/-1;margin-top:4.5rem;border-top:1px solid var(--dark-line)}
-.signal-system {display:grid;grid-template-columns:1fr .9fr 1.1fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;padding-block:3rem}
-.signal-inputs,.signal-filter {display:flex;flex-direction:column;gap:.75rem;font-size:.75rem}
-.signal-inputs span {display:flex;align-items:center;gap:.5rem;color:var(--on-dark-muted)}
-.signal-inputs span::after {content:"";flex:1;height:1px;background:var(--dark-line)}
-.signal-filter {position:relative;padding:1rem;border-inline:1px solid var(--on-dark-muted);text-align:center;font-size:.72rem}
-.signal-filter::after {content:"";position:absolute;top:50%;left:100%;width:clamp(1.5rem,4vw,4rem);height:1px;background:var(--signal)}
-.signal-output {display:flex;align-items:center;gap:1rem}
-.signal-arrow {color:var(--signal);font-size:2rem;line-height:1}
-.signal-output strong {font-size:clamp(1.55rem,2.6vw,2.8rem);line-height:1.05;font-weight:400;letter-spacing:-.045em}
-.statement-visual figcaption {display:flex;justify-content:space-between;border-top:1px solid var(--dark-line);padding-top:1rem;color:var(--on-dark-muted);font-size:.62rem;text-transform:uppercase;letter-spacing:.06em}
-.statement-visual figcaption b {font-size:.85rem;color:var(--signal);margin-left:.4rem}
 /* Capability workbench: explore how each discipline turns into useful work. */
 .capability-workbench {align-items:stretch}
 .capability-workbench:not(.capabilities-ready) .capability-select {display:none}
@@ -407,8 +387,8 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
   .hero-artwork {grid-column:4/-1;margin-top:2rem;margin-bottom:2rem}
   .hero-index {grid-template-columns:repeat(2,minmax(0,1fr));font-size:.61rem}
   .hero-index span:nth-child(even) {text-align:right}
-  .section-heading>.section-index,.about-heading>.section-index,.statement-grid>.section-index,.contact-grid>.section-index {grid-column:1/-1;padding-top:0;margin-bottom:1.8rem}
-  .section-heading>div,.about-heading h2,.statement blockquote,.contact-copy {grid-column:1/-1}
+  .section-heading>.section-index,.about-heading>.section-index,.contact-grid>.section-index {grid-column:1/-1;padding-top:0;margin-bottom:1.8rem}
+  .section-heading>div,.about-heading h2,.contact-copy {grid-column:1/-1}
   .section-heading h2 {font-size:clamp(3rem,7.5vw,5rem)}
   .project-feature {row-gap:1.8rem}
   .project-meta {grid-column:1/-1;grid-row:2;flex-direction:row;justify-content:space-between}
@@ -427,11 +407,6 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
   .archive-list a span:first-child {font-size:1rem}
   .archive-list a span:nth-child(2) {grid-column:1;grid-row:2}
   .archive-list b {grid-column:2;grid-row:1/3}
-  .statement blockquote {font-size:clamp(3.5rem,8vw,5.5rem)}
-  .statement-copy {grid-column:6/-1}
-  .statement-visual {grid-column:1/-1;margin-top:3rem}
-  .signal-system {gap:2rem}
-  .signal-filter::after {width:2rem}
   .about-heading h2 {font-size:clamp(3rem,6.8vw,4.8rem)}
   .about-grid {row-gap:2.5rem}
   .about-field-note {grid-column:1/4}
@@ -575,18 +550,6 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
   .archive-heading,.archive-list {grid-column:1/-1}
   .archive-heading>p:last-child {max-width:20rem;margin-top:.5rem}
   .archive-list a {min-height:84px}
-  .statement blockquote {font-size:clamp(2.9rem,11.8vw,4rem);line-height:1.03}
-  .statement-copy {grid-column:3/-1;margin-top:2rem;font-size:.8rem}
-  .signal-system {grid-template-columns:1fr;gap:1.6rem;padding-block:2rem}
-  .signal-inputs {flex-direction:row;gap:.8rem}
-  .signal-inputs span {flex:1;display:block;font-size:.65rem;padding-bottom:1rem;border-bottom:1px solid var(--dark-line)}
-  .signal-inputs span::after {display:none}
-  .signal-filter {flex-direction:row;justify-content:center;gap:1rem;border-inline:none;border-block:1px solid var(--on-dark-muted);padding:1rem .5rem;font-size:.7rem}
-  .signal-filter::after {top:100%;left:50%;width:1px;height:1.6rem}
-  .signal-output {flex-direction:column;justify-content:center;gap:.5rem;text-align:center}
-  .signal-arrow {transform:rotate(90deg);font-size:1.8rem}
-  .signal-output strong {font-size:2rem}
-  .statement-visual figcaption {font-size:.57rem}
   .about-heading h2 {font-size:2.8rem;line-height:1.09}
   .about-grid {margin-top:2.5rem;row-gap:2rem}
   .about-field-note {grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:1rem}
@@ -625,6 +588,6 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .career-thread .eyebrow,.career-route li>span,.career-contexts,.experience-date,.experience-date>span,.experience-date strong,.experience-date small,.experience-role,
 .experience-evidence dt,.process-evidence small,.reporting-evidence small,.artifact-strip,.artifact-footer,.chart-axis,.artifact-source,.project-meta,.project-stack,.project-method>span,
 .pipeline-stages small,.pipeline-stages li>span,.quality-branch>span,.quality-branch p,.maven-kpis dt,.maven-kpis small,.maven-brands>.eyebrow,.maven-model .eyebrow,.maven-model li,.maven-model li>span,
-.statement-visual figcaption,.signal-inputs span,.capability-number,.capability-hint,.capability-panel>.eyebrow,.capability-select small,.capability-tools>span,.capability-outcome>span,
+.capability-number,.capability-hint,.capability-panel>.eyebrow,.capability-select small,.capability-tools>span,.capability-outcome>span,
 .about-field-note .eyebrow,.about-meta dt,.footer-grid {font-size:.6875rem}
 .diagram-note {font-size:11px}
