@@ -1,3566 +1,443 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Harsh Patel — Data Analyst & Analytics Engineer. Turning messy data into decisions people trust.">
-<title>Harsh Patel — Data Analyst</title>
-<link rel="icon" type="image/png" sizes="32x32" href="tab32.png">
-   
-<style>
-/* ============================================
-   DESIGN TOKENS — Edit these to rebrand
-   ============================================ */
-:root {
-  /* Colors */
-  --bg: #fafaf9;
-  --text: #1a1a19;
-  --muted: #6b6b66;
-  --border: #e4e4e0;
-  --card: #ffffff;
-  --surface: #f2f2ef;
-  --jade: #2d9d78;
-  --jade-soft: #e8f5f0;
-  --accent-warm: #f5f0ea;
-  --ink: #111110;
-
-  /* Spacing (8pt system) */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-  --space-3xl: 64px;
-  --space-4xl: 96px;
-  --space-5xl: 128px;
-
-  /* Layout */
-  --radius: 10px;
-  --radius-sm: 6px;
-  --radius-lg: 16px;
-  --max-width: 1120px;
-  --nav-height: 60px;
-
-  /* Transitions */
-  --ease: cubic-bezier(0.23, 1, 0.32, 1);
-  --duration: 0.35s;
-}
-
-/* ============================================
-   RESET & BASE
-   ============================================ */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-height) + var(--space-lg));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img { max-width: 100%; display: block; }
-
-/* Focus styles */
-:focus-visible {
-  outline: 2px solid var(--jade);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Container */
-.container {
-  width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--space-lg);
-}
-
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
-h1, h2, h3, h4 {
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-
-h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); }
-h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-h3 { font-size: 1.15rem; }
-h4 { font-size: 0.95rem; font-weight: 600; }
-
-.text-muted {
-  color: var(--muted);
-}
-
-.text-sm {
-  font-size: 0.875rem;
-}
-
-.overline {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
-/* ============================================
-   SECTION SYSTEM
-   ============================================ */
-.section {
-  padding: var(--space-4xl) 0;
-}
-
-.section-header {
-  margin-bottom: var(--space-3xl);
-}
-
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
-}
-
-.section-label::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--jade);
-  flex-shrink: 0;
-}
-
-/* ============================================
-   STICKY NAVBAR
-   ============================================ */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--nav-height);
-  background: rgba(250, 250, 249, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
-}
-
-.nav.nav-hidden {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-.nav .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.nav-logo {
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-}
-
-.nav-logo span {
-  color: var(--jade);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xl);
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--muted);
-  transition: color var(--duration) var(--ease);
-  position: relative;
-}
-
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1.5px;
-  background: var(--jade);
-  transition: width var(--duration) var(--ease);
-}
-
-.nav-links a:hover,
-.nav-links a:focus-visible {
-  color: var(--ink);
-}
-
-.nav-links a:hover::after {
-  width: 100%;
-}
-
-/* Mobile nav toggle */
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 32px;
-  height: 32px;
-  position: relative;
-}
-
-.nav-toggle span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: var(--ink);
-  position: absolute;
-  left: 6px;
-  transition: all 0.25s var(--ease);
-}
-
-.nav-toggle span:nth-child(1) { top: 10px; }
-.nav-toggle span:nth-child(2) { top: 16px; }
-.nav-toggle span:nth-child(3) { top: 22px; }
-
-.nav-toggle.active span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 15px;
-}
-.nav-toggle.active span:nth-child(2) { opacity: 0; }
-.nav-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 15px;
-}
-
-/* ============================================
-   HERO — Split Layout
-   ============================================ */
-.hero {
-  padding: var(--space-5xl) 0 var(--space-4xl);
-  position: relative;
-}
-
-.hero-split {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: var(--space-3xl);
-  align-items: center;
-}
-
-.hero-headline {
-  max-width: 640px;
-}
-
-.hero-headline h1.hero-name {
-  font-size: clamp(2.6rem, 5.5vw, 4rem);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin-bottom: var(--space-md);
-}
-
-.hero-tagline {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-  line-height: 1.55;
-  color: var(--muted);
-  max-width: 520px;
-  margin-bottom: var(--space-xl);
-  min-height: 2em;
-}
-
-.hero-tagline .highlight {
-  color: var(--jade);
-  font-weight: 600;
-}
-
-/* ── Typewriter effect ── */
-.typewriter {
-  color: var(--muted);
-}
-
-.cursor {
-  color: var(--jade);
-  font-weight: 300;
-  animation: cursorBlink 0.8s step-end infinite;
-  margin-left: 1px;
-}
-
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  align-items: center;
-}
-
-/* Avatar badge */
-.hero-visual {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xl);
-}
-
-.avatar-badge {
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.10);
-  background: var(--surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar-badge::before {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  border: 2px dashed var(--jade);
-  opacity: 0.35;
-  animation: spin 30s linear infinite;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.avatar-badge img {
-  width: 105%;
-  height: 105%;
-  object-fit: cover;
-  object-position: center 40%;
-  display: block;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ── Data Barista Slider (coffee pipeline) ── */
-/* ── Advanced Data Barista Pipeline ── */
-/* ============================================================
-   ▼▼▼  PIPELINE CSS — Copy everything below into your site  ▼▼▼
-   ============================================================ */
-
-/* Master cycle duration — change this one variable to speed up / slow down */
-/* Master cycle — one variable controls the whole timeline */
-.barista-pipeline { --cycle: 10s; }
-
-.barista-pipeline {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.bp2-track {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 520px;
-  padding: 18px 24px 14px;
-  gap: 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  box-shadow:
-    0 1px 3px rgba(0,0,0,0.02),
-    0 12px 36px rgba(0,0,0,0.04);
-}
-
-/* ── Horizontal rail ── */
-.bp2-rail {
-  position: absolute;
-  left: 30px;
-  right: 30px;
-  top: 44px;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--border);
-  z-index: 1;
-  overflow: visible;
-}
-
-/* Progress glow trailing behind the runner */
-.bp2-rail::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  height: 5px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(122,78,45,0.3), rgba(45,157,120,0.25));
-  filter: blur(1px);
-  animation: bp2RailGlow var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2RailGlow {
-  0%, 2%   { width: 0%; opacity: 0; }
-  5%       { opacity: 0.6; }
-  15%      { width: 12%; }
-  30%      { width: 34%; }
-  55%      { width: 60%; }
-  80%      { width: 92%; }
-  92%      { width: 92%; opacity: 0.5; }
-  96%      { width: 0%; opacity: 0; }
-  100%     { width: 0%; opacity: 0; }
-}
-
-/* ── Runner bean ── */
-.bp2-runner {
-  position: absolute;
-  top: 50%;
-  left: 8%;
-  z-index: 5;
-  transform: translate(-50%, -50%);
-  animation: bp2RunnerPos var(--cycle) cubic-bezier(0.23,1,0.32,1) infinite;
-}
-
-.bp2-runner-dot {
-  width: 14px;
-  height: 9px;
-  border-radius: 999px;
-  background: radial-gradient(ellipse at 35% 30%, #a06b3f, #5c3a1e);
-  box-shadow:
-    0 0 6px rgba(122,78,45,0.5),
-    0 0 12px rgba(122,78,45,0.2);
-  position: relative;
-}
-
-.bp2-runner-dot::after {
-  content: "";
-  position: absolute;
-  top: 48%;
-  left: 22%;
-  right: 22%;
-  height: 1px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 999px;
-}
-
-@keyframes bp2RunnerPos {
-  0%       { left: 8%;  opacity: 1; }
-  14%      { left: 8%;  opacity: 1; }
-  22%      { left: 35%; opacity: 1; }
-  38%      { left: 35%; opacity: 1; }
-  46%      { left: 62%; opacity: 1; }
-  62%      { left: 62%; opacity: 1; }
-  70%      { left: 90%; opacity: 1; }
-  90%      { left: 90%; opacity: 1; }
-  94%      { left: 90%; opacity: 1; }
-  97%      { left: 90%; opacity: 0; }
-  98%      { left: 8%;  opacity: 0; }
-  100%     { left: 8%;  opacity: 1; }
-}
-
-/* ── Stage layout ── */
-.bp2-stage {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 3;
-}
-
-.bp2-icon {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.bp2-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-
-.bp2-name {
-  font-size: 0.72rem;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink);
-  line-height: 1.2;
-}
-
-.bp2-sub {
-  font-size: 0.62rem;
-  letter-spacing: 0.03em;
-  color: var(--muted);
-  line-height: 1.2;
-}
-
-
-/* ────────────────────────────────────────────
-   STAGE 1 : BEANS
-   ──────────────────────────────────────────── */
-.bp2-beans {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.bp2-bean {
-  width: 13px;
-  height: 9px;
-  border-radius: 999px;
-  background: radial-gradient(ellipse at 35% 30%, #a06b3f, #5c3a1e);
-  box-shadow: inset 0 -1px 2px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
-  position: relative;
-}
-
-.bp2-bean::after {
-  content: "";
-  position: absolute;
-  top: 46%;
-  left: 18%;
-  right: 18%;
-  height: 1px;
-  background: rgba(0,0,0,0.22);
-  border-radius: 999px;
-}
-
-.bp2-bean:nth-child(1) { animation: bp2BeanDance var(--cycle) ease-in-out infinite; }
-.bp2-bean:nth-child(2) { animation: bp2BeanDance var(--cycle) ease-in-out infinite 0.1s; }
-.bp2-bean:nth-child(3) { animation: bp2BeanDance var(--cycle) ease-in-out infinite 0.2s; }
-
-@keyframes bp2BeanDance {
-  0%       { transform: translateY(0) rotate(-6deg); }
-  3%       { transform: translateY(-5px) rotate(8deg); }
-  6%       { transform: translateY(1px) rotate(-4deg); }
-  9%       { transform: translateY(-4px) rotate(6deg); }
-  12%      { transform: translateY(0px) rotate(-2deg); }
-  15%      { transform: translateY(0) rotate(0deg); }
-  17%      { transform: translateY(0) rotate(0deg); }
-  95%      { transform: translateY(0) rotate(0deg); }
-  97%      { transform: translateY(-2px) rotate(3deg); }
-  100%     { transform: translateY(0) rotate(0deg); }
-}
-
-
-/* ────────────────────────────────────────────
-   STAGE 2 : GRINDER
-   ──────────────────────────────────────────── */
-.bp2-grinder {
-  position: relative;
-  width: 32px;
-  height: 36px;
-}
-
-.bp2-grinder-hopper {
-  position: absolute;
-  left: 5px;
-  right: 5px;
-  top: 0;
-  height: 11px;
-  border-radius: 6px 6px 3px 3px;
-  background: linear-gradient(180deg, #eceae5, #dddbd5);
-  border: 1.5px solid var(--border);
-  z-index: 2;
-}
-
-.bp2-grinder-hopper::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 3px;
-  background: #ccc9c2;
-  border-radius: 0 0 2px 2px;
-}
-
-.bp2-grinder-body {
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 11px;
-  bottom: 0;
-  border-radius: 5px 5px 7px 7px;
-  background: linear-gradient(180deg, #e5e3de, #d8d6d0);
-  border: 1.5px solid var(--border);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-  overflow: hidden;
-  z-index: 1;
-}
-
-/* Powder fill */
-.bp2-grinder-body::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 2px;
-  right: 2px;
-  height: 0%;
-  background: linear-gradient(
-    180deg,
-    rgba(160, 107, 63, 0.35) 0%,
-    rgba(122, 78, 45, 0.65) 100%
-  );
-  border-radius: 0 0 5px 5px;
-  animation: bp2Powder var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2Powder {
-  0%       { height: 0%; }
-  20%      { height: 0%; }
-  25%      { height: 15%; }
-  30%      { height: 40%; }
-  36%      { height: 65%; }
-  40%      { height: 72%; }
-  44%      { height: 40%; }
-  48%      { height: 10%; }
-  50%      { height: 0%; }
-  100%     { height: 0%; }
-}
-
-/* Handle arm */
-.bp2-grinder-arm {
-  position: absolute;
-  right: -8px;
-  top: 5px;
-  width: 18px;
-  height: 2px;
-  background: #999;
-  border-radius: 999px;
-  z-index: 3;
-  transform-origin: 4px center;
-  animation: bp2HandleSpin var(--cycle) ease-in-out infinite;
-}
-
-.bp2-grinder-arm::after {
-  content: "";
-  position: absolute;
-  right: -1px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #888;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-@keyframes bp2HandleSpin {
-  0%       { transform: rotate(0deg); opacity: 0.4; }
-  18%      { transform: rotate(0deg); opacity: 0.4; }
-  20%      { transform: rotate(0deg); opacity: 0.85; }
-  23%      { transform: rotate(40deg); }
-  26%      { transform: rotate(-25deg); }
-  29%      { transform: rotate(35deg); }
-  32%      { transform: rotate(-20deg); }
-  35%      { transform: rotate(28deg); }
-  38%      { transform: rotate(-10deg); }
-  40%      { transform: rotate(0deg); opacity: 0.85; }
-  44%      { transform: rotate(0deg); opacity: 0.4; }
-  100%     { transform: rotate(0deg); opacity: 0.4; }
-}
-
-/* Grinding particles */
-.bp2-particles {
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  z-index: 4;
-}
-
-.bp2-particle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #a07040;
-  opacity: 0;
-}
-
-.bp2-particle:nth-child(1) { animation: bp2P1 var(--cycle) ease-out infinite; }
-.bp2-particle:nth-child(2) { animation: bp2P2 var(--cycle) ease-out infinite; }
-.bp2-particle:nth-child(3) { animation: bp2P3 var(--cycle) ease-out infinite; }
-
-@keyframes bp2P1 {
-  0%       { opacity: 0; transform: translate(0,0); }
-  23%      { opacity: 0; transform: translate(0,0); }
-  25%      { opacity: 0.7; transform: translate(-7px,-5px); }
-  31%      { opacity: 0; transform: translate(-12px,-10px); }
-  33%      { opacity: 0; }
-  100%     { opacity: 0; }
-}
-@keyframes bp2P2 {
-  0%       { opacity: 0; transform: translate(0,0); }
-  27%      { opacity: 0; transform: translate(0,0); }
-  29%      { opacity: 0.6; transform: translate(6px,-7px); }
-  35%      { opacity: 0; transform: translate(10px,-12px); }
-  37%      { opacity: 0; }
-  100%     { opacity: 0; }
-}
-@keyframes bp2P3 {
-  0%       { opacity: 0; transform: translate(0,0); }
-  31%      { opacity: 0; transform: translate(0,0); }
-  33%      { opacity: 0.5; transform: translate(-4px,-6px); }
-  39%      { opacity: 0; transform: translate(-8px,-11px); }
-  41%      { opacity: 0; }
-  100%     { opacity: 0; }
-}
-
-
-/* ────────────────────────────────────────────
-   STAGE 3 : BREW
-   ──────────────────────────────────────────── */
-.bp2-brew {
-  position: relative;
-  width: 34px;
-  height: 36px;
-}
-
-.bp2-filter {
-  position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 0;
-  height: 14px;
-  background: linear-gradient(180deg, #e8e6e1, #dbd9d3);
-  border: 1.5px solid var(--border);
-  border-radius: 5px 5px 2px 2px;
-  clip-path: polygon(0% 0%, 100% 0%, 82% 100%, 18% 100%);
-  z-index: 2;
-  overflow: hidden;
-}
-
-.bp2-filter::after {
-  content: "";
-  position: absolute;
-  bottom: 3px;
-  left: 22%;
-  right: 22%;
-  height: 0%;
-  background: rgba(122,78,45,0.45);
-  border-radius: 2px;
-  animation: bp2FilterFill var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2FilterFill {
-  0%       { height: 0%; opacity: 0; }
-  44%      { height: 0%; opacity: 0; }
-  50%      { height: 50%; opacity: 0.8; }
-  56%      { height: 35%; opacity: 0.6; }
-  62%      { height: 10%; opacity: 0.3; }
-  66%      { height: 0%; opacity: 0; }
-  100%     { height: 0%; opacity: 0; }
-}
-
-.bp2-drip {
-  position: absolute;
-  left: 50%;
-  top: 13px;
-  width: 3px;
-  height: 0px;
-  border-radius: 0 0 999px 999px;
-  background: rgba(122,78,45,0.75);
-  transform: translateX(-50%);
-  z-index: 1;
-  animation: bp2Drip var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2Drip {
-  0%       { height: 0; top: 13px; opacity: 0; }
-  47%      { height: 0; top: 13px; opacity: 0; }
-  50%      { height: 4px; top: 13px; opacity: 0.85; }
-  53%      { height: 9px; top: 14px; opacity: 0.9; }
-  56%      { height: 5px; top: 17px; opacity: 0.7; }
-  59%      { height: 8px; top: 13px; opacity: 0.85; }
-  62%      { height: 4px; top: 17px; opacity: 0.5; }
-  65%      { height: 0; top: 13px; opacity: 0; }
-  100%     { height: 0; top: 13px; opacity: 0; }
-}
-
-.bp2-brew-cup {
-  position: absolute;
-  left: 7px;
-  right: 7px;
-  bottom: 0;
-  height: 12px;
-  border-radius: 3px 3px 6px 6px;
-  background: var(--card);
-  border: 1.5px solid var(--border);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  overflow: hidden;
-}
-
-.bp2-brew-cup::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 2px;
-  right: 2px;
-  height: 0%;
-  background: linear-gradient(180deg, rgba(140,100,55,0.45), rgba(122,78,45,0.7));
-  border-radius: 0 0 4px 4px;
-  animation: bp2BrewCupFill var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2BrewCupFill {
-  0%       { height: 0%; }
-  50%      { height: 0%; }
-  55%      { height: 25%; }
-  60%      { height: 50%; }
-  65%      { height: 60%; }
-  69%      { height: 30%; }
-  72%      { height: 0%; }
-  100%     { height: 0%; }
-}
-
-/* Brew steam */
-.bp2-brew-steam {
-  position: absolute;
-  width: 3px;
-  border-radius: 999px;
-  background: rgba(107,107,102,0.3);
-  opacity: 0;
-  z-index: 3;
-}
-
-.bp2-brew-steam:nth-child(1) {
-  left: 11px; top: -4px; height: 9px;
-  animation: bp2BrewSteam var(--cycle) ease-in-out infinite;
-}
-.bp2-brew-steam:nth-child(2) {
-  left: 18px; top: -3px; height: 7px;
-  animation: bp2BrewSteam var(--cycle) ease-in-out infinite 0.4s;
-}
-
-@keyframes bp2BrewSteam {
-  0%       { opacity: 0; transform: translateY(3px) scaleY(0.4); }
-  48%      { opacity: 0; transform: translateY(3px) scaleY(0.4); }
-  53%      { opacity: 0.35; transform: translateY(0) scaleY(0.8); }
-  58%      { opacity: 0.5; transform: translateY(-3px) scaleY(1); }
-  63%      { opacity: 0.2; transform: translateY(-7px) scaleY(0.6); }
-  66%      { opacity: 0; transform: translateY(-10px) scaleY(0.3); }
-  100%     { opacity: 0; transform: translateY(-10px) scaleY(0.3); }
-}
-
-
-/* ────────────────────────────────────────────
-   STAGE 4 : SERVE
-   ──────────────────────────────────────────── */
-.bp2-serve-wrap {
-  position: relative;
-  width: 34px;
-  height: 34px;
-}
-
-/* Jade glow */
-.bp2-glow {
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(45,157,120,0.22), transparent 68%);
-  opacity: 0;
-  pointer-events: none;
-  animation: bp2Glow var(--cycle) ease-in-out infinite;
-  z-index: 0;
-}
-
-@keyframes bp2Glow {
-  0%       { opacity: 0; transform: scale(0.7); }
-  66%      { opacity: 0; transform: scale(0.7); }
-  74%      { opacity: 0.6; transform: scale(1); }
-  82%      { opacity: 1; transform: scale(1.08); }
-  88%      { opacity: 0.7; transform: scale(1); }
-  93%      { opacity: 0.2; transform: scale(0.85); }
-  96%      { opacity: 0; transform: scale(0.7); }
-  100%     { opacity: 0; transform: scale(0.7); }
-}
-
-/* Cup body */
-.bp2-serve-cup {
-  position: absolute;
-  left: 3px;
-  right: 8px;
-  bottom: 6px;
-  height: 16px;
-  border-radius: 4px 4px 7px 7px;
-  background: var(--card);
-  border: 2px solid var(--ink);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.14);
-  overflow: hidden;
-  z-index: 2;
-}
-
-/* Coffee inside */
-.bp2-serve-cup::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 2px;
-  right: 2px;
-  height: 0%;
-  background: linear-gradient(180deg, rgba(140,100,55,0.5), rgba(92,58,30,0.8));
-  border-radius: 0 0 5px 5px;
-  animation: bp2ServeFill var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2ServeFill {
-  0%       { height: 0%; }
-  68%      { height: 0%; }
-  74%      { height: 55%; }
-  78%      { height: 72%; }
-  90%      { height: 72%; }
-  94%      { height: 35%; }
-  97%      { height: 0%; }
-  100%     { height: 0%; }
-}
-
-/* Handle */
-.bp2-serve-handle {
-  position: absolute;
-  right: 2px;
-  bottom: 10px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 2px solid var(--ink);
-  border-left-color: transparent;
-  z-index: 2;
-}
-
-/* Saucer */
-.bp2-saucer {
-  position: absolute;
-  left: 0;
-  right: 4px;
-  bottom: 4px;
-  height: 3px;
-  border-radius: 0 0 999px 999px;
-  background: #dddbd5;
-  border: 1px solid var(--border);
-  border-top: none;
-  z-index: 1;
-}
-
-/* Serve steam */
-.bp2-serve-steam {
-  position: absolute;
-  width: 3px;
-  border-radius: 999px;
-  background: rgba(107,107,102,0.3);
-  opacity: 0;
-  z-index: 3;
-}
-
-.bp2-serve-steam:nth-child(1) {
-  left: 8px; bottom: 22px; height: 12px;
-  animation: bp2ServeSteam var(--cycle) ease-in-out infinite;
-}
-.bp2-serve-steam:nth-child(2) {
-  left: 14px; bottom: 23px; height: 10px;
-  animation: bp2ServeSteam var(--cycle) ease-in-out infinite 0.5s;
-}
-.bp2-serve-steam:nth-child(3) {
-  left: 19px; bottom: 21px; height: 8px;
-  animation: bp2ServeSteam var(--cycle) ease-in-out infinite 1s;
-}
-
-@keyframes bp2ServeSteam {
-  0%       { opacity: 0; transform: translateY(4px) scaleY(0.3); }
-  68%      { opacity: 0; transform: translateY(4px) scaleY(0.3); }
-  74%      { opacity: 0.3; transform: translateY(1px) scaleY(0.7); }
-  80%      { opacity: 0.6; transform: translateY(-2px) scaleY(1); }
-  86%      { opacity: 0.4; transform: translateY(-6px) scaleY(0.75); }
-  92%      { opacity: 0.15; transform: translateY(-10px) scaleY(0.4); }
-  96%      { opacity: 0; transform: translateY(-14px) scaleY(0.2); }
-  100%     { opacity: 0; transform: translateY(-14px) scaleY(0.2); }
-}
-
-/* Serve label turns jade */
-.bp2-stage--serve .bp2-name {
-  animation: bp2ServeName var(--cycle) ease-in-out infinite;
-}
-
-@keyframes bp2ServeName {
-  0%       { color: var(--ink); }
-  66%      { color: var(--ink); }
-  74%      { color: var(--jade); }
-  90%      { color: var(--jade); }
-  96%      { color: var(--ink); }
-  100%     { color: var(--ink); }
-}
-
-
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .barista-pipeline *,
-  .barista-pipeline *::before,
-  .barista-pipeline *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-  .bp2-glow { display: none; }
-}
-
-/* ── Mobile ── */
-@media (max-width: 480px) {
-  .bp2-track {
-    max-width: 100%;
-    padding: 14px 14px 12px;
-    gap: 6px;
-  }
-  .bp2-rail {
-    left: 20px;
-    right: 20px;
-    top: 42px;
-  }
-  .bp2-icon {
-    width: 38px;
-    height: 38px;
-  }
-  .bp2-name { font-size: 0.66rem; }
-  .bp2-sub  { font-size: 0.58rem; }
-}
-
-/* Hero skill tags */
-.hero-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.hero-skill-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text);
-  transition: all var(--duration) var(--ease);
-}
-
-.hero-skill-tag:hover {
-  border-color: var(--jade);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.hero-skill-icon {
-  font-size: 0.85rem;
-  line-height: 1;
-}
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: 12px 24px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: var(--radius);
-  border: none;
-  cursor: pointer;
-  transition: all var(--duration) var(--ease);
-  text-decoration: none;
-  line-height: 1;
-}
-
-.btn-primary {
-  background: var(--ink);
-  color: var(--bg);
-}
-
-.btn-primary:hover {
-  background: #2a2a28;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--ink);
-  border: 1.5px solid var(--border);
-}
-
-.btn-secondary:hover {
-  border-color: var(--ink);
-  transform: translateY(-1px);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: var(--muted);
-  padding: 12px 8px;
-  font-weight: 500;
-}
-
-.btn-ghost:hover {
-  color: var(--ink);
-}
-
-.btn-ghost .arrow {
-  transition: transform var(--duration) var(--ease);
-  display: inline-block;
-}
-
-.btn-ghost:hover .arrow {
-  transform: translateX(3px);
-}
-
-/* Status dot */
-.status-bar {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-top: var(--space-xl);
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--jade);
-  animation: pulse 2.5s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-/* ============================================
-   TICKER STRIP (NEW)
-   ============================================ */
-.ticker-wrap {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 0;
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.ticker-track {
-  display: flex;
-  width: max-content;
-  animation: tickerScroll 30s linear infinite;
-}
-
-.ticker-content {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  padding: 0 8px;
-}
-
-.ticker-content span {
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: 0 16px;
-  white-space: nowrap;
-}
-
-.ticker-sep {
-  color: var(--jade) !important;
-  font-size: 0.45rem !important;
-  padding: 0 4px !important;
-}
-
-@keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* ============================================
-   PROOF STRIP (chips)
-   ============================================ */
-.proof-strip {
-  padding: var(--space-2xl) 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.proof-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  justify-content: center;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: 10px 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text);
-  transition: all var(--duration) var(--ease);
-}
-
-.chip:hover {
-  border-color: var(--jade);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.chip-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--jade);
-  flex-shrink: 0;
-}
-
-/* ============================================
-   WORK EXPERIENCE — Employer Sections
-   ============================================ */
-.work-section {
-  margin-bottom: var(--space-3xl);
-}
-
-.work-section:last-child {
-  margin-bottom: 0;
-}
-
-/* ── Employer Header Strip ── */
-.employer-strip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  padding-bottom: var(--space-lg);
-  margin-bottom: var(--space-lg);
-  border-bottom: 2px solid var(--jade);
-}
-
-.employer-strip-left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.employer-strip-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-
-.employer-strip-role {
-  font-size: 0.85rem;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.employer-strip-context {
-  font-size: 0.78rem;
-  color: var(--muted);
-  font-style: italic;
-  max-width: 520px;
-  line-height: 1.45;
-  margin-top: 4px;
-}
-
-.employer-strip-right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
-
-.employer-strip-duration {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--jade);
-  background: var(--jade-soft);
-  padding: 6px 16px;
-  border-radius: 100px;
-  letter-spacing: 0.02em;
-}
-
-/* ── Contribution Card Slider ── */
-.work-slider-wrapper {
-  position: relative;
-}
-
-.work-slider-track {
-  display: flex;
-  gap: var(--space-lg);
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--space-md);
-  scrollbar-width: none;
-}
-
-.work-slider-track::-webkit-scrollbar {
-  display: none;
-}
-
-/* ── Contribution Card ── */
-.work-card {
-  min-width: 340px;
-  max-width: 400px;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: transform var(--duration) var(--ease),
-              box-shadow var(--duration) var(--ease),
-              border-color var(--duration) var(--ease);
-  position: relative;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 12px 36px rgba(0,0,0,0.04);
-}
-
-.work-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.07);
-  border-color: rgba(45,157,120,0.25);
-}
-
-/* Card jade top accent on hover */
-.work-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--jade);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s var(--ease);
-}
-
-.work-card:hover::before {
-  transform: scaleX(1);
-}
-
-.work-card-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
-
-.work-card-context {
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.work-card-work {
-  font-size: 0.82rem;
-  color: var(--text);
-  line-height: 1.6;
-}
-
-/* Impact — lab-why style */
-.work-card-impact {
-  padding: 10px 11px;
-  border-radius: var(--radius);
-  background: linear-gradient(
-    135deg,
-    rgba(232,245,240,0.85),
-    rgba(245,240,234,0.8)
-  );
-  border: 1px solid rgba(45,157,120,0.18);
-}
-
-.work-card-impact-label {
-  display: inline-block;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 650;
-  color: var(--jade);
-  margin-bottom: 2px;
-}
-
-.work-card-impact p {
-  margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: var(--text);
-}
-
-/* Tool tags */
-.work-card-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: auto;
-  padding-top: 4px;
-}
-
-.work-card-tools .tool-tag {
-  font-size: 0.68rem;
-  font-weight: 500;
-  padding: 3px 9px;
-  background: var(--surface);
-  border-radius: 100px;
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
-
-/* ── Slider Controls ── */
-.work-slider-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--space-lg);
-}
-
-.work-slider-dots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.work-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: all var(--duration) var(--ease);
-}
-
-.work-dot.active {
-  width: 20px;
-  border-radius: 100px;
-  background: var(--jade);
-}
-
-.work-slider-nav {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.work-slider-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: var(--card);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--duration) var(--ease);
-  color: var(--muted);
-}
-
-.work-slider-btn:hover {
-  border-color: var(--ink);
-  color: var(--ink);
-  transform: scale(1.05);
-}
-
-.work-slider-btn:active {
-  transform: scale(0.95);
-}
-
-.work-slider-btn svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* Fade edges */
-.work-slider-wrapper::before,
-.work-slider-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: var(--space-md);
-  width: 48px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.work-slider-wrapper::after {
-  right: 0;
-  background: linear-gradient(to left, var(--bg), transparent);
-}
-
-.work-slider-wrapper::before {
-  left: 0;
-  background: linear-gradient(to right, var(--bg), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.work-slider-wrapper.scrolled::before {
-  opacity: 1;
-}
-
-/* ── Responsive ── */
-@media (max-width: 680px) {
-  .employer-strip {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .work-card {
-    min-width: 290px;
-    max-width: 330px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-   
-/* ============================================
-   LAB / SIDE PROJECTS — SLIDER
-   ============================================ */
-.lab-slider-wrapper {
-  position: relative;
-}
-
-.lab-slider-track {
-  display: flex;
-  gap: var(--space-lg);
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--space-md);
-  scrollbar-width: none;
-}
-
-.lab-slider-track::-webkit-scrollbar {
-  display: none;
-}
-
-.lab-card {
-  min-width: 340px;
-  max-width: 380px;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg); /* slightly tighter than space-xl */
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  transition: transform var(--duration) var(--ease),
-              box-shadow var(--duration) var(--ease),
-              border-color var(--duration) var(--ease),
-              background var(--duration) var(--ease);
-  position: relative;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.04);
-}
-
-.lab-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.07);
-  border-color: rgba(45,157,120,0.25);
-  background: radial-gradient(circle at top left, rgba(248,250,249,0.9), var(--card));
-}
-
-.lab-card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-md);
-}
-
-.lab-card-header h3 {
-  font-size: 1.05rem;
-}
-
-/* Why it matters block inside lab cards */
-.lab-why {
-  margin-top: -4px;
-  padding: 10px 11px;
-  border-radius: var(--radius);
-  background: linear-gradient(
-    135deg,
-    rgba(232,245,240,0.85),
-    rgba(245,240,234,0.8)
-  );
-  border: 1px solid rgba(45,157,120,0.18);
-}
-
-.lab-why-label {
-  display: inline-block;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 650;
-  color: var(--jade);
-  margin-bottom: 2px;
-}
-
-.lab-why p {
-  margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: var(--text);
-}
-   
-.lab-link {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--duration) var(--ease);
-  color: var(--muted);
-}
-
-.lab-card:hover .lab-link {
-  border-color: var(--ink);
-  color: var(--ink);
-}
-
-.lab-link svg {
-  width: 14px;
-  height: 14px;
-}
-
-.lab-card-thumb {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.lab-card-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s var(--ease);
-}
-
-.lab-card:hover .lab-card-thumb img {
-  transform: scale(1.03);
-}
-
-.lab-card > p {
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: var(--muted);
-}
-
-.lab-card .project-tools {
-  margin-top: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-.lab-card .tool-tag {
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-}
-
-.lab-lang {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-weight: 500;
-  margin-top: 6px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--surface);
-}
-
-.lab-lang-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.lab-lang-dot.jupyter { background: #f37626; }
-.lab-lang-dot.python  { background: #3572a5; }
-.lab-lang-dot.sql     { background: #e38c00; }
-.lab-lang-dot.powerbi { background: #f2c811; }
-
-/* Slider controls */
-.lab-slider-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--space-lg);
-}
-
-.lab-slider-nav {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.lab-slider-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border);
-  background: var(--card);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--duration) var(--ease);
-  color: var(--muted);
-}
-
-.lab-slider-btn:hover {
-  border-color: var(--ink);
-  color: var(--ink);
-  transform: scale(1.05);
-}
-
-.lab-slider-btn:active {
-  transform: scale(0.95);
-}
-
-.lab-slider-btn svg {
-  width: 16px;
-  height: 16px;
-}
-
-.lab-slider-dots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.lab-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: all var(--duration) var(--ease);
-}
-
-.lab-dot.active {
-  width: 20px;
-  border-radius: 100px;
-  background: var(--jade);
-}
-
-/* Fade edges */
-.lab-slider-wrapper::before,
-.lab-slider-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: var(--space-md);
-  width: 48px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.lab-slider-wrapper::after {
-  right: 0;
-  background: linear-gradient(to left, var(--bg), transparent);
-}
-
-.lab-slider-wrapper::before {
-  left: 0;
-  background: linear-gradient(to right, var(--bg), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.lab-slider-wrapper.scrolled::before {
-  opacity: 1;
-}
-
-@media (max-width: 680px) {
-  .lab-card {
-    min-width: 290px;
-    max-width: 320px;
-  }
-}
-
-/* ============================================
-   SKILLS
-   ============================================ */
-/* ============================================
-   SKILLS ICON GRID — Drop-in replacement
-   ============================================
-   
-   INTEGRATION:
-   1. Delete the old .skills-grid, .skill-group, .skill-group-title,
-      .skill-group-icon, .skill-list CSS blocks
-   2. Paste this CSS into your <style> tag
-   3. Replace the <div class="skills-grid">...</div> HTML block
-      with the HTML from skills-section-html.html
-   ============================================ */
-
-.skills-table {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.03);
-}
-
-/* Column headers */
-.skills-col-header {
-  padding: 20px 12px 16px;
-  text-align: center;
-  border-bottom: 2px solid var(--jade);
-  background: linear-gradient(180deg, var(--jade-soft), rgba(232,245,240,0.3));
-}
-
-.skills-col-header h3 {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--jade);
-  line-height: 1;
-}
-
-/* Columns */
-.skills-col {
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--border);
-}
-
-.skills-col:last-child {
-  border-right: none;
-}
-
-/* Individual skill cells */
-.skill-cell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 20px 8px 16px;
-  border-bottom: 1px solid var(--border);
-  transition: background var(--duration) var(--ease);
-}
-
-.skill-cell:last-child {
-  border-bottom: none;
-}
-
-.skill-cell:hover {
-  background: var(--jade-soft);
-}
-
-.skill-cell:hover .skill-icon-wrap {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(45,157,120,0.12);
-}
-
-/* Icon container */
-.skill-icon-wrap {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--duration) var(--ease);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-.skill-icon-wrap svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* Skill label */
-.skill-cell-name {
-  font-size: 0.74rem;
-  font-weight: 550;
-  color: var(--ink);
-  text-align: center;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-}
-
-/* ── Responsive ── */
-@media (max-width: 900px) {
-  .skills-table {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 680px) {
-  .skills-table {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 420px) {
-  .skills-table {
-    grid-template-columns: 1fr;
-  }
-  .skills-col {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .skills-col:last-child {
-    border-bottom: none;
-  }
-}
-
-/* ============================================
-   ABOUT
-   ============================================ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3xl);
-  align-items: start;
-}
-
-.about-story p {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: var(--muted);
-  margin-bottom: var(--space-lg);
-}
-
-.about-story p strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.how-i-work {
-  background: var(--surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-}
-
-.how-i-work h3 {
-  margin-bottom: var(--space-md);
-}
-
-.how-i-work-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.how-i-work-list li {
-  display: flex;
-  gap: var(--space-md);
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.how-i-work-list li .num {
-  font-weight: 700;
-  color: var(--jade);
-  font-size: 0.75rem;
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-
-/* ============================================
-   DECISION JOURNAL
-   ============================================ */
-/* .journal {
-  background: var(--ink);
-  color: var(--bg);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3xl);
-  position: relative;
-  overflow: hidden;
-}
-
-.journal::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: var(--jade);
-  opacity: 0.06;
-}
-
-.journal .section-label::before {
-  background: var(--jade);
-}
-
-.journal .overline {
-  color: rgba(250,250,249,0.5);
-}
-
-.journal h2 {
-  color: var(--bg);
-  margin-bottom: var(--space-2xl);
-}
-
-.journal-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
-}
-
-.journal-entry {
-  border-left: 2px solid var(--jade);
-  padding-left: var(--space-lg);
-}
-
-.journal-entry .entry-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--jade);
-  margin-bottom: 6px;
-}
-
-.journal-entry p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: rgba(250,250,249,0.8);
-} */
-
-/* ============================================
-   CONTACT
-   ============================================ */
-.contact-inner {
-  text-align: center;
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-.contact-inner h2 {
-  margin-bottom: var(--space-md);
-}
-
-.contact-inner .subtitle {
-  color: var(--muted);
-  margin-bottom: var(--space-2xl);
-  font-size: 1.05rem;
-}
-
-.contact-links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-}
-
-.contact-link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: 12px 24px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all var(--duration) var(--ease);
-}
-
-.contact-link:hover {
-  border-color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-}
-
-.contact-link svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.footer {
-  padding: var(--space-2xl) 0;
-  border-top: 1px solid var(--border);
-}
-
-.footer .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer p {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-@media (max-width: 900px) {
-  .hero-split {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .hero-headline {
-    max-width: 100%;
-  }
-  .hero-tagline {
-    max-width: 100%;
-  }
-  .hero-actions {
-    justify-content: center;
-  }
-  .hero-visual {
-    order: -1;
-  }
-  .avatar-badge {
-    width: 200px;
-    height: 200px;
-  }
-  .mini-pipeline {
-    max-width: 300px;
-  }
-  .status-bar {
-    justify-content: center;
-  }
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-  .journal-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 680px) {
-  :root {
-    --space-4xl: 64px;
-    --space-5xl: 80px;
-  }
-
-  .hero {
-    padding: var(--space-4xl) 0 var(--space-3xl);
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-skills {
-    gap: 8px;
-  }
-
-  .mini-pipeline {
-    max-width: 100%;
-    padding: 8px 10px;
-  }
-
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: var(--nav-height);
-    left: 0;
-    right: 0;
-    background: rgba(250,250,249,0.97);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    flex-direction: column;
-    padding: var(--space-lg);
-    gap: var(--space-md);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-toggle {
-    display: block;
-  }
-
-  .journal {
-    padding: var(--space-2xl);
-  }
-
-  .container {
-    padding: 0 var(--space-md);
-  }
-
-  .footer .container {
-    flex-direction: column;
-    gap: var(--space-sm);
-    text-align: center;
-  }
-}
-
-/* ============================================
-   ENTRANCE ANIMATIONS
-   ============================================ */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>
-</head>
-<body>
-
-<!-- ============================================
-     NAVIGATION
-     ============================================ -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <div class="container">
-    <a href="#hero" class="nav-logo" aria-label="Home">harsh<span>.</span>data</a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" role="list">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#lab">Lab</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-</nav>
-
-<!-- ============================================
-     HERO SECTION
-     ============================================ -->
-<section class="hero" id="hero">
-  <div class="container">
-    <div class="hero-split">
-      <div class="hero-headline fade-in">
-        <div class="overline" style="margin-bottom: var(--space-md);">Data Analyst · Analytics Engineer</div>
-        <h1 class="hero-name">Harsh Patel</h1>
-        <p class="hero-tagline"><span class="typewriter" id="typewriter"></span><span class="cursor" aria-hidden="true">|</span></p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-          <a href="https://drive.google.com/file/d/1ZE9Nh7otCvGoWTYUlGkcuaWp9lz2ky4y/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Resume <span class="arrow">→</span></a>
-        </div>
-        <div class="status-bar">
-          <span class="status-dot" aria-hidden="true"></span>
-          Open to Data Analyst & Analytics Engineer roles in Canada
-        </div>
-      </div>
-      <div class="hero-visual fade-in">
-        <div class="avatar-badge" aria-hidden="true">
-          <img src="avatar.png" alt="Harsh Patel — Data Analyst illustration" width="260" height="260" loading="eager">
-        </div>
-
-   <!-- ============================================================
-     ▼▼▼  PIPELINE HTML — Replace your <div class="barista-pipeline"> with this  ▼▼▼
-     ============================================================ -->
-<div class="barista-pipeline" aria-label="Data pipeline: raw data → clean → model → decision-ready dashboard">
-  <div class="bp2-track">
-
-    <!-- Rail + runner -->
-    <div class="bp2-rail" aria-hidden="true">
-      <div class="bp2-runner">
-        <div class="bp2-runner-dot"></div>
-      </div>
-    </div>
-
-    <!-- Stage 1: Beans -->
-    <div class="bp2-stage bp2-stage--beans">
-      <div class="bp2-icon">
-        <div class="bp2-beans">
-          <span class="bp2-bean"></span>
-          <span class="bp2-bean"></span>
-          <span class="bp2-bean"></span>
-        </div>
-      </div>
-      <div class="bp2-label">
-        <span class="bp2-name">Beans</span>
-        <span class="bp2-sub">Raw data</span>
-      </div>
-    </div>
-
-    <!-- Stage 2: Grind -->
-    <div class="bp2-stage bp2-stage--grind">
-      <div class="bp2-icon">
-        <div class="bp2-grinder">
-          <div class="bp2-grinder-hopper"></div>
-          <div class="bp2-grinder-body"></div>
-          <div class="bp2-grinder-arm"></div>
-          <div class="bp2-particles">
-            <span class="bp2-particle"></span>
-            <span class="bp2-particle"></span>
-            <span class="bp2-particle"></span>
-          </div>
-        </div>
-      </div>
-      <div class="bp2-label">
-        <span class="bp2-name">Grind</span>
-        <span class="bp2-sub">Clean &amp; prep</span>
-      </div>
-    </div>
-
-    <!-- Stage 3: Brew -->
-    <div class="bp2-stage bp2-stage--brew">
-      <div class="bp2-icon">
-        <div class="bp2-brew">
-          <span class="bp2-brew-steam"></span>
-          <span class="bp2-brew-steam"></span>
-          <div class="bp2-filter"></div>
-          <div class="bp2-drip"></div>
-          <div class="bp2-brew-cup"></div>
-        </div>
-      </div>
-      <div class="bp2-label">
-        <span class="bp2-name">Brew</span>
-        <span class="bp2-sub">Model &amp; logic</span>
-      </div>
-    </div>
-
-    <!-- Stage 4: Serve -->
-    <div class="bp2-stage bp2-stage--serve">
-      <div class="bp2-icon">
-        <div class="bp2-glow"></div>
-        <div class="bp2-serve-wrap">
-          <span class="bp2-serve-steam"></span>
-          <span class="bp2-serve-steam"></span>
-          <span class="bp2-serve-steam"></span>
-          <div class="bp2-serve-cup"></div>
-          <div class="bp2-serve-handle"></div>
-          <div class="bp2-saucer"></div>
-        </div>
-      </div>
-      <div class="bp2-label">
-        <span class="bp2-name">Serve</span>
-        <span class="bp2-sub">Decision view</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-         
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     TICKER STRIP — Scrolling tech marquee
-     ============================================ -->
-<div class="ticker-wrap" aria-hidden="true">
-  <div class="ticker-track">
-    <div class="ticker-content">
-      <span>Python</span><span class="ticker-sep">◆</span>
-      <span>SQL</span><span class="ticker-sep">◆</span>
-      <span>Power BI</span><span class="ticker-sep">◆</span>
-      <span>Microsoft Fabric</span><span class="ticker-sep">◆</span>
-      <span>DAX</span><span class="ticker-sep">◆</span>
-      <span>Star Schema</span><span class="ticker-sep">◆</span>
-      <span>ETL Pipelines</span><span class="ticker-sep">◆</span>
-      <span>Data Quality</span><span class="ticker-sep">◆</span>
-      <span>Tableau</span><span class="ticker-sep">◆</span>
-      <span>Docker</span><span class="ticker-sep">◆</span>
-      <span>MongoDB</span><span class="ticker-sep">◆</span>
-      <span>dbt</span><span class="ticker-sep">◆</span>
-    </div>
-    <div class="ticker-content">
-      <span>Python</span><span class="ticker-sep">◆</span>
-      <span>SQL</span><span class="ticker-sep">◆</span>
-      <span>Power BI</span><span class="ticker-sep">◆</span>
-      <span>Microsoft Fabric</span><span class="ticker-sep">◆</span>
-      <span>DAX</span><span class="ticker-sep">◆</span>
-      <span>Star Schema</span><span class="ticker-sep">◆</span>
-      <span>ETL Pipelines</span><span class="ticker-sep">◆</span>
-      <span>Data Quality</span><span class="ticker-sep">◆</span>
-      <span>Tableau</span><span class="ticker-sep">◆</span>
-      <span>Docker</span><span class="ticker-sep">◆</span>
-      <span>MongoDB</span><span class="ticker-sep">◆</span>
-      <span>dbt</span><span class="ticker-sep">◆</span>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================
-     PROOF STRIP
-     ============================================ -->
-<section class="proof-strip" aria-label="Core competencies">
-  <div class="container">
-    <div class="proof-chips">
-      <div class="chip"><span class="chip-dot" aria-hidden="true"></span>SQL &amp; Data Modeling</div>
-      <div class="chip"><span class="chip-dot" aria-hidden="true"></span>ETL Pipeline Architecture</div>
-      <div class="chip"><span class="chip-dot" aria-hidden="true"></span>Decision-Ready Dashboards</div>
-      <div class="chip"><span class="chip-dot" aria-hidden="true"></span>Data Quality Engineering</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     WORK EXPERIENCE
-     ============================================ -->
-   
-<section class="section" id="projects">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label"><span class="overline">Work experience</span></div>
-      <h2>Where I've been doing the work</h2>
-    </div>
-
-   <!-- ═══════════════════════════════════════════
-     CENTAURI AI
-     Paste this block INSIDE <section id="projects">
-     ABOVE the existing Alberta Innovates work-section.
-     ═══════════════════════════════════════════ -->
-   <div class="work-section">
-     <div class="employer-strip">
-       <div class="employer-strip-left">
-         <span class="employer-strip-name">Centauri AI</span>
-         <span class="employer-strip-role">Market Research Analyst · Contract</span>
-         <p class="employer-strip-context">Early-stage AI startup building computer vision and document intelligence for construction. I supported the founding team with competitive research and go-to-market analysis.</p>
-       </div>
-       <div class="employer-strip-right">
-         <span class="employer-strip-duration">
-           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-           Present · 2026
-         </span>
-       </div>
-     </div>
-   
-     <div class="work-slider-wrapper" data-slider="centauri">
-       <div class="work-slider-track">
-   
-         <!-- Card 1 -->
-         <article class="work-card">
-           <div class="work-card-title">Competitive landscape — 20+ construction tech players in one place</div>
-           <p class="work-card-context">The founding team was making product and go-to-market calls based on scattered notes, half-finished spreadsheets, and whatever someone remembered from a demo last week. No shared view of who was doing what.</p>
-           <p class="work-card-work">Pulled together a structured competitive view of 20+ construction tech companies, tracking pricing, product features, positioning, and recent moves like funding or acquisitions. Pulled signals from company websites, review sites, and public sources, and organized everything into a consistent shape so competitors could actually be compared side by side.</p>
-           <div class="work-card-impact">
-             <span class="work-card-impact-label">Impact</span>
-             <p>Gave the founding team a clear picture of the market they were walking into, which made product and positioning conversations less opinion-driven and more grounded in what was actually out there.</p>
-           </div>
-           <div class="work-card-tools">
-             <span class="tool-tag">Market Research</span>
-             <span class="tool-tag">LLM Workflows</span>
-             <span class="tool-tag">Excel</span>
-             <span class="tool-tag">Notion</span>
-           </div>
-         </article>
-   
-         <!-- Card 2 -->
-         <article class="work-card">
-           <div class="work-card-title">LLM-assisted research workflows — faster scans, consistent output</div>
-           <p class="work-card-context">Manually reading through dozens of competitor sites and pricing pages was eating most of the week, and different research rounds kept producing slightly different shapes of data.</p>
-           <p class="work-card-work">Designed prompt-based research workflows that used LLMs to extract structured info from messy web sources: pricing, feature lists, target customers, and positioning language. Standardized the output format so each competitor scan slotted into the same template, and documented the prompts so the process stayed repeatable instead of one-off.</p>
-           <div class="work-card-impact">
-             <span class="work-card-impact-label">Impact</span>
-             <p>Cut down manual research time on each competitor and made outputs consistent enough that the team could trust comparisons without double-checking the source every time.</p>
-           </div>
-           <div class="work-card-tools">
-             <span class="tool-tag">Prompt Design</span>
-             <span class="tool-tag">LLMs</span>
-             <span class="tool-tag">Python</span>
-             <span class="tool-tag">Excel</span>
-           </div>
-         </article>
-   
-         <!-- Card 3 -->
-         <article class="work-card">
-           <div class="work-card-title">Vertical prioritization &amp; BI dashboard — where to actually sell first</div>
-           <p class="work-card-context">As a small team, "go after everyone in construction" was not a strategy. The founders needed a defensible way to pick which segments to chase first without relying on gut feel alone.</p>
-           <p class="work-card-work">Scored prospect segments across company size, tech maturity, and pain severity to surface 3 priority verticals for early outbound. Then built a Power BI market intelligence dashboard that brought competitor feature releases, pricing shifts, and acquisition activity into one place, so competitive monitoring stopped being a weekly scramble.</p>
-           <div class="work-card-impact">
-             <span class="work-card-impact-label">Impact</span>
-             <p>Gave the founding team a concrete starting point for outbound sales and a single view of the competitive landscape, replacing ad hoc research with a decision-ready layer.</p>
-           </div>
-           <div class="work-card-tools">
-             <span class="tool-tag">Power BI</span>
-             <span class="tool-tag">DAX</span>
-             <span class="tool-tag">Segmentation</span>
-             <span class="tool-tag">Go-to-Market</span>
-           </div>
-         </article>
-   
-       </div>
-   
-       <div class="work-slider-controls">
-         <div class="work-slider-dots">
-           <span class="work-dot active"></span>
-           <span class="work-dot"></span>
-           <span class="work-dot"></span>
-         </div>
-         <div class="work-slider-nav">
-           <button class="work-slider-btn" data-dir="prev" aria-label="Previous">
-             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-           </button>
-           <button class="work-slider-btn" data-dir="next" aria-label="Next">
-             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-           </button>
-         </div>
-       </div>
-     </div>
-   </div>
-     
-    <!-- ═══════════════════════════════════════════
-         ALBERTA INNOVATES
-         ═══════════════════════════════════════════ -->
-    <div class="work-section">
-      <div class="employer-strip">
-        <div class="employer-strip-left">
-          <span class="employer-strip-name">Alberta Innovates</span>
-          <span class="employer-strip-role">Data &amp; Reporting Analyst · Contract</span>
-          <p class="employer-strip-context">Provincial innovation agency funding Alberta's tech ecosystem. I worked with the data team on corporate planning and leadership reporting.</p>
-        </div>
-        <div class="employer-strip-right">
-          <span class="employer-strip-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            8 months · 2025
-          </span>
-        </div>
-      </div>
-
-      <div class="work-slider-wrapper" data-slider="ai">
-        <div class="work-slider-track">
-
-          <!-- Card 1 -->
-          <article class="work-card">
-            <div class="work-card-title">Post-investment metrics — getting to one place for the truth</div>
-            <p class="work-card-context">Grant performance data over 8+ years lived in different spreadsheets and trackers. Every big review started with "which version of this is right?"</p>
-            <p class="work-card-work">Helped build a reusable reporting model in Microsoft Fabric and Power BI so leaders could pull numbers from one place instead of chasing files. I worked on loading and cleaning historical spreadsheets, shaping them into a simple star schema for programs and projects, and running reconciliation checks so the new numbers matched what finance expected. I also documented how key metrics were calculated so different teams stopped maintaining their own formulas.</p>
-            <div class="work-card-impact">
-              <span class="work-card-impact-label">Impact</span>
-              <p>Made executive reports easier to trust: one source of metrics, fewer last-minute fixes, and clearer answers when someone asked, "where did this number come from?"</p>
-            </div>
-            <div class="work-card-tools">
-              <span class="tool-tag">Microsoft Fabric</span>
-              <span class="tool-tag">Power BI</span>
-              <span class="tool-tag">SQL</span>
-              <span class="tool-tag">Excel</span>
-            </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="work-card">
-            <div class="work-card-title">Alberta tech landscape — research pack for strategy conversations</div>
-            <p class="work-card-context">Leadership wanted a clearer, data-backed picture of Alberta's tech ecosystem to guide program focus, but information lived across reports, websites, and one-off discussions.</p>
-            <p class="work-card-work">Pulled together public datasets, internal notes, and stakeholder input into a structured view of sectors, stages, regions, and funding gaps. Built summary tables and simple visuals that could drop into slide decks and briefings, and kept a small "sources &amp; assumptions" log so people knew what the numbers actually represented.</p>
-            <div class="work-card-impact">
-              <span class="work-card-impact-label">Impact</span>
-              <p>Gave leaders a concrete starting point for program discussions and made it easier to explain the province's tech story to government partners.</p>
-            </div>
-            <div class="work-card-tools">
-              <span class="tool-tag">Python</span>
-              <span class="tool-tag">Excel</span>
-              <span class="tool-tag">Power BI</span>
-              <span class="tool-tag">SharePoint</span>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="work-card">
-            <div class="work-card-title">Funding dashboards &amp; refreshes — monthly reports without the scramble</div>
-            <p class="work-card-context">Monthly funding summaries were built by copying numbers between spreadsheets. Any last-minute question meant starting another manual version.</p>
-            <p class="work-card-work">Helped design a Power BI model on top of Fabric dataflows so core funding KPIs were always available in one dashboard. I contributed queries for program and project views, set up scheduled refreshes, and added simple validation checks so we could spot issues before meetings. For a few recurring asks, I used Python to tidy raw extracts into shapes the model could consume.</p>
-            <div class="work-card-impact">
-              <span class="work-card-impact-label">Impact</span>
-              <p>Shifted monthly reviews from "build the pack" to "open the dashboard," and cut down the time spent rebuilding the same views every cycle.</p>
-            </div>
-            <div class="work-card-tools">
-              <span class="tool-tag">Power BI</span>
-              <span class="tool-tag">Microsoft Fabric</span>
-              <span class="tool-tag">Python</span>
-              <span class="tool-tag">SQL</span>
-              <span class="tool-tag">DAX</span>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="work-slider-controls">
-          <div class="work-slider-dots">
-            <span class="work-dot active"></span>
-            <span class="work-dot"></span>
-            <span class="work-dot"></span>
-          </div>
-          <div class="work-slider-nav">
-            <button class="work-slider-btn" data-dir="prev" aria-label="Previous">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-            </button>
-            <button class="work-slider-btn" data-dir="next" aria-label="Next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         WHISTLING SOLUTIONS
-         ═══════════════════════════════════════════ -->
-    <div class="work-section">
-      <div class="employer-strip">
-        <div class="employer-strip-left">
-          <span class="employer-strip-name">Whistling Solutions</span>
-          <span class="employer-strip-role">Data Analyst Intern</span>
-          <p class="employer-strip-context">Joined a small team supporting operations and product with reporting, data cleaning, and keeping KPIs consistent across dashboards.</p>
-        </div>
-        <div class="employer-strip-right">
-          <span class="employer-strip-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            4 months · 2023
-          </span>
-        </div>
-      </div>
-
-      <div class="work-slider-wrapper" data-slider="ws">
-        <div class="work-slider-track">
-
-          <!-- Card 1 -->
-          <article class="work-card">
-            <div class="work-card-title">Reporting workflows — less copy-paste, more answers</div>
-            <p class="work-card-context">Several recurring reports were rebuilt by hand in spreadsheets every week, which left little time to discuss what the numbers meant.</p>
-            <p class="work-card-work">Helped set up Power Automate flows and scheduled refreshes so key reports pulled their own data. Worked with my manager to test the new process against the old spreadsheets and fix mismatches before handing it over to the team.</p>
-            <div class="work-card-impact">
-              <span class="work-card-impact-label">Impact</span>
-              <p>Freed up time that used to go into updating spreadsheets so the team could spend more of their weekly check-ins talking about trends and next steps.</p>
-            </div>
-            <div class="work-card-tools">
-              <span class="tool-tag">Power Automate</span>
-              <span class="tool-tag">Power BI</span>
-              <span class="tool-tag">Excel</span>
-            </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="work-card">
-            <div class="work-card-title">Data cleaning &amp; reconciliation — making 50K+ rows usable</div>
-            <p class="work-card-context">Operational data came in with duplicates, inconsistent IDs, and missing values, which made simple questions hard to answer confidently.</p>
-            <p class="work-card-work">Used SQL and Python (Pandas) to clean and reconcile 50K+ records into analysis-ready tables for leadership dashboards and ad-hoc questions. Logged the main assumptions and filters so future queries could follow the same rules.</p>
-            <div class="work-card-impact">
-              <span class="work-card-impact-label">Impact</span>
-              <p>Reduced "is this data clean?" conversations in reviews and gave stakeholders a clearer, repeatable base for their own analysis.</p>
-            </div>
-            <div class="work-card-tools">
-              <span class="tool-tag">SQL</span>
-              <span class="tool-tag">Python</span>
-              <span class="tool-tag">Pandas</span>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="work-card">
-            <div class="work-card-title">KPI definitions — everyone talking about the same numbers</div>
-            <p class="work-card-context">Different teams reused the same metric names but calculated them slightly differently, which made cross-team dashboards confusing.</p>
-            <p class="work-card-work">Worked with analysts and managers to write down 10+ KPI definitions, including formulas, filters, and caveats. Updated dashboard labels and notes so people could quickly see how a metric was built.</p>
-            <div class="work-card-impact">
-              <span class="work-card-impact-label">Impact</span>
-              <p>Made it easier for teams to compare results and reduced time spent in meetings debating definitions instead of outcomes.</p>
-            </div>
-            <div class="work-card-tools">
-              <span class="tool-tag">Documentation</span>
-              <span class="tool-tag">Power BI</span>
-              <span class="tool-tag">Tableau</span>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="work-slider-controls">
-          <div class="work-slider-dots">
-            <span class="work-dot active"></span>
-            <span class="work-dot"></span>
-            <span class="work-dot"></span>
-          </div>
-          <div class="work-slider-nav">
-            <button class="work-slider-btn" data-dir="prev" aria-label="Previous">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-            </button>
-            <button class="work-slider-btn" data-dir="next" aria-label="Next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================
-     PERSONAL PROJECTS
-     ============================================ -->
-   
-<section class="section" id="lab">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div class="section-label"><span class="overline">The Lab</span></div>
-      <h2>Things I built to learn out loud</h2>
-    </div>
-
-    <div class="lab-slider-wrapper fade-in">
-      <div class="lab-slider-track" id="labSlider">
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>Maven Market - Power BI</h3>
-            <a href="https://github.com/HarshP10101/Maven-Market-Power-BI-Project" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="MavenMarketDashboardPreview.png" alt="Maven Market Power BI Dashboard" loading="lazy">
-          </div>
-          <p>End to end Power BI solution for a multi national retail chain. Built a star schema from raw CSVs, wrote DAX measures for time intelligence and KPI tracking, and designed an interactive dashboard covering revenue, profit, returns, and regional store performance.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>This is how I practice realistic retail reporting: modeling from raw files, writing reusable measures, and designing views that make sense for executives and store managers, not just for a portfolio screenshot.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">Power BI</span>
-            <span class="tool-tag">DAX</span>
-            <span class="tool-tag">Power Query</span>
-            <span class="tool-tag">Star Schema</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot powerbi" aria-hidden="true"></span>Power BI</span>
-        </article>
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>Production Grade ETL Pipeline</h3>
-            <a href="https://github.com/HarshP10101/ETL-breweries" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="ETL_breweries.png" alt="ETL Pipeline Architecture" loading="lazy">
-          </div>
-          <p>Built a bronze to silver to gold ETL pipeline that ingests REST API data into MySQL. Includes hash based change detection, a simple data quality framework with logged checks, and advanced SQL analytics using CTEs, window functions, HHI, and Shannon entropy.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>This is where I practice analytics engineering basics: layered data, change detection, quality checks, and analytic queries on top. It shows how I think about moving from one off scripts to something repeatable.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">Python</span>
-            <span class="tool-tag">MySQL</span>
-            <span class="tool-tag">SQLAlchemy</span>
-            <span class="tool-tag">Docker</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot python" aria-hidden="true"></span>Python</span>
-        </article>
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>Market Basket Analysis</h3>
-            <a href="https://github.com/HarshP10101/Market-Basket-Analysis" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="MarketBasketAnalysis.png" alt="Market Basket Analysis Heatmap" loading="lazy">
-          </div>
-          <p>Analyzed customer purchasing patterns to uncover product associations using Apriori based association rule mining. Used clustering to explore simple customer segments and surfaced practical cross sell and upsell opportunities.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>Shows how I move from algorithms to store level actions like shelf placement, bundles, and targeted offers instead of stopping at support and confidence scores.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">Python</span>
-            <span class="tool-tag">Pandas</span>
-            <span class="tool-tag">Apriori</span>
-            <span class="tool-tag">Clustering</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot jupyter" aria-hidden="true"></span>Jupyter Notebook</span>
-        </article>
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>Edmonton Property Value Drivers</h3>
-            <a href="https://github.com/HarshP10101/Edmonton-Property-Analysis" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="EdmontonPropertyAnalysis.png" alt="Edmonton Neighbourhood Appreciation Rates" loading="lazy">
-          </div>
-          <p>Statistical analysis of 1.2M property assessment records (2022-2024) from the City of Edmonton Open Data Portal. Used t-tests, ANOVA, and OLS regression to identify what drives assessed values and which neighbourhoods gained or lost value.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>Shows how I work with real civic data end to end: cleaning messy records, picking the right statistical test for each question, and turning regression output into findings a non-technical audience can act on.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">Python</span>
-            <span class="tool-tag">Pandas</span>
-            <span class="tool-tag">Statsmodels</span>
-            <span class="tool-tag">Scipy</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot jupyter" aria-hidden="true"></span>Jupyter Notebook</span>
-        </article>
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>HR Analytics Dashboard</h3>
-            <a href="https://github.com/HarshP10101/HR-Analytics-Dashboard" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="HR_Analytics_Dashboard.png" alt="HR Analytics Dashboard" loading="lazy">
-          </div>
-          <p>Interactive Power BI dashboard analyzing employee attrition trends inspired by real IT industry data. Includes KPI cards, attrition breakdowns by age, department, salary, and job role, plus job satisfaction views for retention conversations.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>Gives a taste of how I would support HR or people teams: clean breakdowns, simple navigation, and views that help managers talk about risk and retention instead of just counts.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">Power BI</span>
-            <span class="tool-tag">DAX</span>
-            <span class="tool-tag">Power Query</span>
-            <span class="tool-tag">Excel</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot powerbi" aria-hidden="true"></span>Power BI</span>
-        </article>
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>MongoDB Query Performance</h3>
-            <a href="https://github.com/HarshP10101/Mongo-DB-Query-Performance" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="MongoDB_QueryPerformance.png" alt="MongoDB Query Performance Benchmark" loading="lazy">
-          </div>
-          <p>Explored data modeling tradeoffs in MongoDB by comparing normalized and embedded document models on a music dataset. Benchmarked songwriter and recording queries to see the real performance impact of schema choices.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>This is where I test my understanding of modeling tradeoffs. It shows that I care about how a schema behaves under real workloads, not just how it looks in a diagram.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">Python</span>
-            <span class="tool-tag">MongoDB</span>
-            <span class="tool-tag">Data Modeling</span>
-            <span class="tool-tag">Benchmarking</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot python" aria-hidden="true"></span>Python</span>
-        </article>
-
-        <article class="lab-card">
-          <div class="lab-card-header">
-            <h3>SQL Query Optimization</h3>
-            <a href="https://github.com/HarshP10101/Optimizing-Database-Query-Performance" target="_blank" rel="noopener noreferrer" class="lab-link" aria-label="View on GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-            </a>
-          </div>
-          <div class="lab-card-thumb">
-            <img src="SQL_Query_Optimaztion.png" alt="SQL Query Optimization Results" loading="lazy">
-          </div>
-          <p>Benchmarked SQL query execution on e commerce style datasets with different indexing strategies. Used Python scripts to collect execution times and visualize performance improvements to see which indexes actually matter.</p>
-
-          <div class="lab-why">
-            <span class="lab-why-label">Why it matters</span>
-            <p>Shows that I do not stop at “the query runs”. I care about how fast and how scalable it is, and I am comfortable measuring the impact of indexing and query design decisions.</p>
-          </div>
-
-          <div class="project-tools">
-            <span class="tool-tag">SQL</span>
-            <span class="tool-tag">Python</span>
-            <span class="tool-tag">Indexing</span>
-            <span class="tool-tag">Performance</span>
-          </div>
-          <span class="lab-lang"><span class="lab-lang-dot python" aria-hidden="true"></span>Python</span>
-        </article>
-
-      </div>
-
-      <div class="lab-slider-controls">
-        <div class="lab-slider-dots" id="labDots">
-          <span class="lab-dot active"></span>
-          <span class="lab-dot"></span>
-          <span class="lab-dot"></span>
-          <span class="lab-dot"></span>
-          <span class="lab-dot"></span>
-          <span class="lab-dot"></span>
-          <span class="lab-dot"></span>
-        </div>
-        <div class="lab-slider-nav">
-          <button class="lab-slider-btn" id="labPrev" aria-label="Previous project">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-          </button>
-          <button class="lab-slider-btn" id="labNext" aria-label="Next project">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     SKILLS
-     ============================================ -->
-<section class="section" id="skills" style="background: var(--surface);">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div class="section-label"><span class="overline">Capabilities</span></div>
-      <h2>What I bring to the table</h2>
-    </div>
-
-    <div class="skills-table fade-in">
-      <!-- paste skills-section-html.html content here -->
-
-      <!-- - Column 1: Languages -->
-      <div class="skills-col">
-        <div class="skills-col-header"><h3>Languages</h3></div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Python -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M11.9 2c-2.8 0-4.6.6-5.5 1.4-.9.8-1.1 1.8-1.1 2.9V8h5.5v1H4.5c-1.6 0-3 1-3.4 2.8-.5 2 0 4.2 0 4.2s.6 1.8 2.2 1.8H5V15c0-1.7 1.5-3.2 3.2-3.2h5.5c1.5 0 2.7-1.2 2.7-2.7V4.3c0-1.5-1.3-2.3-2.7-2.3h-1.8zM8.8 4c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .5-1 1-1z" fill="#306998"/>
-              <path d="M12.1 22c2.8 0 4.6-.6 5.5-1.4.9-.8 1.1-1.8 1.1-2.9V16h-5.5v-1h6.3c1.6 0 3-1 3.4-2.8.5-2 0-4.2 0-4.2s-.6-1.8-2.2-1.8H19V9c0 1.7-1.5 3.2-3.2 3.2h-5.5c-1.5 0-2.7 1.2-2.7 2.7v4.8c0 1.5 1.3 2.3 2.7 2.3h1.8zm3.1-2c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.5 1-1 1z" fill="#FFD43B"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Python</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- SQL -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <ellipse cx="12" cy="6" rx="8" ry="3" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
-              <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
-              <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">SQL</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- DAX -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="4" width="18" height="16" rx="2" stroke="#E8A117" stroke-width="1.5" fill="none"/>
-              <path d="M7 14l3-4 2 2 3-4" stroke="#E8A117" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="12" y="19.5" text-anchor="middle" fill="#E8A117" font-size="4" font-weight="700" font-family="sans-serif">DAX</text>
-            </svg>
-          </div>
-          <span class="skill-cell-name">DAX</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- R -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="8.5" stroke="#276DC3" stroke-width="1.5" fill="none"/>
-              <text x="12" y="16" text-anchor="middle" fill="#276DC3" font-size="10" font-weight="700" font-family="sans-serif">R</text>
-            </svg>
-          </div>
-          <span class="skill-cell-name">R</span>
-        </div>
-      </div>
-
-      <!-- - Column 2: Databases -->
-      <div class="skills-col">
-        <div class="skills-col-header"><h3>Databases</h3></div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- MySQL -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 3C7 3 4 5 4 7v10c0 2 3 4 8 4s8-2 8-4V7c0-2-3-4-8-4z" stroke="#00758F" stroke-width="1.5" fill="none"/>
-              <path d="M4 7c0 2 3 4 8 4s8-2 8-4" stroke="#00758F" stroke-width="1.5" fill="none"/>
-              <path d="M4 12c0 2 3 4 8 4s8-2 8-4" stroke="#00758F" stroke-width="1.5" fill="none"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">MySQL</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- PostgreSQL -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 3C7 3 4 5.5 4 7.5v9C4 18.5 7 21 12 21s8-2.5 8-4.5v-9C20 5.5 17 3 12 3z" stroke="#336791" stroke-width="1.5" fill="none"/>
-              <path d="M4 7.5c0 2 3 4 8 4s8-2 8-4" stroke="#336791" stroke-width="1.5"/>
-              <circle cx="14.5" cy="12" r="2" stroke="#336791" stroke-width="1.2" fill="none"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">PostgreSQL</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- MongoDB -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C12 2 8 6 8 12c0 4 2 8 4 10 2-2 4-6 4-10 0-6-4-10-4-10z" stroke="#4DB33D" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-              <line x1="12" y1="14" x2="12" y2="22" stroke="#4DB33D" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">MongoDB</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Oracle SQL -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <ellipse cx="12" cy="12" rx="9" ry="5.5" stroke="#C74634" stroke-width="1.8" fill="none"/>
-              <ellipse cx="12" cy="12" rx="5" ry="3" stroke="#C74634" stroke-width="1.2" fill="none"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Oracle SQL</span>
-        </div>
-      </div>
-
-      <!-- - Column 3: Libraries -->
-      <div class="skills-col">
-        <div class="skills-col-header"><h3>Libraries</h3></div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Pandas -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="5" y="3" width="3" height="7" rx="1" fill="#150458"/>
-              <rect x="5" y="14" width="3" height="7" rx="1" fill="#150458"/>
-              <rect x="10.5" y="7" width="3" height="10" rx="1" fill="#150458"/>
-              <rect x="16" y="3" width="3" height="7" rx="1" fill="#150458"/>
-              <rect x="16" y="14" width="3" height="7" rx="1" fill="#150458"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Pandas</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- NumPy -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" stroke="#4DABCF" stroke-width="1.5" fill="none"/>
-              <polygon points="12,7 17,9.5 17,14.5 12,17 7,14.5 7,9.5" fill="#4DABCF" opacity="0.25"/>
-              <text x="12" y="14" text-anchor="middle" fill="#4DABCF" font-size="5" font-weight="700" font-family="sans-serif">NP</text>
-            </svg>
-          </div>
-          <span class="skill-cell-name">NumPy</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Matplotlib -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="3" width="18" height="18" rx="2" stroke="#11557C" stroke-width="1.5" fill="none"/>
-              <polyline points="6,17 9,12 12,14 15,8 18,10" stroke="#E24A33" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <polyline points="6,15 10,10 13,13 17,7" stroke="#348ABD" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Matplotlib</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Scikit-learn -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="8" cy="8" r="2.5" stroke="#F89939" stroke-width="1.3" fill="none"/>
-              <circle cx="16" cy="8" r="2.5" stroke="#3499CD" stroke-width="1.3" fill="none"/>
-              <circle cx="12" cy="16" r="2.5" stroke="#F89939" stroke-width="1.3" fill="none"/>
-              <line x1="10" y1="9" x2="12" y2="14" stroke="var(--border)" stroke-width="1"/>
-              <line x1="14" y1="9" x2="12" y2="14" stroke="var(--border)" stroke-width="1"/>
-              <line x1="10" y1="8" x2="14" y2="8" stroke="var(--border)" stroke-width="1"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Scikit-learn</span>
-        </div>
-      </div>
-
-      <!-- - Column 4: Dashboards -->
-      <div class="skills-col">
-        <div class="skills-col-header"><h3>Dashboards</h3></div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Power BI -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="14" y="4" width="4" height="16" rx="1" fill="#F2C811"/>
-              <rect x="8.5" y="8" width="4" height="12" rx="1" fill="#F2C811" opacity="0.7"/>
-              <rect x="3" y="12" width="4" height="8" rx="1" fill="#F2C811" opacity="0.45"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Power BI</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Tableau -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <line x1="12" y1="2" x2="12" y2="22" stroke="#E97627" stroke-width="2"/>
-              <line x1="2" y1="12" x2="22" y2="12" stroke="#E97627" stroke-width="2"/>
-              <line x1="12" y1="6" x2="12" y2="18" stroke="#C72B28" stroke-width="1.2"/>
-              <line x1="6" y1="12" x2="18" y2="12" stroke="#C72B28" stroke-width="1.2"/>
-              <line x1="7" y1="4.5" x2="7" y2="9.5" stroke="#5B879B" stroke-width="1.2"/>
-              <line x1="4.5" y1="7" x2="9.5" y2="7" stroke="#5B879B" stroke-width="1.2"/>
-              <line x1="17" y1="14.5" x2="17" y2="19.5" stroke="#5B879B" stroke-width="1.2"/>
-              <line x1="14.5" y1="17" x2="19.5" y2="17" stroke="#5B879B" stroke-width="1.2"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Tableau</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Excel -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="3" width="18" height="18" rx="2" fill="#217346" opacity="0.12" stroke="#217346" stroke-width="1.5"/>
-              <text x="12" y="15.5" text-anchor="middle" fill="#217346" font-size="9" font-weight="800" font-family="sans-serif">X</text>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Excel</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Looker -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="4" stroke="#4285F4" stroke-width="1.8" fill="none"/>
-              <circle cx="12" cy="12" r="1.5" fill="#4285F4"/>
-              <path d="M12 4v3M12 17v3M4 12h3M17 12h3" stroke="#4285F4" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M6.3 6.3l2.1 2.1M15.6 15.6l2.1 2.1M6.3 17.7l2.1-2.1M15.6 8.4l2.1-2.1" stroke="#4285F4" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Looker</span>
-        </div>
-      </div>
-
-      <!-- - Column 5: Infrastructure -->
-      <div class="skills-col">
-        <div class="skills-col-header"><h3>Infrastructure</h3></div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Docker -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="11" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
-              <rect x="7" y="11" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
-              <rect x="12" y="11" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
-              <rect x="7" y="7" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
-              <rect x="12" y="7" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
-              <rect x="12" y="3" width="4" height="3" rx="0.5" stroke="#2496ED" stroke-width="1.2"/>
-              <path d="M1 15c2-1 4-.5 5 0 1.5.7 3 1 5 .5 2.5-.5 4-2 5-3" stroke="#2496ED" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">Docker</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- Microsoft Fabric -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="5" width="7" height="7" rx="1.5" fill="#0078D4" opacity="0.8"/>
-              <rect x="14" y="5" width="7" height="7" rx="1.5" fill="#50E6FF" opacity="0.8"/>
-              <rect x="3" y="14" width="7" height="7" rx="1.5" fill="#50E6FF" opacity="0.6"/>
-              <rect x="14" y="14" width="7" height="7" rx="1.5" fill="#0078D4" opacity="0.6"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">MS Fabric</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- dbt -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="8.5" stroke="#FF694A" stroke-width="1.5" fill="none"/>
-              <text x="12" y="15" text-anchor="middle" fill="#FF694A" font-size="6.5" font-weight="700" font-family="sans-serif">dbt</text>
-            </svg>
-          </div>
-          <span class="skill-cell-name">dbt</span>
-        </div>
-
-        <div class="skill-cell">
-          <div class="skill-icon-wrap">
-            <!-- ETL -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="9" width="6" height="6" rx="1.5" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
-              <rect x="16" y="9" width="6" height="6" rx="1.5" stroke="var(--jade)" stroke-width="1.5" fill="none"/>
-              <path d="M8 12h2l1.5-3 1 6 1.5-3H16" stroke="var(--jade)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </div>
-          <span class="skill-cell-name">ETL Pipelines</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     ABOUT
-     ============================================ -->
-<section class="section" id="about">
-  <div class="container">
-    <div class="section-header fade-in">
-      <div class="section-label"><span class="overline">About</span></div>
-      <h2>So… who’s this guy?</h2>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-story fade-in">
-           <p>
-             I am a <strong>data and reporting analyst</strong> with a Computer Science major and Business minor who accidentally fell in love with the messy part in the middle: taking half-broken data and turning it into something leaders can actually use. Writing SQL is fun, but watching a VP say “oh, that actually makes sense now” is way better.
-           </p>
-         
-           <p>
-             At <strong>Alberta Innovates</strong>, that meant helping move innovation funding data out of scattered spreadsheets and into Microsoft Fabric and Power BI. Most of my days were spent doing unglamorous things: chasing down what a column really meant, aligning metric definitions, and fixing the kind of edge cases that only show up the night before a review meeting. At <strong>Whistling Solutions</strong>, it looked like building simple experiment workflows so product changes had numbers behind them instead of “we feel like it’s better.”
-           </p>
-         
-           <p>
-             I’ve noticed the pattern is almost always the same: unclear definitions, scattered sources, and smart people stuck in meetings debating which number is correct. My small obsession is building a calm, reliable layer between all of that and the people who actually need to decide. I like my data work the way I like my coffee: no drama, no surprises, and strong enough that people trust it.
-           </p>
-         
-           <p>
-             When I’m not doing that, I read about data engineering practices I’m slowly growing into, tweak my own Power BI designs just to shave off one more click, and work on my French at a pace my friends find very entertaining. Somewhere between all of that, I’m trying to become the kind of analyst teams call when they want fewer dashboards and better decisions.
-           </p>
-         </div>
-
-      <div class="how-i-work fade-in">
-        <h3>How I work</h3>
-        <ul class="how-i-work-list" role="list">
-          <li>
-            <span class="num">01</span>
-            <span><strong>Decision-first.</strong> Every pipeline, model, and dashboard starts with the question: what decision does this enable?</span>
-          </li>
-          <li>
-            <span class="num">02</span>
-            <span><strong>Clarity over cleverness.</strong> I'd rather build something a PM can explain to their VP than something that impresses other engineers.</span>
-          </li>
-          <li>
-            <span class="num">03</span>
-            <span><strong>Reliability is a feature.</strong> If the data can't be trusted, the dashboard is decoration. I obsess over data quality.</span>
-          </li>
-          <li>
-            <span class="num">04</span>
-            <span><strong>Ship, then iterate.</strong> Perfect is the enemy of useful. I deliver early, gather feedback, and improve continuously.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     DECISION JOURNAL
-     ============================================ -->
-<!-- <section class="section">
-  <div class="container">
-    <div class="journal fade-in">
-      <div class="section-label"><span class="overline" style="color: rgba(250,250,249,0.5);">Signature</span></div>
-      <h2>Decision Journal</h2>
-
-      <div class="journal-grid">
-        <div class="journal-entry">
-          <div class="entry-label">Decision Made</div>
-          <p>Chose Microsoft Fabric over a traditional warehouse stack for Alberta Innovates,  traded ecosystem maturity for tighter integration with the team's existing Microsoft tooling.</p>
-        </div>
-        <div class="journal-entry">
-          <div class="entry-label">Tradeoff Accepted</div>
-          <p>Opted for a star schema over a more flexible data vault model. Simpler to maintain for a small team; faster time-to-dashboard at the cost of some flexibility for future edge cases.</p>
-        </div>
-        <div class="journal-entry">
-          <div class="entry-label">Metric I Trust</div>
-          <p>Time-to-decision: how quickly a stakeholder can go from question to confident answer using the tools I've built. If it takes more than two clicks, I've failed.</p>
-        </div>
-        <div class="journal-entry">
-          <div class="entry-label">Next Step</div>
-          <p>Deepening my dbt practice and exploring analytics engineering at scale, building the muscle to own data quality end-to-end in larger, more complex environments.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-<!-- ============================================
-     CONTACT
-     ============================================ -->
-<section class="section" id="contact">
-  <div class="container">
-    <div class="contact-inner fade-in">
-      <div class="section-label" style="justify-content: center;"><span class="overline">Contact</span></div>
-      <h2>Let's work together</h2>
-      <p class="subtitle">Open to data analyst and analytics engineer roles across Canada. Always happy to chat about data problems.</p>
-
-      <div class="contact-links">
-        <a href="/cdn-cgi/l/email-protection#0a696564646f697e7d637e62626b7879627a6b7e6f663a394a6d676b636624696567" class="contact-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          Email
-        </a>
-        <a href="https://www.linkedin.com/in/harsh-patel-a1563a237" class="contact-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://github.com/HarshP10101" class="contact-link" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-          GitHub
-        </a>
-        <a href="https://drive.google.com/file/d/1ZE9Nh7otCvGoWTYUlGkcuaWp9lz2ky4y/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="contact-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Resume
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     FOOTER
-     ============================================ -->
-<footer class="footer">
-  <div class="container">
-    <p>© 2026 Harsh Patel · Canada 🇨🇦 </p>
-    <p class="text-sm text-muted">No templates were harmed in the making of this site.</p>
-  </div>
-</footer>
-
-<!-- ============================================
-     JS — Nav, animations, slider, typewriter
-     ============================================ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Mobile nav toggle
-const toggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
-
-toggle.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
-  toggle.classList.toggle('active');
-  toggle.setAttribute('aria-expanded', isOpen);
-});
-
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    toggle.classList.remove('active');
-    toggle.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// Intersection Observer for fade-in
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (!prefersReducedMotion) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-} else {
-  document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-}
-
-// Lab slider
-const slider = document.getElementById('labSlider');
-const prevBtn = document.getElementById('labPrev');
-const nextBtn = document.getElementById('labNext');
-const dots = document.querySelectorAll('#labDots .lab-dot');
-const wrapper = slider.closest('.lab-slider-wrapper');
-
-function getCardWidth() {
-  const card = slider.querySelector('.lab-card');
-  const gap = 24;
-  return card.offsetWidth + gap;
-}
-
-function getCurrentIndex() {
-  const cardWidth = getCardWidth();
-  return Math.round(slider.scrollLeft / cardWidth);
-}
-
-function updateDots() {
-  const idx = getCurrentIndex();
-  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-  wrapper.classList.toggle('scrolled', slider.scrollLeft > 10);
-}
-
-prevBtn.addEventListener('click', () => {
-  slider.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
-});
-
-nextBtn.addEventListener('click', () => {
-  slider.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
-});
-
-slider.addEventListener('scroll', updateDots, { passive: true });
-
-// ── Typing animation ──
-if (!prefersReducedMotion) {
-  const text = "I build the pipelines nobody sees, the models nobody questions, and the dashboards everyone suddenly can\u2019t stop opening. If your data needs therapy, I\u2019m the guy.";
-  const el = document.getElementById('typewriter');
-  let i = 0;
-  function typeChar() {
-    if (i < text.length) {
-      el.textContent += text.charAt(i);
-      i++;
-      setTimeout(typeChar, 28 + Math.random() * 24);
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eeeeee">
+  <meta name="description" content="Harsh Patel connects research, data analytics and data engineering to turn complex questions into clear insights and reliable systems.">
+  <link rel="canonical" href="https://harshp10101.github.io/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://harshp10101.github.io/">
+  <meta property="og:title" content="Harsh Patel | Research, data and clear decisions">
+  <meta property="og:description" content="Research, data analytics and data engineering. Better questions, sharper insights and stronger systems.">
+  <meta property="og:image" content="https://harshp10101.github.io/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Harsh Patel: Research. Data. Clear decisions.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Harsh Patel | Research, data and clear decisions">
+  <meta name="twitter:description" content="Research, data analytics and data engineering. Better questions, sharper insights and stronger systems.">
+  <meta name="twitter:image" content="https://harshp10101.github.io/og.png">
+
+  <title>Harsh Patel | Research, Analytics &amp; Data Engineering</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css?v=20260831-interactive-evidence">
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Harsh Patel",
+    "url": "https://harshp10101.github.io/",
+    "sameAs": [
+      "https://github.com/HarshP10101",
+      "https://www.linkedin.com/in/harsh-patel-a1563a237"
+    ],
+    "jobTitle": "Research Analyst",
+    "knowsAbout": ["Research", "Data analytics", "Data engineering", "Business intelligence", "Statistical analysis"],
+    "homeLocation": {
+      "@type": "Place",
+      "name": "Edmonton, Canada"
     }
   }
-  setTimeout(typeChar, 600);
-} else {
-  document.getElementById('typewriter').textContent = "I build the pipelines nobody sees, the models nobody questions, and the dashboards everyone suddenly can\u2019t stop opening. If your data needs therapy, I\u2019m the guy.";
-}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-// ── Nav hide on scroll-down, show on scroll-up ──
-let lastScrollY = window.scrollY;
-let navTicking = false;
-const nav = document.querySelector('.nav');
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="Harsh Patel home">Harsh Patel</a>
 
-window.addEventListener('scroll', () => {
-  if (!navTicking) {
-    window.requestAnimationFrame(() => {
-      const y = window.scrollY;
-      if (y > lastScrollY && y > 120) {
-        nav.classList.add('nav-hidden');
-      } else {
-        nav.classList.remove('nav-hidden');
-      }
-      lastScrollY = y;
-      navTicking = false;
-    });
-    navTicking = true;
-  }
-}, { passive: true });
-</script>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="menu-label">Menu</span>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
+      </button>
 
-<!-- ── Slider JS (same pattern as Lab slider) ── -->
-<script>
-document.querySelectorAll('.work-slider-wrapper').forEach(wrapper => {
-  const track = wrapper.querySelector('.work-slider-track');
-  const dots = wrapper.querySelectorAll('.work-dot');
-  const prevBtn = wrapper.querySelector('[data-dir="prev"]');
-  const nextBtn = wrapper.querySelector('[data-dir="next"]');
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="https://drive.google.com/file/d/1ZE9Nh7otCvGoWTYUlGkcuaWp9lz2ky4y/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Résumé ↗</a>
+      </nav>
+    </div>
+  </header>
 
-  function getCardWidth() {
-    const card = track.querySelector('.work-card');
-    return card.offsetWidth + 24; // card width + gap
-  }
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="page-shell hero-grid">
+        <div class="hero-copy">
+          <p class="hero-disciplines">Data analyst <span>/</span> Research analyst <span>/</span> Data engineer</p>
+          <h1 id="hero-title" class="hero-title">
+            <span>Better questions.</span>
+            <span>Sharper insights.</span>
+            <em>Stronger systems.</em>
+          </h1>
+          <p class="hero-intro">I connect research, analytics and engineering to make complex information useful and build the systems that keep it that way.</p>
+          <div class="hero-actions">
+            <a class="editorial-link" href="#experience">Experience <span aria-hidden="true">↓</span></a>
+            <a class="editorial-link secondary" href="https://drive.google.com/file/d/1ZE9Nh7otCvGoWTYUlGkcuaWp9lz2ky4y/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Résumé <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
 
-  function getCurrentIndex() {
-    return Math.round(track.scrollLeft / getCardWidth());
-  }
+        <figure class="hero-artwork">
+          <div class="hero-plate">
+            <div class="hero-depth">
+              <picture>
+                <source media="(max-width: 560px)" srcset="assets/evidence-hero-small.webp" width="800" height="600">
+                <img class="hero-art" src="assets/evidence-hero.webp" width="1448" height="1086" alt="A magnifying lens examines records, analytical reports reveal patterns, and connected data modules turn the evidence into a system" decoding="async" fetchpriority="high">
+              </picture>
+              <svg class="hero-flow-overlay" viewBox="0 0 1448 1086" fill="none" aria-hidden="true">
+                <path class="hero-signal" pathLength="1" d="M494 503H657Q706 503 706 548V560Q706 583 735 583H961Q988 583 988 550V523Q988 496 1016 496H1061"/>
+                <ellipse class="hero-cue hero-research-cue" cx="307" cy="450" rx="215" ry="219" pathLength="1"/>
+                <path class="hero-cue hero-analytics-cue" pathLength="1" d="M564 757L630 713L679 642L744 698L818 628L857 680L895 640"/>
+                <path class="hero-cue hero-engineering-cue" pathLength="1" d="M1065 300H1040Q1015 300 1015 326V658Q1015 684 1040 684H1070M1346 333H1378Q1402 333 1402 359V658Q1402 685 1378 685H1360"/>
+              </svg>
+            </div>
+          </div>
+          <figcaption class="hero-stages">
+            <div class="hero-stage-labels"><span>01 / Research</span><span>02 / Analytics</span><span>03 / Engineering</span></div>
+            <div class="hero-stage-controls" role="group" aria-label="Explore the three disciplines" hidden>
+              <button type="button" data-hero-stage="research" aria-pressed="false" aria-describedby="hero-explore-note"><span>01 /</span> Research</button>
+              <button type="button" data-hero-stage="analytics" aria-pressed="false" aria-describedby="hero-explore-note"><span>02 /</span> Analytics</button>
+              <button type="button" data-hero-stage="engineering" aria-pressed="false" aria-describedby="hero-explore-note"><span>03 /</span> Engineering</button>
+            </div>
+            <p class="hero-explore-note" id="hero-explore-note" hidden>Hover or tap a discipline to explore.</p>
+          </figcaption>
+        </figure>
 
-  function updateDots() {
-    const idx = getCurrentIndex();
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    wrapper.classList.toggle('scrolled', track.scrollLeft > 10);
-  }
+        <div class="hero-index">
+          <span>Research &amp; discovery</span>
+          <span>Data analytics</span>
+          <span>Data engineering</span>
+          <span class="current-role">Curiosity → Clarity → Impact</span>
+        </div>
+      </div>
+    </section>
 
-  prevBtn.addEventListener('click', () => {
-    track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
-  });
+    <section class="section experience" id="experience" aria-labelledby="experience-title">
+      <div class="page-shell">
+        <header class="section-heading reveal">
+          <p class="section-index">01 / Experience</p>
+          <div>
+            <h2 id="experience-title">Where the work<br>meets the decision.</h2>
+            <p>Different industries. A connected practice in research, analysis and building better ways to work with data.</p>
+          </div>
+        </header>
 
-  nextBtn.addEventListener('click', () => {
-    track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
-  });
+        <div class="experience-layout">
+          <aside class="career-thread reveal" aria-label="The connection across my experience">
+            <p class="eyebrow">The through-line</p>
+            <p class="career-statement">Not one lane.<br><em>A connected<br>practice.</em></p>
+            <ol class="career-route">
+              <li><span>01</span><strong>Investigate</strong><p>Find the question worth asking.</p></li>
+              <li><span>02</span><strong>Interpret</strong><p>Turn evidence into a point of view.</p></li>
+              <li><span>03</span><strong>Build</strong><p>Make the useful thing repeatable.</p></li>
+            </ol>
+            <p class="career-contexts">Technology / Public sector /<br>Commercial real estate</p>
+          </aside>
+          <div class="experience-list">
+          <article class="experience-row is-current reveal">
+            <p class="experience-date"><span>01</span>Present</p>
+            <div class="experience-company">
+              <h3>JLL</h3>
+              <p class="experience-role">Research Analyst · Full-time</p>
+            </div>
+            <p class="experience-impact">Audit industrial and office property data, produce quarterly market reports, conduct in-depth market research and answer broker queries with the properties and market statistics they need for client work.</p>
+            <div class="experience-evidence process-evidence" aria-label="Evidence to decisions at JLL"><span><b>Audit</b><small>Property evidence</small></span><i aria-hidden="true">→</i><span><b>Report</b><small>Quarterly intelligence</small></span><i aria-hidden="true">→</i><span><b>Respond</b><small>Broker-ready answers</small></span></div>
+          </article>
+          <article class="experience-row reveal">
+            <p class="experience-date"><span>02</span>2026</p>
+            <div class="experience-company">
+              <h3>Centauri AI</h3>
+              <p class="experience-role">Market Research Analyst · Contract</p>
+            </div>
+            <p class="experience-impact">Turned competitive research across 20+ construction-tech companies into a shared market view and three prioritized verticals.</p>
+            <dl class="experience-evidence"><div><dt>Companies researched</dt><dd>20<span>+</span></dd></div><div><dt>Priority verticals</dt><dd>03</dd></div><div><dt>Research outcome</dt><dd class="evidence-note">Scattered signals.<br><em>One market view.</em></dd></div></dl>
+          </article>
+          <article class="experience-row reveal">
+            <p class="experience-date"><span>03</span>2025</p>
+            <div class="experience-company">
+              <h3>Alberta Innovates</h3>
+              <p class="experience-role">Data &amp; Reporting Analyst · Contract</p>
+            </div>
+            <p class="experience-impact">Helped move 8+ years of funding data toward a reusable Microsoft Fabric and Power BI reporting model.</p>
+            <div class="experience-evidence reporting-evidence"><p><strong>8<span>+</span></strong><small>Years of funding data</small></p><ol aria-label="Reporting model direction"><li>Funding history</li><li>Microsoft Fabric</li><li>Power BI</li></ol></div>
+          </article>
+          <article class="experience-row reveal">
+            <p class="experience-date"><span>04</span>2023</p>
+            <div class="experience-company">
+              <h3>Whistling Solutions</h3>
+              <p class="experience-role">Data Analyst Intern</p>
+            </div>
+            <p class="experience-impact">Helped automate recurring reporting, reconcile 50K+ records and align 10+ KPI definitions across dashboards.</p>
+            <dl class="experience-evidence"><div><dt>Records reconciled</dt><dd>50K<span>+</span></dd></div><div><dt>KPI definitions aligned</dt><dd>10<span>+</span></dd></div></dl>
+          </article>
+        </div>
+        </div>
+      </div>
+    </section>
 
-  track.addEventListener('scroll', updateDots, { passive: true });
-});
-</script>
+    <section class="section work" id="work" aria-labelledby="work-title">
+      <div class="page-shell">
+        <header class="section-heading reveal">
+          <p class="section-index">02 / Selected work</p>
+          <div>
+            <h2 id="work-title">A body of work,<br>not a list of tools.</h2>
+            <p>Four projects that show how I move from scattered inputs to something people can use.</p>
+          </div>
+        </header>
+
+        <article class="project-feature reveal" id="project-edmonton">
+          <a class="project-visual property-preview" href="https://github.com/HarshP10101/Edmonton-Property-Analysis" target="_blank" rel="noopener noreferrer" aria-label="View Edmonton Property Value Drivers on GitHub">
+            <div class="artifact-strip"><span><b>01</b> / Edmonton property</span><span>Research extract <i aria-hidden="true">↗</i></span></div>
+            <div class="artifact-body">
+              <div class="preview-heading"><p class="preview-title">One city.<br><em>Different trajectories.</em></p><p>Median assessed-value change<br>2022 to 2024</p></div>
+              <div class="diverging-chart" role="img" aria-label="Selected median appreciation: Stillwater approximately plus 18 percent, citywide plus 2.52 percent, Downtown approximately minus 9 percent">
+                <div class="chart-row is-highlighted"><span>Stillwater</span><div class="bar-track"><i style="--start:33.333%;--size:60%"></i></div><strong>≈ +18%</strong></div>
+                <div class="chart-row"><span>Citywide</span><div class="bar-track"><i style="--start:33.333%;--size:8.4%"></i></div><strong>+2.52%</strong></div>
+                <div class="chart-row"><span>Downtown</span><div class="bar-track"><i style="--start:3.333%;--size:30%"></i></div><strong>≈ −9%</strong></div>
+                <div class="chart-axis" aria-hidden="true"><span>−10%</span><span>0</span><span>+10%</span><span>+20%</span></div>
+              </div>
+              <p class="artifact-source">Selected medians from the project. Neighbourhood figures rounded; assessed value is not sale price.</p>
+            </div>
+          </a>
+          <div class="project-meta">
+            <span>01 / Civic data + statistics</span>
+            <span>2022 to 2024</span>
+          </div>
+          <div class="project-copy">
+            <h3>Edmonton property value drivers.</h3>
+            <p>1.2M assessment records. One question: what actually moves value? Statistical tests and regression turned civic data into a readable view of neighbourhood change.</p>
+            <p class="project-stack">Python · Pandas · Statsmodels · SciPy</p>
+            <a class="editorial-link" href="https://github.com/HarshP10101/Edmonton-Property-Analysis" target="_blank" rel="noopener noreferrer">View project <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="project-feature reveal" id="project-maven">
+          <a class="project-visual maven-preview" href="https://github.com/HarshP10101/Maven-Market-Power-BI-Project" target="_blank" rel="noopener noreferrer" aria-label="View Maven Market Power BI project on GitHub">
+            <div class="artifact-strip"><span><b>02</b> / Maven Market</span><span>Retail intelligence <i aria-hidden="true">↗</i></span></div>
+            <div class="artifact-body">
+              <div class="preview-heading"><p class="preview-title">The numbers.<br><em>The next move.</em></p><p>Power BI / Report extract<br>Actual figures, clearer focus</p></div>
+              <dl class="maven-kpis" aria-label="Current-month figures from the original dashboard"><div><dt>Transactions / current month</dt><dd>18,325<small>Goal: 17,339 <span>+5.69%</span></small></dd></div><div><dt>Profit / current month</dt><dd>$71,682<small>Goal: $67,872 <span>+5.61%</span></small></dd></div><div><dt>Returns / current month</dt><dd>496<small>Monitor alongside sales performance</small></dd></div></dl>
+              <div class="maven-analysis">
+                <div class="maven-brands"><p class="eyebrow">Leading brands / total transactions</p><div class="frequency-chart" role="img" aria-label="Brand transactions from the report: Hermanos 5342, Ebony 5238, Tell Tale 5112, Tri-State 5099, High Top 4940">
+                  <div class="chart-row is-highlighted"><span>Hermanos</span><div class="bar-track"><i style="--size:97.13%"></i></div><strong>5,342</strong></div>
+                  <div class="chart-row"><span>Ebony</span><div class="bar-track"><i style="--size:95.24%"></i></div><strong>5,238</strong></div>
+                  <div class="chart-row"><span>Tell Tale</span><div class="bar-track"><i style="--size:92.95%"></i></div><strong>5,112</strong></div>
+                  <div class="chart-row"><span>Tri-State</span><div class="bar-track"><i style="--size:92.71%"></i></div><strong>5,099</strong></div>
+                  <div class="chart-row"><span>High Top</span><div class="bar-track"><i style="--size:89.82%"></i></div><strong>4,940</strong></div>
+                </div></div>
+                <aside class="maven-model"><p class="eyebrow">Behind the report</p><p class="model-title">One model.<br><em>Many questions.</em></p><ol><li><span>01</span>Power Query</li><li><span>02</span>Star schema</li><li><span>03</span>DAX measures</li><li><span>04</span>Decision view</li></ol></aside>
+              </div>
+              <p class="artifact-source">Values transcribed from the original report. Current-month KPIs and brand-table totals retain their separate report contexts.</p>
+            </div>
+          </a>
+          <div class="project-meta">
+            <span>02 / Decision dashboard</span>
+            <span>Power BI</span>
+          </div>
+          <div class="project-copy">
+            <h3>Retail reporting from raw files to executive view.</h3>
+            <p>An end-to-end Power BI solution: star schema, reusable DAX measures and an interactive view of revenue, profit, returns and regional store performance.</p>
+            <p class="project-stack">Power BI · DAX · Power Query · Star schema</p>
+            <a class="editorial-link" href="https://github.com/HarshP10101/Maven-Market-Power-BI-Project" target="_blank" rel="noopener noreferrer">View project <span aria-hidden="true">↗</span></a>
+            <a class="artifact-link" href="assets/maven-market.webp" target="_blank" rel="noopener">Inspect full dashboard <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="project-feature reveal" id="project-engineering">
+          <a class="project-visual pipeline-preview" href="https://github.com/HarshP10101/ETL-breweries" target="_blank" rel="noopener noreferrer" aria-label="View production-grade ETL pipeline on GitHub">
+            <div class="artifact-strip"><span><b>03</b> / ETL Breweries</span><span>System architecture <i aria-hidden="true">↗</i></span></div>
+            <div class="artifact-body">
+              <div class="preview-heading"><p class="preview-title">Built to run.<br><em>And run again.</em></p><p>Bronze → Silver → Gold<br>One repeatable flow</p></div>
+              <ol class="pipeline-stages" aria-label="REST API to raw payloads, clean canonical tables, analytics mart and MySQL">
+                <li><small>Ingest</small><strong>REST API</strong><span>Source records</span></li>
+                <li><small>Bronze</small><strong>Raw</strong><span>Payload history</span></li>
+                <li><small>Silver</small><strong>Clean</strong><span>Canonical tables</span></li>
+                <li><small>Gold</small><strong>Analytics mart</strong><span>Analysis-ready</span></li>
+                <li><small>Store</small><strong>MySQL</strong><span>SQL analysis</span></li>
+              </ol>
+              <div class="quality-branch"><span>Data quality</span><p>Validation · Missing values · Audit trail</p></div>
+            </div>
+          </a>
+          <div class="project-meta">
+            <span>03 / Data engineering</span>
+            <span>Python</span>
+          </div>
+          <div class="project-copy">
+            <h3>From one-off script to a repeatable pipeline.</h3>
+            <p>A bronze-to-silver-to-gold ETL pipeline that moves REST API data into MySQL, detects changes, logs quality checks and supports advanced SQL analysis.</p>
+            <p class="project-stack">Python · MySQL · SQLAlchemy · Docker</p>
+            <a class="editorial-link" href="https://github.com/HarshP10101/ETL-breweries" target="_blank" rel="noopener noreferrer">View project <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <article class="project-feature reveal" id="project-basket">
+          <a class="project-visual basket-preview" href="https://github.com/HarshP10101/Market-Basket-Analysis" target="_blank" rel="noopener noreferrer" aria-label="View Market Basket Analysis project on GitHub">
+            <div class="artifact-strip"><span><b>04</b> / Market basket</span><span>Pattern study <i aria-hidden="true">↗</i></span></div>
+            <div class="artifact-body">
+              <div class="preview-heading"><p class="preview-title">What fills<br><em>the basket?</em></p><p>Top five purchased products<br>After duplicate removal</p></div>
+              <div class="frequency-chart" role="img" aria-label="Product frequency: whole milk 2363, other vegetables 1827, rolls and buns 1646, soda 1453, yogurt 1285">
+                <div class="chart-row is-highlighted"><span>Whole milk</span><div class="bar-track"><i style="--size:94.52%"></i></div><strong>2,363</strong></div>
+                <div class="chart-row"><span>Other vegetables</span><div class="bar-track"><i style="--size:73.08%"></i></div><strong>1,827</strong></div>
+                <div class="chart-row"><span>Rolls / buns</span><div class="bar-track"><i style="--size:65.84%"></i></div><strong>1,646</strong></div>
+                <div class="chart-row"><span>Soda</span><div class="bar-track"><i style="--size:58.12%"></i></div><strong>1,453</strong></div>
+                <div class="chart-row"><span>Yogurt</span><div class="bar-track"><i style="--size:51.4%"></i></div><strong>1,285</strong></div>
+              </div>
+              <p class="artifact-source">Frequency is the starting point. Association rules add the relationships.<span>Source: project dataset, matching notebook cleaning.</span></p>
+            </div>
+          </a>
+          <div class="project-meta">
+            <span>04 / Machine learning + data science</span>
+            <span>Python</span>
+          </div>
+          <div class="project-copy">
+            <h3>Basket patterns into smarter retail decisions.</h3>
+            <p>Association-rule mining, dynamic-pricing experiments and K-Means segmentation turn grocery transactions into ideas for product placement, bundles and personalized promotions.</p>
+            <p class="project-stack">Python · Pandas · MLxtend · Apriori · K-Means</p>
+            <a class="editorial-link" href="https://github.com/HarshP10101/Market-Basket-Analysis" target="_blank" rel="noopener noreferrer">View project <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+
+        <div class="archive reveal">
+          <div class="archive-heading">
+            <p class="section-index">More experiments</p>
+            <p>Smaller studies in analytics, modeling and performance.</p>
+          </div>
+          <div class="archive-list">
+            <a href="https://github.com/HarshP10101/HR-Analytics-Dashboard" target="_blank" rel="noopener noreferrer"><span>HR Analytics Dashboard</span><span>Power BI · Retention</span><b>↗</b></a>
+            <a href="https://github.com/HarshP10101/Mongo-DB-Query-Performance" target="_blank" rel="noopener noreferrer"><span>MongoDB Query Performance</span><span>Modeling · Benchmarking</span><b>↗</b></a>
+            <a href="https://github.com/HarshP10101/Optimizing-Database-Query-Performance" target="_blank" rel="noopener noreferrer"><span>SQL Query Optimization</span><span>Indexing · Performance</span><b>↗</b></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="statement" id="point-of-view" aria-label="Positioning statement">
+      <div class="page-shell statement-grid">
+        <p class="section-index">03 / Point of view</p>
+        <blockquote class="reveal">The work can be technical.<br><em>The outcome should feel obvious.</em></blockquote>
+        <p class="statement-copy">Good analysis reduces the number of questions in the room. It does not add another dashboard to explain.</p>
+        <figure class="statement-visual reveal">
+          <div class="signal-system" role="img" aria-label="Market evidence, research questions and data systems are audited, analyzed and synthesized into one clear decision signal">
+            <div class="signal-inputs"><span>Market evidence</span><span>Research questions</span><span>Data systems</span></div>
+            <div class="signal-filter"><span>Audit</span><span>Analyze</span><span>Synthesize</span></div>
+            <div class="signal-output"><span class="signal-arrow" aria-hidden="true">→</span><strong>A clear<br>decision.</strong></div>
+          </div>
+          <figcaption><span>Complexity in</span><span>Clarity out <b aria-hidden="true">↗</b></span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section capabilities" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="page-shell">
+        <header class="section-heading reveal">
+          <p class="section-index">04 / Capabilities</p>
+          <div>
+            <h2 id="capabilities-title">What I can<br>help make clear.</h2>
+          </div>
+        </header>
+
+        <div class="capability-workbench reveal" data-capabilities>
+          <div class="capability-select" role="tablist" aria-label="Explore my capabilities" aria-orientation="vertical">
+            <button type="button" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="true"><span class="capability-number">01</span><span><strong>Research &amp;<br>intelligence</strong><small>Find the question.</small></span><i aria-hidden="true">↗</i></button>
+            <button type="button" role="tab" id="tab-analytics" aria-controls="panel-analytics" aria-selected="false"><span class="capability-number">02</span><span><strong>Data analytics</strong><small>Make the evidence speak.</small></span><i aria-hidden="true">↗</i></button>
+            <button type="button" role="tab" id="tab-products" aria-controls="panel-products" aria-selected="false"><span class="capability-number">03</span><span><strong>Data products</strong><small>Put insight to work.</small></span><i aria-hidden="true">↗</i></button>
+            <button type="button" role="tab" id="tab-engineering" aria-controls="panel-engineering" aria-selected="false"><span class="capability-number">04</span><span><strong>Data engineering</strong><small>Build it to run again.</small></span><i aria-hidden="true">↗</i></button>
+            <p class="capability-hint">Four disciplines. One connected way of thinking.<br>Select a discipline to explore <span aria-hidden="true">→</span></p>
+          </div>
+          <div class="capability-panels">
+            <section class="capability-panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" tabindex="0">
+              <p class="eyebrow">01 / Investigate</p><h3>Start with the<br><em>right question.</em></h3>
+              <svg class="capability-diagram" viewBox="0 0 560 210" role="img" aria-label="Sources, context and comparisons come together through research to form an insight"><g class="diagram-lines"><path d="M110 40H153L205 105M110 105H205M110 170H153L205 105"/><path class="diagram-signal" pathLength="1" d="M335 105H425"/></g><g class="diagram-nodes"><rect x="1" y="20" width="109" height="40"/><rect x="1" y="85" width="109" height="40"/><rect x="1" y="150" width="109" height="40"/><rect x="205" y="70" width="130" height="70"/><rect x="425" y="70" width="134" height="70"/></g><g class="diagram-labels"><text x="55" y="45">Sources</text><text x="55" y="110">Context</text><text x="55" y="175">Comparisons</text><text x="270" y="111">Research</text><text x="492" y="111">Insight</text></g></svg>
+              <ol class="capability-mobile-flow" aria-label="Process"><li>Sources + context</li><li>Research</li><li>Insight</li></ol>
+              <p class="capability-description">Competitive research · Market mapping · Segmentation · Strategic synthesis</p><div class="capability-tools"><span>Working toolkit</span><p>Excel / Notion / LLM workflows</p></div><a class="capability-outcome" href="#experience"><span>From the work</span>20+ companies researched at Centauri AI <b aria-hidden="true">↗</b></a>
+            </section>
+            <section class="capability-panel" id="panel-analytics" role="tabpanel" aria-labelledby="tab-analytics" tabindex="0">
+              <p class="eyebrow">02 / Interpret</p><h3>Test assumptions.<br><em>Find the pattern.</em></h3>
+              <svg class="capability-diagram" viewBox="0 0 560 210" role="img" aria-label="Data is explored, tested and explained"><g class="diagram-lines"><path class="diagram-signal" pathLength="1" d="M90 100H470"/></g><g class="diagram-nodes"><rect x="1" y="70" width="89" height="60"/><rect x="157" y="70" width="89" height="60"/><rect x="313" y="70" width="89" height="60"/><rect x="470" y="70" width="89" height="60"/></g><g class="diagram-labels"><text x="45" y="106">Data</text><text x="201" y="106">Explore</text><text x="357" y="106">Test</text><text x="515" y="106">Explain</text></g><text class="diagram-note" x="280" y="174">STATISTICS + CONTEXT</text></svg>
+              <ol class="capability-mobile-flow" aria-label="Process"><li>Data</li><li>Explore</li><li>Test</li><li>Explain</li></ol>
+              <p class="capability-description">SQL · Python · Statistical analysis · Data modeling</p><div class="capability-tools"><span>Working toolkit</span><p>Pandas / Statsmodels / R</p></div><a class="capability-outcome" href="https://github.com/HarshP10101/Edmonton-Property-Analysis" target="_blank" rel="noopener noreferrer"><span>From the work</span>1.2M assessment records explored in the Edmonton project <b aria-hidden="true">↗</b></a>
+            </section>
+            <section class="capability-panel" id="panel-products" role="tabpanel" aria-labelledby="tab-products" tabindex="0">
+              <p class="eyebrow">03 / Translate</p><h3>Make the answer<br><em>easy to use.</em></h3>
+              <svg class="capability-diagram" viewBox="0 0 560 210" role="img" aria-label="A data model and reusable measures support reports and dashboards"><g class="diagram-lines"><path d="M110 105H210"/><path class="diagram-signal" pathLength="1" d="M330 105H370V45H425M370 105V165H425"/></g><g class="diagram-nodes"><rect x="1" y="75" width="109" height="60"/><rect x="210" y="75" width="120" height="60"/><rect x="425" y="20" width="134" height="50"/><rect x="425" y="140" width="134" height="50"/></g><g class="diagram-labels"><text x="55" y="111">Data model</text><text x="270" y="111">Measures</text><text x="492" y="51">Reports</text><text x="492" y="171">Dashboards</text></g></svg>
+              <ol class="capability-mobile-flow" aria-label="Process"><li>Data model</li><li>Measures</li><li>Reports + dashboards</li></ol>
+              <p class="capability-description">Reporting systems · Decision dashboards · KPI design · Visualization</p><div class="capability-tools"><span>Working toolkit</span><p>Power BI / DAX / Tableau</p></div><a class="capability-outcome" href="https://github.com/HarshP10101/Maven-Market-Power-BI-Project" target="_blank" rel="noopener noreferrer"><span>From the work</span>Raw files to executive view in Maven Market <b aria-hidden="true">↗</b></a>
+            </section>
+            <section class="capability-panel" id="panel-engineering" role="tabpanel" aria-labelledby="tab-engineering" tabindex="0">
+              <p class="eyebrow">04 / Build</p><h3>Useful once.<br><em>Reliable by design.</em></h3>
+              <svg class="capability-diagram" viewBox="0 0 560 210" role="img" aria-label="Sources are transformed, validated and reused, with a quality-check loop"><g class="diagram-lines"><path class="diagram-signal" pathLength="1" d="M90 85H450"/><path d="M340 115V165H190V115"/></g><g class="diagram-nodes"><rect x="1" y="55" width="89" height="60"/><rect x="140" y="55" width="100" height="60"/><rect x="290" y="55" width="100" height="60"/><rect x="450" y="55" width="109" height="60"/></g><g class="diagram-labels"><text x="45" y="91">Sources</text><text x="190" y="91">Transform</text><text x="340" y="91">Validate</text><text x="504" y="91">Reuse</text></g><text class="diagram-note" x="265" y="195">QUALITY CHECKS</text></svg>
+              <ol class="capability-mobile-flow" aria-label="Process"><li>Sources</li><li>Transform</li><li>Validate</li><li>Reuse</li></ol>
+              <p class="capability-description">ETL · Data quality · Automation · Analytics engineering</p><div class="capability-tools"><span>Working toolkit</span><p>Microsoft Fabric / MySQL / Docker</p></div><a class="capability-outcome" href="https://github.com/HarshP10101/ETL-breweries" target="_blank" rel="noopener noreferrer"><span>From the work</span>REST API to MySQL in the ETL Breweries project <b aria-hidden="true">↗</b></a>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="page-shell">
+        <header class="about-heading reveal">
+          <p class="section-index">05 / About</p>
+          <h2 id="about-title">I like data work best when the result is fewer questions, <em>not more dashboards.</em></h2>
+        </header>
+
+        <div class="about-grid reveal">
+          <aside class="about-field-note" aria-label="Research perspective"><span class="eyebrow">Edmonton / Canada</span><p>Research<br><em>× systems.</em></p><span class="field-line" aria-hidden="true"></span></aside>
+          <div class="about-copy">
+            <p>My work lives at the intersection of research, data analytics and engineering. With a Computer Science major and Business minor, I like moving between the question, the analysis and the system that makes the answer useful.</p>
+            <p>That has taken me from competitive research and public-sector reporting to statistical analysis, dashboards and data pipelines. I currently work as a Research Analyst at JLL, bringing that same approach to commercial real estate. The industry changes; the instinct to investigate, connect and build stays.</p>
+          </div>
+          <dl class="about-meta">
+            <div><dt>Based</dt><dd>Edmonton, Canada</dd></div>
+            <div><dt>Background</dt><dd>Computing Science × Business</dd></div>
+            <div><dt>Exploring</dt><dd>Market intelligence · Analytics engineering · French</dd></div>
+          </dl>
+        </div>
+
+        <div class="principles reveal" aria-labelledby="principles-title">
+          <h3 id="principles-title">How I work</h3>
+          <ol>
+            <li><span>01</span><strong>Decision first</strong><p>Start with the question the work needs to answer.</p></li>
+            <li><span>02</span><strong>Clarity over cleverness</strong><p>Build something a team can explain and use.</p></li>
+            <li><span>03</span><strong>Reliability is a feature</strong><p>If the data cannot be trusted, the interface is decoration.</p></li>
+            <li><span>04</span><strong>Ship, then iterate</strong><p>Deliver early, gather feedback and improve the useful thing.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="page-shell contact-grid">
+        <p class="section-index">06 / Contact</p>
+        <div class="contact-copy reveal">
+          <h2 id="contact-title">Too much information.<br>Not enough clarity?</h2>
+          <a class="contact-cta" href="mailto:connectwithharshpatel03@gmail.com">Let’s talk. <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="contact-links" aria-label="Contact links">
+          <a href="mailto:connectwithharshpatel03@gmail.com">Email <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/harsh-patel-a1563a237" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/HarshP10101" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="https://drive.google.com/file/d/1ZE9Nh7otCvGoWTYUlGkcuaWp9lz2ky4y/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Résumé <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-shell footer-grid">
+      <p>Harsh Patel</p>
+      <p>Edmonton / Canada</p>
+      <p>© 2026</p>
+      <p>No templates were harmed. Just a few spreadsheets.</p>
+    </div>
+  </footer>
+
+  <script src="script.js?v=20260831-interactive-evidence" defer></script>
 </body>
 </html>
