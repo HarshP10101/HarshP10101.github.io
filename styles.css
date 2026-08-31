@@ -57,6 +57,12 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .hero-title>span,.hero-title>em {display:block}
 .hero-title>em {margin-top:.05em;letter-spacing:-.067em}
 .hero-intro {max-width:29rem;margin-top:2rem;color:var(--muted);font-size:clamp(.95rem,1.15vw,1.1rem);line-height:1.65}
+.hero-context {display:grid;grid-template-columns:1fr 1.1fr;gap:1rem;margin-top:1.4rem;max-width:38rem;border-block:1px solid var(--line)}
+.hero-context p,.hero-context a {min-height:58px;padding:.75rem 0;font-size:.76rem;line-height:1.45}
+.hero-context a {position:relative;padding-left:1rem;border-left:1px solid var(--line)}
+.hero-context span {display:block;margin-bottom:.15rem;color:var(--signal-text);font-size:.6875rem;letter-spacing:.04em;text-transform:uppercase}
+.hero-context b {font-weight:400;margin-left:.35rem;transition:transform 180ms ease}
+.hero-context a:hover b,.hero-context a:focus-visible b {display:inline-block;transform:translateY(3px)}
 .hero-actions {display:flex;flex-wrap:wrap;gap:1.8rem;margin-top:1.5rem}
 .hero-actions .editorial-link:first-child {border-bottom-color:var(--signal)}
 .hero-artwork {grid-column:8/-1;align-self:center;margin-bottom:2rem}
@@ -116,10 +122,21 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .experience-row:last-child {border-bottom:1px solid var(--line)}
 .experience-date {grid-column:1;grid-row:1/4;padding-top:.25rem;font-size:.61rem}
 .experience-date>span {display:block;margin-bottom:1.2rem;font-size:.75rem;color:var(--signal-text)}
+.experience-date strong,.experience-date small {display:block;font-size:.6875rem;font-weight:400;line-height:1.5}
+.experience-date small {margin-top:.35rem;color:var(--muted);text-transform:none;letter-spacing:0}
 .experience-company {grid-column:2/-1}
 .experience-row h3 {font-size:clamp(2rem,3vw,3.2rem);line-height:1.1;letter-spacing:-.045em}
 .experience-role {margin-top:.7rem;font-size:.62rem}
 .experience-impact {grid-column:2/-1;max-width:39rem;color:var(--muted);font-size:.94rem;line-height:1.75}
+.role-proof {grid-column:2/-1;margin-top:.3rem;padding-top:1.3rem;border-top:1px solid var(--line)}
+.role-proof>p {display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding-bottom:1.1rem}
+.role-proof>p strong {font-size:clamp(1.65rem,2.5vw,2.7rem);font-weight:400;letter-spacing:-.045em;line-height:1.05}
+.role-proof>p span {max-width:18rem;color:var(--muted);font-size:.78rem;line-height:1.55;text-align:right}
+.role-proof ol {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;padding:0;margin:0;list-style:none}
+.role-proof li {position:relative;padding:.85rem .5rem .65rem 0;border-top:1px solid var(--line)}
+.role-proof li::before {content:"";position:absolute;top:-2px;left:0;width:1.8rem;height:2px;background:var(--signal)}
+.role-proof b {display:block;font-size:.78rem;font-weight:400}
+.role-proof small {display:block;margin-top:.25rem;color:var(--muted);font-size:.6875rem;line-height:1.45}
 .experience-row.is-current {background:var(--surface);padding:2.3rem 1.5rem;margin-bottom:.8rem;border-top:2px solid var(--signal)}
 .experience-evidence {grid-column:2/-1;display:flex;flex-wrap:wrap;align-items:end;gap:1.5rem 2.5rem;margin-top:.3rem;padding-top:1.3rem;border-top:1px solid var(--line)}
 .experience-evidence>div {display:flex;flex-direction:column-reverse;gap:.25rem}
@@ -172,6 +189,8 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .project-copy {grid-column:4/-1;grid-row:2;max-width:45rem}
 .project-copy h3 {max-width:43rem;font-size:clamp(2rem,3.45vw,3.8rem);letter-spacing:-.05em;line-height:1.07;text-wrap:balance}
 .project-copy>p:not(.project-stack) {max-width:38rem;margin-top:1.3rem;font-size:1rem;color:var(--muted);line-height:1.75}
+.project-copy .project-method {max-width:42rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.82rem;line-height:1.65}
+.project-method>span {display:block;margin-bottom:.35rem;color:var(--signal-text);font-size:.6875rem;letter-spacing:.055em;text-transform:uppercase}
 .project-stack {margin-top:1.2rem;color:var(--muted);font-size:.6rem}
 .project-copy .editorial-link {margin-top:1.4rem}
 .artifact-link {min-height:44px;display:inline-flex;align-items:center;gap:1rem;margin-left:2rem;font-size:.75rem;text-decoration:underline;text-underline-offset:5px}
@@ -220,7 +239,10 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .statement {padding-block:var(--section-space);background:var(--ink);color:var(--paper)}
 .statement blockquote {grid-column:4/-1;font-size:clamp(3.2rem,5.75vw,6.3rem);line-height:.98;letter-spacing:-.055em}
 .statement blockquote em {letter-spacing:-.05em}
-.statement-copy {grid-column:8/-1;margin-top:2.5rem;max-width:26rem;font-size:.85rem;color:var(--on-dark-muted);line-height:1.7}
+.statement-copy {grid-column:8/-1;margin-top:2.5rem;max-width:28rem;font-size:.85rem;color:var(--on-dark-muted);line-height:1.7}
+.statement-copy>a {display:block;min-height:44px;margin-top:1.4rem;padding-top:1rem;border-top:1px solid var(--dark-line);color:var(--paper)}
+.statement-copy>a>span {display:block;color:var(--signal);font-size:.6875rem;letter-spacing:.05em;text-transform:uppercase}
+.statement-copy>a>b {font-weight:400}
 .statement-visual {grid-column:4/-1;margin-top:4.5rem;border-top:1px solid var(--dark-line)}
 .signal-system {display:grid;grid-template-columns:1fr .9fr 1.1fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;padding-block:3rem}
 .signal-inputs,.signal-filter {display:flex;flex-direction:column;gap:.75rem;font-size:.75rem}
@@ -439,11 +461,14 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
   .experience-row {grid-template-columns:1fr;gap:1rem;padding-block:2rem}
   .experience-date {grid-column:1;grid-row:auto;display:flex;align-items:center;gap:1rem;font-size:.63rem}
   .experience-date>span {margin:0;font-size:.67rem}
-  .experience-company,.experience-impact,.experience-evidence {grid-column:1}
+  .experience-company,.experience-impact,.experience-evidence,.role-proof {grid-column:1}
   .experience-row h3 {font-size:2.1rem}
   .experience-role {font-size:.6rem}
   .experience-impact {font-size:.9rem}
   .experience-row.is-current {padding:1.7rem 1.2rem}
+  .role-proof>p {display:block}
+  .role-proof>p span {display:block;margin-top:.5rem;text-align:left}
+  .role-proof ol {grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem 1rem}
   .experience-evidence {gap:1.2rem 1.5rem}
   .experience-evidence dd,.reporting-evidence strong {font-size:3.35rem}
   .experience-evidence dt {font-size:.62rem}
@@ -495,6 +520,8 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
   .hero-title {font-size:clamp(2.7rem,11.5vw,4.05rem);line-height:1.02;letter-spacing:-.06em}
   .hero-title>em {letter-spacing:-.065em}
   .hero-intro {margin-top:1.5rem;font-size:.94rem}
+  .hero-context {grid-template-columns:1fr;margin-top:1.2rem}
+  .hero-context a {padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .hero-actions {gap:1.5rem;margin-top:1rem}
   .hero-actions .editorial-link {font-size:.75rem;gap:1.5rem}
   .hero-artwork {grid-column:1/-1;margin-top:1.7rem;margin-bottom:1rem}
@@ -593,3 +620,11 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
   .hero-signal,.hero-cue {display:none}
   .hero-depth {transform:none!important}
 }
+/* Editorial labels never fall below 11px, including narrow screens. */
+.hero-disciplines,.hero-stage-labels,.hero-stage-controls,.hero-stage-controls button,.hero-stage-controls button>span,.hero-explore-note,.hero-index,.section-index,.preview-heading>p:not(.preview-title),
+.career-thread .eyebrow,.career-route li>span,.career-contexts,.experience-date,.experience-date>span,.experience-date strong,.experience-date small,.experience-role,
+.experience-evidence dt,.process-evidence small,.reporting-evidence small,.artifact-strip,.artifact-footer,.chart-axis,.artifact-source,.project-meta,.project-stack,.project-method>span,
+.pipeline-stages small,.pipeline-stages li>span,.quality-branch>span,.quality-branch p,.maven-kpis dt,.maven-kpis small,.maven-brands>.eyebrow,.maven-model .eyebrow,.maven-model li,.maven-model li>span,
+.statement-visual figcaption,.signal-inputs span,.capability-number,.capability-hint,.capability-panel>.eyebrow,.capability-select small,.capability-tools>span,.capability-outcome>span,
+.about-field-note .eyebrow,.about-meta dt,.footer-grid {font-size:.6875rem}
+.diagram-note {font-size:11px}
