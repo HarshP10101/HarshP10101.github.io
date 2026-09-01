@@ -591,3 +591,141 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--signal-text);outli
 .capability-number,.capability-hint,.capability-panel>.eyebrow,.capability-select small,.capability-tools>span,.capability-outcome>span,
 .about-field-note .eyebrow,.about-meta dt,.footer-grid {font-size:.6875rem}
 .diagram-note {font-size:11px}
+
+/* Keep directional marks typographic on every device. */
+.hero-context b,.editorial-link>span,.artifact-strip i,.artifact-link>span,.archive-list b,
+.capability-select i,.capability-hint>span,.capability-outcome b,.contact-cta>span,.contact-links a>span {
+  font-family:"Segoe UI Symbol","Arial Unicode MS",Arial,sans-serif;
+  font-style:normal;
+  font-weight:400;
+}
+
+/* Mobile editorial reflow: the desktop system, recomposed instead of miniaturized. */
+@media (max-width:560px) {
+  :root {--page-pad:1.125rem;--section-space:4rem;--header-height:68px}
+  html {scroll-padding-top:calc(var(--header-height) + .75rem)}
+  body {font-size:1rem}
+  .page-shell {padding-inline:var(--page-pad)}
+
+  .site-header {min-height:var(--header-height)}
+  .nav-shell {min-height:var(--header-height);padding-inline:var(--page-pad)}
+  .brand {font-size:.94rem}
+  .nav-ready .menu-toggle {min-width:76px;gap:.7rem;font-size:.75rem}
+  .menu-icon {position:relative;display:block;width:20px;height:18px}
+  .menu-icon i {position:absolute;left:0;width:20px;height:1px;transform:none;background:var(--ink)}
+  .menu-icon i:first-child {top:5px}
+  .menu-icon i:last-child {bottom:5px}
+  .menu-open .menu-icon i:first-child {top:9px;transform:rotate(45deg)}
+  .menu-open .menu-icon i:last-child {bottom:8px;transform:rotate(-45deg)}
+  .nav-ready .menu-open .primary-nav {padding:1rem var(--page-pad) 2.5rem}
+  .menu-open .primary-nav a {min-height:66px;padding-block:.55rem;font-size:1.7rem;letter-spacing:-.035em}
+
+  .hero-grid {padding-top:1.8rem}
+  .hero-copy {padding-top:.55rem}
+  .hero-disciplines {margin-bottom:1.25rem;gap:.25rem .4rem;line-height:1.7}
+  .hero-title {font-size:clamp(2.75rem,11.25vw,3.25rem);line-height:1.01}
+  .hero-intro {margin-top:1.35rem;font-size:.94rem;line-height:1.65}
+  .hero-context {grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin-top:1.15rem}
+  .hero-context p,.hero-context a {min-height:82px;padding:.75rem 0;font-size:.74rem}
+  .hero-context a {padding-left:.9rem;border-top:0;border-left:1px solid var(--line)}
+  .hero-actions {margin-top:1.15rem;gap:1.4rem}
+  .hero-actions .editorial-link {font-size:.75rem}
+  .hero-artwork {margin-top:2rem;margin-bottom:.8rem}
+  .hero-stages {margin-top:.75rem}
+  .hero-stage-controls {gap:.5rem}
+  .hero-stage-controls button {min-height:52px;padding:.55rem 0;white-space:normal;line-height:1.35}
+  .hero-explore-note {min-height:auto;padding-top:.35rem;line-height:1.5}
+  .hero-index {grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem 1rem;padding-block:1rem}
+  .hero-index span {min-height:42px;padding-top:.55rem;border-top:1px solid var(--line);text-align:left!important}
+
+  .section-heading {margin-bottom:2.25rem}
+  .section-heading>.section-index,.about-heading>.section-index,.contact-grid>.section-index {margin-bottom:1.3rem}
+  .section-heading h2 {max-width:21rem;font-size:2.65rem;line-height:1.03}
+  .section-heading>div>p {max-width:21rem;margin-top:1rem;font-size:.92rem;line-height:1.65}
+
+  .experience-layout {row-gap:1.15rem}
+  .career-thread {display:block;padding:1.35rem}
+  .career-statement {max-width:13rem;margin-top:.9rem;font-size:1.9rem;line-height:1.05}
+  .career-route {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1rem;margin-top:1.5rem}
+  .career-route li {display:block;min-height:94px;padding:.7rem 0;border-top:1px solid var(--dark-line)}
+  .career-route li:not(:last-child)::after {display:none}
+  .career-route li>span {display:block;padding:0;margin-bottom:.25rem}
+  .career-route strong {display:block;font-size:1rem;line-height:1.25}
+  .career-route li p {margin-top:.25rem;font-size:.72rem;line-height:1.45}
+  .career-contexts {margin-top:.35rem;padding-top:1rem;font-size:.7rem}
+  .experience-list {display:grid;gap:1rem}
+  .experience-row,.experience-row.is-current {gap:.9rem;margin:0;padding:1.25rem 1rem;border:1px solid var(--line);background:transparent}
+  .experience-row.is-current {border-top:2px solid var(--signal);background:var(--surface)}
+  .experience-row:last-child {border-bottom:1px solid var(--line)}
+  .experience-date {display:grid;grid-template-columns:auto 1fr auto;gap:.6rem;align-items:center;padding:0}
+  .experience-date>span,.experience-date strong,.experience-date small {margin:0;line-height:1.4}
+  .experience-date strong {justify-self:start}
+  .experience-date small {justify-self:end;text-align:right}
+  .experience-row h3 {font-size:1.9rem;line-height:1.08}
+  .experience-role {margin-top:.4rem}
+  .experience-impact {font-size:.9rem;line-height:1.65}
+  .role-proof {margin-top:.15rem;padding-top:1rem}
+  .role-proof>p {padding-bottom:.9rem}
+  .role-proof>p strong {font-size:1.55rem}
+  .role-proof>p span {margin-top:.45rem;font-size:.75rem}
+  .role-proof ol {gap:.6rem .8rem}
+  .role-proof li {min-height:72px;padding:.65rem .25rem .5rem 0}
+
+  .work .section-heading {margin-bottom:2.6rem}
+  .project-feature {margin-bottom:3.75rem;row-gap:1.25rem}
+  .artifact-strip {display:grid;grid-template-columns:1fr auto;min-height:60px;padding:.8rem .9rem;gap:.65rem}
+  .artifact-strip>span:last-child {max-width:8rem}
+  .artifact-body {padding:1.3rem .9rem}
+  .preview-heading {margin-bottom:1.5rem}
+  .preview-title {font-size:2.05rem;line-height:1.02}
+  .project-meta {padding-top:.85rem;border-top:1px solid var(--line)}
+  .project-copy h3 {font-size:1.95rem;line-height:1.08}
+  .project-copy>p:not(.project-stack) {font-size:.91rem;line-height:1.65}
+  .project-copy .project-method {font-size:.79rem;line-height:1.6}
+  .archive-list a {min-height:74px;padding-block:1.05rem}
+
+  .capability-workbench {row-gap:1.25rem}
+  .capability-select {gap:.75rem}
+  .capability-select button {min-height:118px;padding:1rem .8rem;border:1px solid var(--line)}
+  .capability-select button:nth-of-type(3),.capability-select button:nth-of-type(4) {border-bottom:1px solid var(--line)}
+  .capability-select button[aria-selected="true"] {background:var(--surface);border-top-color:var(--signal)}
+  .capability-select button[aria-selected="true"]::after {left:.8rem;bottom:-1px;width:2rem}
+  .capability-select strong {font-size:1.28rem;line-height:1.08}
+  .capability-select small {margin-top:.4rem;line-height:1.4}
+  .capability-select i {font-size:1rem}
+  .capability-hint {margin-top:.3rem;line-height:1.55}
+  .capability-panel {padding:1.4rem 1.2rem}
+  .capability-panel h3 {margin-top:1.3rem;font-size:2.05rem}
+  .capability-mobile-flow {margin:1.5rem 0}
+  .capability-mobile-flow li {padding:.55rem 0 .55rem 1rem}
+  .capability-description {padding-top:1.15rem;font-size:.82rem}
+  .capability-outcome {margin-top:1.4rem;padding-top:1.15rem}
+
+  .about-heading h2 {font-size:2.55rem;line-height:1.05}
+  .about-grid {margin-top:2.25rem;row-gap:1.6rem}
+  .about-field-note {padding:1.1rem;border:1px solid var(--line)}
+  .about-field-note p {font-size:1.55rem}
+  .field-line {margin-top:-1rem}
+  .about-copy p {font-size:.92rem;line-height:1.7}
+  .about-meta>div {grid-template-columns:82px 1fr;gap:.75rem}
+  .principles {margin-top:2rem}
+  .principles li {grid-template-columns:1.5rem 1fr;padding-block:1.1rem}
+  .principles li p {grid-column:2;margin-top:.25rem}
+
+  .contact {padding-bottom:3rem}
+  .contact h2 {font-size:2.7rem;line-height:1.02}
+  .contact-cta {margin-top:1.4rem;font-size:2.15rem}
+  .contact-links {margin-top:2.5rem}
+  .contact-links a {min-height:58px;padding:.8rem;font-size:.75rem}
+  .footer-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem 1rem}
+  .footer-grid p:nth-child(n) {grid-column:auto;text-align:left}
+  .footer-grid p:nth-child(4) {grid-column:1/-1}
+}
+
+@media (max-width:359px) {
+  .hero-context {grid-template-columns:1fr}
+  .hero-context p,.hero-context a {min-height:0}
+  .hero-context a {padding-left:0;border-top:1px solid var(--line);border-left:0}
+  .capability-select {grid-template-columns:1fr}
+  .capability-select button {min-height:102px}
+}
