@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f9fc" />
+    <meta
+      name="description"
+      content="Grocery transactions reveal which products appear often and which combinations are worth testing together."
+    />
+    <title>Market Basket Analysis | Harsh Patel</title>
+    <link rel="canonical" href="https://harshp10101.github.io/work/market-basket.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Harsh Patel" />
+    <meta property="og:url" content="https://harshp10101.github.io/work/market-basket.html" />
+    <meta property="og:title" content="Market Basket Analysis | Harsh Patel" />
+    <meta
+      property="og:description"
+      content="Grocery transactions reveal which products appear often and which combinations are worth testing together."
+    />
+    <meta property="og:image" content="https://harshp10101.github.io/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Harsh Patel — The Analytical Editorial" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead">
+      <div class="shell masthead-inner">
+        <a class="wordmark" href="../#top">
+          <span class="monogram" aria-hidden="true">hp<span>.</span></span>
+          <span>Harsh Patel</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>
+          Menu <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Primary">
+          <a href="../#work">Work</a>
+          <a href="../#experience">Experience</a>
+          <a href="../#about">About</a>
+          <a class="nav-contact" href="../#contact">Connect <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" tabindex="-1" class="case-page">
+      <article id="top" aria-labelledby="case-title">
+        <header class="case-hero">
+          <div class="shell">
+            <a class="text-link case-back" href="../#work"><span aria-hidden="true">←</span> All work</a>
+            <div class="case-title-row">
+              <div>
+                <p class="mono section-index"><span>04</span> Retail analytics / machine learning</p>
+                <h1 id="case-title">Market Basket Analysis</h1>
+                <p class="case-question">Which items tend to share a basket?</p>
+              </div>
+              <div class="case-metric"><strong>2,363</strong><span>whole-milk occurrences</span></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="shell case-content">
+          <figure class="project-figure chart basket-chart">
+            <div class="figure-kicker mono">FREQUENCY / TOP FIVE ITEMS</div>
+            <figcaption>What fills the basket?</figcaption>
+            <ul class="chart-bars" aria-label="What fills the basket?">
+              <li>
+                <span>Whole milk</span
+                ><span class="bar-track" aria-hidden="true"><i style="--start: 0%; --size: 94.52%"></i></span
+                ><b>2,363</b>
+              </li>
+              <li>
+                <span>Other vegetables</span
+                ><span class="bar-track" aria-hidden="true"><i style="--start: 0%; --size: 73.08%"></i></span
+                ><b>1,827</b>
+              </li>
+              <li>
+                <span>Rolls / buns</span
+                ><span class="bar-track" aria-hidden="true"><i style="--start: 0%; --size: 65.84%"></i></span
+                ><b>1,646</b>
+              </li>
+              <li>
+                <span>Soda</span
+                ><span class="bar-track" aria-hidden="true"><i style="--start: 0%; --size: 58.12%"></i></span
+                ><b>1,453</b>
+              </li>
+              <li>
+                <span>Yogurt</span
+                ><span class="bar-track" aria-hidden="true"><i style="--start: 0%; --size: 51.4%"></i></span
+                ><b>1,285</b>
+              </li>
+            </ul>
+            <div class="chart-axis" aria-hidden="true">
+              <span>0</span><span>500</span><span>1,000</span><span>1,500</span><span>2,000</span
+              ><span>2,500</span>
+            </div>
+            <p class="figure-note">Item counts after duplicate removal.</p>
+          </figure>
+          <div class="case-layout">
+            <aside class="case-source" aria-label="Project details">
+              <p class="mono">Tools &amp; sources</p>
+              <p>Python · pandas · MLxtend · Apriori · K-Means</p>
+              <a class="text-link" href="https://github.com/HarshP10101/Market-Basket-Analysis"
+                >View project on GitHub <span aria-hidden="true">↗</span></a
+              >
+            </aside>
+            <div class="case-story">
+              <section>
+                <p class="mono">01 / Context</p>
+                <h2>Why it mattered</h2>
+                <p>
+                  Product popularity gives retailers a starting point. The items that people buy together can
+                  suggest a different set of ideas for store layout, bundles and promotions.
+                </p>
+              </section>
+              <section>
+                <p class="mono">02 / Method</p>
+                <h2>How I approached it</h2>
+                <p>
+                  I removed duplicate member-date-item rows, then used Apriori association rules to explore
+                  co-purchases. I used K-Means to explore customer segments and compared pricing scenarios in
+                  the notebook.
+                </p>
+              </section>
+              <section>
+                <p class="mono">03 / Findings</p>
+                <h2>What came out of it</h2>
+                <p>
+                  Whole milk appeared most often in the cleaned records, with 2,363 occurrences. The
+                  association study highlighted combinations involving staples such as whole milk, yogurt and
+                  rolls or buns as candidates for testing.
+                </p>
+              </section>
+              <section>
+                <p class="mono">04 / Takeaway</p>
+                <h2>What I learned</h2>
+                <p>
+                  Frequency and association answer different questions. The pricing and segmentation exercises
+                  were exploratory, so their value is in shaping hypotheses for a real test.
+                </p>
+              </section>
+            </div>
+          </div>
+          <a class="next-project" href="edmonton-property.html">
+            <span
+              ><span class="mono">Next case study / 01</span
+              ><strong>Edmonton Property Value Drivers</strong></span
+            >
+            <span class="next-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>© 2026 Harsh Patel <span aria-hidden="true">/</span> Edmonton, Canada</p>
+        <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+    </footer>
+  </body>
+</html>
