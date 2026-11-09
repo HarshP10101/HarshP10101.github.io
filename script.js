@@ -43,35 +43,19 @@ if (menuButton && masthead && siteNav) {
   document.documentElement.classList.add("nav-enhanced");
 }
 
-const atlas = document.querySelector(".atlas");
-if (atlas) {
-  const controls = atlas.querySelector(".atlas-controls");
-  const buttons = controls.querySelectorAll("button");
-  const note = atlas.querySelector(".atlas-note");
-  const link = atlas.querySelector(".atlas-link");
-  const modes = {
-    research: {
-      note: "Research starts by deciding which question is worth pursuing.",
-      href: "#experience",
-    },
-    analytics: {
-      note: "Analytics tests whether the pattern holds when you change the comparison.",
-      href: "#project-edmonton",
-    },
-    engineering: {
-      note: "Engineering makes the work repeatable, with checks you can inspect.",
-      href: "#project-engineering",
-    },
-  };
+const researchControls = document.querySelector(".research-controls");
+if (researchControls) {
+  const buttons = [...researchControls.querySelectorAll("button")];
+  const views = buttons.map((button) => document.getElementById(button.getAttribute("aria-controls")));
 
-  buttons.forEach((button) =>
+  buttons.forEach((button, index) => {
     button.addEventListener("click", () => {
-      const mode = button.dataset.mode;
-      atlas.dataset.mode = mode;
-      buttons.forEach((candidate) => candidate.setAttribute("aria-pressed", String(candidate === button)));
-      note.textContent = modes[mode].note;
-      link.href = modes[mode].href;
-    }),
-  );
-  controls.hidden = false;
+      buttons.forEach((candidate, position) => {
+        const isSelected = position === index;
+        candidate.setAttribute("aria-pressed", String(isSelected));
+        views[position].hidden = !isSelected;
+      });
+    });
+  });
+  researchControls.hidden = false;
 }
