@@ -1016,10 +1016,6 @@ img {
 .case-content > .chart {
   min-height: 16rem;
 }
-.case-content .chart-bars,
-.case-content .chart-axis {
-  max-width: 46rem;
-}
 .case-content > .pipeline {
   min-height: 17rem;
 }

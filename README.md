@@ -43,7 +43,7 @@ The custom properties at the top of `styles.css` are the source of truth. The gr
 
 ## Verification
 
-- Rendered the homepage in Chrome at 1440, 1024, 820, 768, 390 and 320 px. Ran the same overflow and asset checks on each case study at 1440, 390 and 320 px.
+- Rendered the homepage in Chrome at 1440, 1024, 820, 768, 390 and 320 px. Checked horizontal overflow, asset loading and chart scale alignment on the homepage and on each case study at 1440, 390 and 320 px.
 - Checked the skip link, keyboard focus, mobile menu open and close, Escape, touch selection, all Atlas destinations, case-study navigation, reduced motion and the no-JavaScript fallback.
 - Ran axe checks for WCAG 2.0 and 2.1 A and AA across 18 page and viewport combinations. Found zero automated violations and zero browser errors. Browser coverage used Chrome with emulated touch and viewport sizes.
 - Preserved all existing external destinations. The GitHub and résumé URLs returned HTTP 200. LinkedIn blocked automated access, so its inherited profile URL still needs a signed-in check.
